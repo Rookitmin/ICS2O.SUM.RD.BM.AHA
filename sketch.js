@@ -2,19 +2,28 @@ function setup() {
   createCanvas(400, 400);
   background(220);
 }
+// Basicly, these two variables control the way the
+// system works, in way 1, or way 2. one of the ways will 
+// always work
 var v1 = false;
 var v2 = true;
+// an in-game ariable, controlling 
+// where you are looking on the map.
 var scroll = [0, 0];
+// controlls what you see
 var scene = 1;
 var inGame = false;
+// Changes the difficulty of the CPUs and the 
+// color of the buttons
 var difficulty = 1;
+// Key Changing Variables
 var keybinding = false;
+var changeKey = 0;
 var cycles = 0;
 var P1 = {Up: 32, Down: 40, Left: 37, Right: 39, shoot: 77};
 var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82};
-//scene number 
-var pauseScreen = 99;
 
+// creates genaralised button variables
 function button (x, y, width, height, scene, text)  {
   this.x = x;
   this.y = y;
@@ -24,6 +33,7 @@ function button (x, y, width, height, scene, text)  {
   this.words = text;
   this.hovering = false;
 }
+// conatins the code for drawing the buttons
 button.prototype.draw = function () {
   fill(0, 102, 102);
   rect(this.x, this.y, this.width, this.height);
@@ -32,6 +42,7 @@ button.prototype.draw = function () {
        this.x + this.width - 10, 
        this.y + this.height - 10);
 }
+// calls 
 button.prototype.hover = function (lll) {
   if (this.x < mouseX && this.y < mouseY && 
       this.x + this.width > mouseX && this.y + this.height > mouseY && 
@@ -98,7 +109,7 @@ var buttonMenu3 = new button (10, 10, 75, 25, 5, "Main Menu");
 var buttonStart1 = new button (10, 50, 120, 40, 1, "Start");
 var buttonSettings1 = new button (10, 100, 120, 40, 1, "Settings");
 var buttonDifficulty1 = new button (20, 50, 75, 30, 2, "Difficulty");
-var buttonDifficulty2 = new button (20, 50, 75, 30, pauseScreen, "Difficulty");
+// var buttonDifficulty2 = new button (20, 50, 75, 30, FillInTheBlank, "Difficulty");
 var HardCpu = new button (30, 150, 75, 30, 3, "Hard");
 var MediumCpu = new button (30, 100, 75, 30, 3, "Medium");
 var EasyCpu = new button (30, 50, 75, 30, 3, "Easy");
@@ -106,60 +117,80 @@ var Back1 = new button (325, 10, 50, 20, 2, "back");
 var Back2 = new button (325, 10, 50, 20, 3, "back");
 var Back3 = new button (325, 10, 50, 20, 5, "back");
 var keybind = new button (20, 100, 75, 30, 2, "Controls");
-var P1U = new button (80, 45, 80, 45, 5, "bind Player 1 Up key");
-var P1D = new button (80, 135, 80, 45, 5, "bind Player 1 Down key");
-var P1L = new button (80, 225, 80, 45, 5, "bind Player 1 Left key");
-var P1R = new button (80, 315, 80, 45, 5, "bind Player 1 Right key");
-var P2U = new button (240, 45, 80, 45, 5, "bind Player 2 Up key");
-var P2D = new button (240, 135, 80, 45, 5, "bind Player 2 Down key");
-var P2L = new button (240, 225, 80, 45, 5, "bind Player 2 Left key");
-var P2R = new button (240, 315, 80, 45, 5, "bind Player 2 RIght key");
+var P1Up = new button (80, 45, 80, 45, 5, 
+											"bind Player 1 Up key");
+var P1Down = new button (80, 135, 80, 45, 5, 
+											"bind Player 1 Down key");
+var P1Left = new button (80, 225, 80, 45, 5, 
+											"bind Player 1 Left key");
+var P1Right = new button (80, 315, 80, 45, 5, 
+											"bind Player 1 Right key");
 
+var P2Up = new button (240, 45, 80, 45, 5, 
+											"bind Player 2 Up key");
+var P2Down = new button (240, 135, 80, 45, 5, 
+											"bind Player 2 Down key");
+var P2Left = new button (240, 225, 80, 45, 5, 
+											"bind Player 2 Left key");
+var P2Right = new button (240, 315, 80, 45, 5, 
+											"bind Player 2 RIght key");
+
+var P1UDLR = function () {
+	P1Up.hover();
+	P1Down.hover();
+	P1Left.hover();
+	P1Right.hover();
+}
+var P2UDLR = function () {
+	P2Up.hover();
+	P2Left.hover();
+	P2Right.hover();
+	P2Down.hover();
+}
 function draw() {
   if (inGame) {
   	background(220);
   } 
-	else if (keybinding) {
-		if (v1) {
-			background(220);
-			if (cycles < 200) {
-				text("Press Player 1's new Up Button", 100, 100, 200, 200)
-			} else if (cycles < 420 && cycles > 220) {
-				text("Press Player 1's new Down Button", 100, 100, 200, 200)
-			} else if (cycles < 640 && cycles > 440) {
-				text("Press Player 1's new Left Button", 100, 100, 200, 200)
-			} else if (cycles < 860 && cycles > 660) {
-				text("Press Player 1's new Right Button", 100, 100, 200, 200)
-			} else if (cycles < 1080 && cycles > 880) {
-				text("Press Player 2's new Up Button", 100, 100, 200, 200)
-			} else if (cycles < 1300 && cycles > 1100) {
-				text("Press Player 2's new Down Button", 100, 100, 200, 200)
-			} else if (cycles < 1520 && cycles > 1320) {
-				text("Press Player 2's new Left Button", 100, 100, 200, 200)
-			} else if (cycles < 1740 && cycles > 1540) {
-				text("Press Player 2's new Right Button", 100, 100, 200, 200)
-			} else if (cycles > 2000) {
-				keybinding = false;
-			}
-			cycles ++;
+	else {
+		background(220);
+		textSize(12);
+		buttonMenu3.hover();
+		Back3.hover();
+		P1UDLR();
+		textSize(12);
+		P2UDLR();
+		if (changeKey === 1 & keyIsPressed) {
+			P1.Up = keyCode;
+			changeKey = 0;
 		}
-		else if (v2) {
-			background(220);
-			textSize(12);
-			buttonMenu3.hover();
-			Back3.hover();
-			P1U.hover();
-			P1D.hover();
-			P1L.hover();
-			P1R.hover();
-			P2U.hover();
-			P2D.hover();
-			P2L.hover();
-			P2R.hover();
+		if (changeKey === 2 & keyIsPressed) {
+			P1.Down = keyCode;
+			changeKey = 0;
 		}
-	}
-  else {
-    background(220);
+		if (changeKey === 3 & keyIsPressed) {
+			P1.Left = keyCode;
+			changeKey = 0;
+		}
+		if (changeKey === 4 & keyIsPressed) {
+			P1.Right = keyCode;
+			changeKey = 0;
+		}
+		if (changeKey === 5 & keyIsPressed) {
+			P2.Up = keyCode;
+			changeKey = 0;
+		}
+		if (changeKey === 6 & keyIsPressed) {
+			P2.Down = keyCode;
+			changeKey = 0;
+		}
+		if (changeKey === 7 & keyIsPressed) {
+			P2.Left = keyCode;
+			changeKey = 0;
+		}
+		if (changeKey === 8 & keyIsPressed) {
+			P2.Right = keyCode;
+			changeKey = 0;
+		}
     textSize(12);
     buttonMenu1.hover();
     buttonMenu2.hover();
@@ -170,7 +201,7 @@ function draw() {
     buttonSettings1.hover();
     textSize(16);
     buttonDifficulty1.hover();
-    buttonDifficulty2.hover();
+    // buttonDifficulty2.hover();
 		keybind.hover();
 		HardCpu.hover(1);
 		MediumCpu.hover(2);
@@ -180,13 +211,20 @@ function draw() {
 }
 function mousePressed () {
 	if (!inGame) {
+		print(buttonMenu3.hovering);
   	if (buttonMenu1.hovering || buttonMenu2.hovering) {
-      scene = 1;
+			scene = 1;
+		}
+		if (buttonMenu3.hovering) {
+			keybinding = false;     
+			scene = 1;
   	}
     if (buttonSettings1.hovering) {
       scene = 2;
     }
-    if (buttonDifficulty1.hovering || buttonDifficulty2.hovering) {
+    if (buttonDifficulty1.hovering
+				// || buttonDifficulty2.hovering
+			 ) {
       scene = 3;
     }
 		if (HardCpu.hovering) {
@@ -207,10 +245,37 @@ function mousePressed () {
 		if (Back2.hovering) {
 			scene = 2;
 		}
+		if (Back3.hovering) {
+			scene = 2;
+		}
 		if (keybind.hovering) {
 			keybinding = true;
-			cycles = 0;
+			// cycles = 0;
 			scene = 5;
+		}
+		if (P1Up.hovering) {
+			changeKey = 1;
+		}
+		if (P1Down.hovering) {
+			changeKey = 2;
+		}
+		if (P1Left.hovering) {
+			changeKey = 3;
+		}
+		if (P1Right.hovering) {
+			changeKey = 4;
+		}
+		if (P2Up.hovering) {
+			changeKey = 5;
+		}
+		if (P2Down.hovering) {
+			changeKey = 6;
+		}
+		if (P2Left.hovering) {
+			changeKey = 7;
+		}
+		if (P2Right.hovering) {
+			changeKey = 8;
 		}
   }
 }
