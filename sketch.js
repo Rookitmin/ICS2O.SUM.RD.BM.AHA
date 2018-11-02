@@ -8,7 +8,7 @@ function setup() {
 var scroll = [0, 0];
 var Score = 100;
 // controlls what you see
-var scene = 8;
+var scene = 1;
 var inGame = false;
 var GameMode = 0;
 // Changes the difficulty of the CPUs and the 
