@@ -8,6 +8,9 @@ function setup() {
 var scroll = [0, 0];
 var Score = 100;
 var Players = 0;
+var PlayerType = 0;
+var playerSpeed = 5;
+var CompleteControl = false;
 // controlls what you see
 var scene = 1;
 var inGame = false;
@@ -19,8 +22,62 @@ var difficulty = 1;
 var changeKey = 0;
 var P1 = {Up: 32, Down: 40, Left: 37, Right: 39, shoot: 77};
 var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82};
-// creates genaralised button variables
-function button (x, y, width, height, scene, text)  {
+// creates genaralised button & Slider variables
+var OneButton = true;
+// Sliders
+function slider (min, max, x, y, w, h, scene, title, valueChange) {
+	this.x = x;
+	this.y = y;
+	this.width = w;
+	this.height = h;
+	this.scene = scene;
+	this.words = title;
+	this.min = min;
+	this.max = max + valueChange;
+	this.pos = min;
+	this.hovering = false;
+	this.change = valueChange;
+}
+
+slider.prototype.hover = function () {
+	this.hovering = false;
+	if (scene === this.scene) {
+		noFill();
+		rect(this.x, this.y + this.height / 3, this.width, this.height / 3);
+		if (difficulty === 1) {
+			fill(102, 102, 0);
+		}
+		else if (difficulty === 2) {
+			fill(102, 51, 10);
+		}
+		else {
+			fill(102, 10, 10);
+		}
+		rect(this.x + this.pos * this.width / (this.max - this.min), this.y, 
+				 this.width / (this.max - this.min), this.height);
+		text(this.words, this.x, this.y - 15, this.width, this.height);
+		fill(255, 255, 255);
+		text(this.pos, this.x + this.pos * this.width / (this.max - this.min), this.y + this.height / 5, 
+				 this.width / (this.max - this.min), this.height);
+		if (mouseX > this.x && mouseX < this.x + this.width && mouseY > this.y && mouseY < this.y + this.height) {
+			this.hovering = true;
+		}
+	}
+}
+
+slider.prototype.posChange = function () {
+	if ((this.pos + this.change / 2) * this.width / (this.max - this.min) + this.width / (this.max - this.min) < mouseX && 
+				this.scene === scene && this.pos + this.change <= this.max) {
+			this.pos += this.change;
+	}
+	else if ((this.pos - this.change / 2) * this.width / (this.max - this.min) + this.width / (this.max - this.min) > mouseX && 
+				this.scene === scene && this.pos - this.change >= this.min) {
+		this.pos -= this.change;
+		
+	}
+}
+
+function button (x, y, width, height, scene, text, changeBy)  {
   this.x = x;
   this.y = y;
   this.width = width;
@@ -28,6 +85,7 @@ function button (x, y, width, height, scene, text)  {
   this.scene = scene;
   this.words = text;
   this.hovering = false;
+	this.change = changeBy;
 }
 // conatins the code for drawing the buttons
 button.prototype.draw = function () {
@@ -44,7 +102,8 @@ button.prototype.hover = function (lll) {
   if (this.x < mouseX && this.y < mouseY && 
       this.x + this.width > mouseX && this.y + this.height > mouseY && 
       scene === this.scene) {
-		if (scene != 9 || (this.words === "Main Menu" || this.words === "back")) {
+		if (OneButton) {
+			OneButton = false;
 			if (difficulty === 1) {
 				fill(102, 102, 0);
 			}
@@ -132,12 +191,15 @@ var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." +
 						"the real credits: Rookitmin, Ali596087, and Minirals in collaboration " +
 						"With the grade three's ... Hockey Dude, and Ringette Girl.";
 var creditScroll = 400;
+var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5);
+var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "CPU Speed", 0.5);
 var buttonMenu1 = new button (10, 10, 75, 25, 2, "Main Menu");
 var buttonMenu2 = new button (10, 10, 75, 25, 3, "Main Menu");
 var buttonMenu3 = new button (10, 10, 75, 25, 5, "Main Menu");
 var buttonMenu4 = new button (10, 10, 75, 25, 6, "Main Menu");
 var buttonMenu5 = new button (315, 365, 75, 25, 7, "Main Menu");
 var buttonMenu6 = new button (10, 10, 75, 25, 9, "Main Menu");
+var buttonMenu7 = new button (10, 10, 75, 25, 10, "Main Menu");
 var buttonStart1 = new button (10, 50, 120, 40, 1, "Start");
 var buttonSettings1 = new button (10, 100, 120, 40, 1, "Settings");
 var buttonDifficulty1 = new button (20, 50, 75, 30, 2, "Difficulty");
@@ -150,8 +212,11 @@ var Back2 = new button (325, 10, 50, 20, 3, "back");
 var Back3 = new button (325, 10, 50, 20, 5, "back");
 var Back4 = new button (325, 10, 50, 20, 6, "back");
 var Back5 = new button (325, 10, 50, 20, 9, "back");
+var Back6 = new button (325, 10, 50, 20, 10, "back");
 var buttonNumOfPlayer1 = new button (0, 0, 400, 200, 9, "One Player");
 var buttonNumOfPlayer2 = new button (0, 200, 400, 200, 9, "Two Players");
+var buttonPlayerType1 = new button (0, 0, 400, 200, 10, "Versus");
+var buttonPlayerType2 = new button (0, 200, 400, 200, 10, "Same Team");
 var keybind = new button (20, 100, 75, 30, 2, "Controls");
 var next1 = new button (325, 355, 50, 20, 5, "Next");
 var prev1 = new button (10, 355, 50, 20, 6, "Prev");
@@ -261,6 +326,9 @@ function draw() {
 		credits1.hover();
 		buttonNumOfPlayer1.hover();
 		buttonNumOfPlayer2.hover();
+		buttonPlayerType1.hover();
+		buttonPlayerType2.hover();
+		OneButton = true;
     textSize(16);
     buttonDifficulty1.hover();
     buttonDifficulty2.hover();
@@ -270,7 +338,22 @@ function draw() {
 		EasyCpu.hover(3);
 		textSize(12);
 		buttonMenu6.hover();
+		buttonMenu7.hover();
 		Back5.hover();
+		Back6.hover();
+		if (CompleteControl) {
+			sliderPlayerSpeed.hover();
+			sliderCPUSpeed.hover();
+			if (mouseIsPressed) {
+				if (sliderPlayerSpeed.hovering) {
+					sliderPlayerSpeed.posChange();
+					playerSpeed = sliderPlayerSpeed.pos;
+				}
+				if (sliderCPUSpeed.hovering) {
+					sliderCPUSpeed.posChange();
+				}
+			}
+		}
 		if (scene === 7) {
 			background(155, 0, 155);
 			fill(0, 0, 0);
@@ -310,94 +393,116 @@ function draw() {
 }
 function mousePressed () {
 	if (!inGame) {
-  	if (buttonMenu1.hovering || buttonMenu2.hovering || buttonMenu6.hovering) {
+  	if (buttonMenu1.hovering || buttonMenu2.hovering || buttonMenu6.hovering || buttonMenu7.hovering) {
 			scene = 1;
 		}
-		else if (buttonMenu3.hovering || buttonMenu4.hovering || buttonMenu5.hovering) {    
+		if (buttonMenu3.hovering || buttonMenu4.hovering || buttonMenu5.hovering) {    
 			scene = 1;
   	}
-		else if (Back5.hovering) {
+		if (Back5.hovering) {
 			scene = 1;
 		}
-    else if (buttonSettings1.hovering) {
+    if (buttonSettings1.hovering) {
       scene = 2;
     }
-    else if (buttonDifficulty1.hovering || buttonDifficulty2.hovering) {
+    if (buttonDifficulty1.hovering || buttonDifficulty2.hovering) {
       scene = 3;
     }
-		else if (HardCpu.hovering) {
+		if (HardCpu.hovering) {
 			scene = 2;
 			difficulty = 3;
 		}
-		else if (MediumCpu.hovering) {
+		if (MediumCpu.hovering) {
 			scene = 2;
 			difficulty = 2;
 		}
-		else if (EasyCpu.hovering) {
+		if (EasyCpu.hovering) {
 			scene = 2;
 			difficulty = 1;
 		}
-		else if (Back1.hovering) {
+		if (Back1.hovering) {
 			scene = 1;
 		}
-		else if (Back2.hovering) {
+		if (Back2.hovering) {
 			scene = 2;
 		}
-		else if (Back3.hovering || Back4.hovering) {
+		if (Back3.hovering || Back4.hovering) {
 			scene = 2;
 		}
-		else if (keybind.hovering) {
-			scene = 5;
-		}
-		else if (P1Up.hovering) {
-			changeKey = 1;
-		}
-		else if (P1Down.hovering) {
-			changeKey = 2;
-		}
-		else if (P1Left.hovering) {
-			changeKey = 3;
-		}
-		else if (P1Right.hovering) {
-			changeKey = 4;
-		}
-		else if (P2Up.hovering) {
-			changeKey = 5;
-		}
-		else if (P2Down.hovering) {
-			changeKey = 6;
-		}
-		else if (P2Left.hovering) {
-			changeKey = 7;
-		}
-		else if (P2Right.hovering) {
-			changeKey = 8;
-		}
-		else if (P1Shoot.hovering) {
-			changeKey = 9;
-		}
-		else if (P2Shoot.hovering) {
-			changeKey = 10;
-		}
-		else if (next1.hovering) {
-			scene = 6;
-		}
-		else if (prev1.hovering) {
-			scene = 5;
-		}
-		else if (credits1.hovering) {
-			scene = 7;
-		}
-		else if (buttonStart1.hovering) {
+		if (Back6.hovering) {
 			scene = 9;
 		}
-		else if (buttonNumOfPlayer1.hovering) {
-			Players = 1;
-			scene = 10;
+		if (keybind.hovering) {
+			scene = 5;
 		}
-		else if (buttonNumOfPlayer2.hovering) {
+		if (P1Up.hovering) {
+			changeKey = 1;
+		}
+		if (P1Down.hovering) {
+			changeKey = 2;
+		}
+		if (P1Left.hovering) {
+			changeKey = 3;
+		}
+		if (P1Right.hovering) {
+			changeKey = 4;
+		}
+		if (P2Up.hovering) {
+			changeKey = 5;
+		}
+		if (P2Down.hovering) {
+			changeKey = 6;
+		}
+		if (P2Left.hovering) {
+			changeKey = 7;
+		}
+		if (P2Right.hovering) {
+			changeKey = 8;
+		}
+		if (P1Shoot.hovering) {
+			changeKey = 9;
+		}
+		if (P2Shoot.hovering) {
+			changeKey = 10;
+		}
+		if (next1.hovering) {
+			scene = 6;
+		}
+		if (prev1.hovering) {
+			scene = 5;
+		}
+		if (credits1.hovering) {
+			scene = 7;
+		}
+		if (buttonStart1.hovering) {
+			scene = 9;
+		}
+		if (buttonNumOfPlayer1.hovering) {
+			Players = 1;
+			scene = 11;
+		}
+		if (buttonNumOfPlayer2.hovering) {
 			Players = 2;
 			scene = 10;
+		} 
+		if (buttonPlayerType1.hovering) {
+			PlayerType = 1;
+			scene = 11;
+		}
+		if (buttonPlayerType2.hovering) {
+			PlayerType = 2;
+			scene = 11;
 		}
   }
 }
+
+function keyTyped() {
+	if (key === 'v') {
+		scene = 1;
+	}
+	else if (key === 'b') {
+		CompleteControl = true;
+	}
+}
+
+
