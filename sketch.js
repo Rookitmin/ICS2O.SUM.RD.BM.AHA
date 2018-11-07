@@ -20,8 +20,19 @@ var GameMode = 0;
 var difficulty = 1;
 // Key Changing Variables
 var changeKey = 0;
-var P1 = {Up: 32, Down: 40, Left: 37, Right: 39, shoot: 77};
-var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82};
+var P1 = {Up: 32, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}};
+var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82, keyName: {}};
+P1.keyName = {Up: "Up Arrow", Down: "Down Arrow", Left: "Left Arrow", 
+							Right: "Right Arrow", Shoot: "M"};
+P2.keyName = {Up: "W", Down: "S", Left: "A", Right: "D", Shoot: "R"};
+
+var team1 = [];
+var team2 = [];
+var teamcreate = function (color1, color2, color3, color4) {
+	for (var i = 0; i < 10; i ++) {
+		
+	}
+}
 // creates genaralised button & Slider variables
 var OneButton = true;
 // Sliders
@@ -45,13 +56,13 @@ slider.prototype.hover = function () {
 		noFill();
 		rect(this.x, this.y + this.height / 3, this.width, this.height / 3);
 		if (difficulty === 1) {
-			fill(102, 102, 0);
+			fill(0, 102, 102);
 		}
 		else if (difficulty === 2) {
-			fill(102, 51, 10);
+			fill(10, 51, 102);
 		}
 		else {
-			fill(102, 10, 10);
+			fill(10, 10, 102);
 		}
 		rect(this.x + this.pos * this.width / (this.max - this.min), this.y, 
 				 this.width / (this.max - this.min), this.height);
@@ -127,9 +138,9 @@ button.prototype.hover = function (lll) {
 			text(this.words, this.x + 5, this.y + 5, 
 				 this.width - 5, 
 				 this.height - 5);
-			
+			this.hovering = true;
 		} else {
-		if (difficulty === 1) {
+			if (difficulty === 1) {
 				fill(0, 102, 102);
 			}
 			else if (difficulty === 2) {
@@ -152,8 +163,8 @@ button.prototype.hover = function (lll) {
   		text(this.words, this.x + 5, this.y + 5, 
       	 this.width - 5, 
       	 this.height - 5);
+			this.hovering = false;
 		}
-		this.hovering = true;
 	}
   else {
     if (scene === this.scene) {
@@ -200,7 +211,9 @@ var buttonMenu4 = new button (10, 10, 75, 25, 6, "Main Menu");
 var buttonMenu5 = new button (315, 365, 75, 25, 7, "Main Menu");
 var buttonMenu6 = new button (10, 10, 75, 25, 9, "Main Menu");
 var buttonMenu7 = new button (10, 10, 75, 25, 10, "Main Menu");
+var buttonMenu8 = new button (10, 10, 75, 25, 4, "Main Menu");
 var buttonStart1 = new button (10, 50, 120, 40, 1, "Start");
+var buttonHowToPlay1 = new button (315, 340, 75, 50, 1, "How To Play");
 var buttonSettings1 = new button (10, 100, 120, 40, 1, "Settings");
 var buttonDifficulty1 = new button (20, 50, 75, 30, 2, "Difficulty");
 var buttonDifficulty2 = new button (20, 50, 75, 30, 999, "Difficulty");
@@ -255,6 +268,7 @@ var P2UDLRS = function () {
 	P2Down.hover();
 	P2Shoot.hover();
 }
+
 function draw() {
   if (inGame) {
   	background(220);
@@ -275,42 +289,52 @@ function draw() {
 		if (true) {
 			if (changeKey === 1 & keyIsPressed) {
 				P1.Up = keyCode;
+				P1.keyName.Up = key;
 				changeKey = 0;
 			}
 			if (changeKey === 2 & keyIsPressed) {
 				P1.Down = keyCode;
+				P1.keyName.Down = key;
 				changeKey = 0;
 			}
 			if (changeKey === 3 & keyIsPressed) {
 				P1.Left = keyCode;
+				P1.keyName.Left = key;
 				changeKey = 0;
 			}
 			if (changeKey === 4 & keyIsPressed) {
 				P1.Right = keyCode;
+				P1.keyName.Right = key;
 				changeKey = 0;
 			}
 			if (changeKey === 5 & keyIsPressed) {
 				P2.Up = keyCode;
+				P2.keyName.Up = key;
 				changeKey = 0;
 			}
 			if (changeKey === 6 & keyIsPressed) {
 				P2.Down = keyCode;
+				P2.keyName.Down = key;
 				changeKey = 0;
 			}
 			if (changeKey === 7 & keyIsPressed) {
 				P2.Left = keyCode;
+				P2.keyName.Left = key;
 				changeKey = 0;
 			}
 			if (changeKey === 8 & keyIsPressed) {
 				P2.Right = keyCode;
+				P2.keyName.Right = key;
 				changeKey = 0;
 			}	
 			if (changeKey === 9 & keyIsPressed) {
 				P1.shoot = keyCode;
+				P1.keyName.Shoot = key;
 				changeKey = 0;
 			}
 			if (changeKey === 10 & keyIsPressed) {
 				P2.shoot = keyCode;
+				P2.keyName.Shoot = key;
 				changeKey = 0;
 			}
 		}
@@ -318,6 +342,7 @@ function draw() {
     buttonMenu1.hover();
     buttonMenu2.hover();
 		buttonMenu5.hover();
+		buttonMenu8.hover();
 		Back1.hover();
 		Back2.hover();
     textSize(30);
@@ -332,6 +357,7 @@ function draw() {
     textSize(16);
     buttonDifficulty1.hover();
     buttonDifficulty2.hover();
+		buttonHowToPlay1.hover();
 		keybind.hover();
 		HardCpu.hover(1);
 		MediumCpu.hover(2);
@@ -389,6 +415,14 @@ function draw() {
 				text(Score + "th place.", 100, 200, 200, 100);
 			}
 		}
+		if (scene === 4) {
+			fill("black");
+			textSize(30);
+			text("The Origanal Keys to Move are " + P2.keyName.Up + " - " + P2.keyName.Down + " - " + P2.keyName.Left + " - " + 
+					 P2.keyName.Right + " with " + P2.keyName.Shoot + " to shoot (Player 2) " + 
+					 "& " + P1.keyName.Up + " - " + P1.keyName.Down + " - " + P1.keyName.Left + " - " + P1.keyName.Right + " with " + 
+					 P1.keyName.Shoot + " to shoot (Player 1).", 50, 50, 300, 300);
+		}
   }
 }
 function mousePressed () {
@@ -396,7 +430,7 @@ function mousePressed () {
   	if (buttonMenu1.hovering || buttonMenu2.hovering || buttonMenu6.hovering || buttonMenu7.hovering) {
 			scene = 1;
 		}
-		if (buttonMenu3.hovering || buttonMenu4.hovering || buttonMenu5.hovering) {    
+		if (buttonMenu3.hovering || buttonMenu4.hovering || buttonMenu5.hovering || buttonMenu8.hovering) {    
 			scene = 1;
   	}
 		if (Back5.hovering) {
@@ -477,6 +511,7 @@ function mousePressed () {
 		if (buttonStart1.hovering) {
 			scene = 9;
 		}
+		// console.log(scene);
 		if (buttonNumOfPlayer1.hovering) {
 			Players = 1;
 			scene = 11;
@@ -492,6 +527,9 @@ function mousePressed () {
 		if (buttonPlayerType2.hovering) {
 			PlayerType = 2;
 			scene = 11;
+		}
+		if (buttonHowToPlay1.hovering) {
+			scene = 4;
 		}
   }
 }
