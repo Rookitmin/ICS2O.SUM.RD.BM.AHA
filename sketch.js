@@ -28,11 +28,46 @@ P2.keyName = {Up: "W", Down: "S", Left: "A", Right: "D", Shoot: "R"};
 
 var team1 = [];
 var team2 = [];
-var teamcreate = function (color1, color2, color3, color4) {
+
+var teamCreate = function (color1, color2, color3, color4) {
 	for (var i = 0; i < 10; i ++) {
-		
+		team1[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color1};
+		console.log(1);
+	}
+	team1[0].posNum = 1;
+	team1[1].posNum = 1;
+	team1[2].posNum = 2;
+	team1[3].posNum = 2;
+	team1[4].posNum = 3;
+	team1[5].posNum = 3;
+	team1[6].posNum = 4;
+	team1[7].posNum = 4;
+	team1[8].posNum = 5;
+	team1[9].posNum = 5;
+	for (i = 10; i < 12; i ++) {
+		team1[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color2, posNum:6}
+		console.log(1);
+	}
+	for (i = 0; i < 10; i ++) {
+		team2[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color3}
+		console.log(1);
+	}
+	team2[0].posNum = 1;
+	team2[1].posNum = 1;
+	team2[2].posNum = 2;
+	team2[3].posNum = 2;
+	team2[4].posNum = 3;
+	team2[5].posNum = 3;
+	team2[6].posNum = 4;
+	team2[7].posNum = 4;
+	team2[8].posNum = 5;
+	team2[9].posNum = 5;
+	for (i = 10; i < 12; i ++) {
+		team2[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color4, posNum:6}
+		console.log(1);
 	}
 }
+
 // creates genaralised button & Slider variables
 var OneButton = true;
 // Sliders
@@ -540,6 +575,7 @@ function keyTyped() {
 	}
 	else if (key === 'b') {
 		CompleteControl = true;
+		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
 	}
 }
 
