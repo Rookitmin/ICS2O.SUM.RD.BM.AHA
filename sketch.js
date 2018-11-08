@@ -247,6 +247,7 @@ var buttonMenu5 = new button (315, 365, 75, 25, 7, "Main Menu");
 var buttonMenu6 = new button (10, 10, 75, 25, 9, "Main Menu");
 var buttonMenu7 = new button (10, 10, 75, 25, 10, "Main Menu");
 var buttonMenu8 = new button (10, 10, 75, 25, 4, "Main Menu");
+var buttonMenu9 = new button (10, 10, 75, 25, 11, "Main Menu");
 var buttonStart1 = new button (10, 50, 120, 40, 1, "Start");
 var buttonHowToPlay1 = new button (315, 340, 75, 50, 1, "How To Play");
 var buttonSettings1 = new button (10, 100, 120, 40, 1, "Settings");
@@ -261,10 +262,15 @@ var Back3 = new button (325, 10, 50, 20, 5, "back");
 var Back4 = new button (325, 10, 50, 20, 6, "back");
 var Back5 = new button (325, 10, 50, 20, 9, "back");
 var Back6 = new button (325, 10, 50, 20, 10, "back");
+var Back7 = new button (325, 10, 50, 20, 11, "back");
 var buttonNumOfPlayer1 = new button (0, 0, 400, 200, 9, "One Player");
 var buttonNumOfPlayer2 = new button (0, 200, 400, 200, 9, "Two Players");
 var buttonPlayerType1 = new button (0, 0, 400, 200, 10, "Versus");
 var buttonPlayerType2 = new button (0, 200, 400, 200, 10, "Same Team");
+var buttonGameMode1 = new button (95, 95, 100, 100, 11, "Single Match");
+var buttonGameMode2 = new button (205, 95, 100, 100, 11, "Tournament");
+var buttonGameMode3 = new button (95, 205, 100, 100, 11, "Ringette");
+var buttonGameMode4 = new button (205, 205, 100, 100, 11, "Practice Match");
 var keybind = new button (20, 100, 75, 30, 2, "Controls");
 var next1 = new button (325, 355, 50, 20, 5, "Next");
 var prev1 = new button (10, 355, 50, 20, 6, "Prev");
@@ -378,8 +384,10 @@ function draw() {
     buttonMenu2.hover();
 		buttonMenu5.hover();
 		buttonMenu8.hover();
+		buttonMenu9.hover();
 		Back1.hover();
 		Back2.hover();
+		Back7.hover();
     textSize(30);
     buttonStart1.hover();
     buttonSettings1.hover();
@@ -453,7 +461,7 @@ function draw() {
 		if (scene === 4) {
 			fill("black");
 			textSize(30);
-			text("The Origanal Keys to Move are " + P2.keyName.Up + " - " + P2.keyName.Down + " - " + P2.keyName.Left + " - " + 
+			text("The Keys to Move are " + P2.keyName.Up + " - " + P2.keyName.Down + " - " + P2.keyName.Left + " - " + 
 					 P2.keyName.Right + " with " + P2.keyName.Shoot + " to shoot (Player 2) " + 
 					 "& " + P1.keyName.Up + " - " + P1.keyName.Down + " - " + P1.keyName.Left + " - " + P1.keyName.Right + " with " + 
 					 P1.keyName.Shoot + " to shoot (Player 1).", 50, 50, 300, 300);
@@ -462,7 +470,7 @@ function draw() {
 }
 function mousePressed () {
 	if (!inGame) {
-  	if (buttonMenu1.hovering || buttonMenu2.hovering || buttonMenu6.hovering || buttonMenu7.hovering) {
+  	if (buttonMenu1.hovering || buttonMenu2.hovering || buttonMenu6.hovering || buttonMenu7.hovering || buttonMenu9.hovering) {
 			scene = 1;
 		}
 		if (buttonMenu3.hovering || buttonMenu4.hovering || buttonMenu5.hovering || buttonMenu8.hovering) {    
@@ -498,7 +506,7 @@ function mousePressed () {
 		if (Back3.hovering || Back4.hovering) {
 			scene = 2;
 		}
-		if (Back6.hovering) {
+		if (Back6.hovering || Back7.hovering) {
 			scene = 9;
 		}
 		if (keybind.hovering) {
