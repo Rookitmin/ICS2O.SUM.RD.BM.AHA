@@ -135,7 +135,7 @@ slider.prototype.posChange = function () {
 	}
 }
 
-function button (x, y, width, height, scene, text, TextSize)  {
+function button (x, y, width, height, scene, text, TextSize, scene2)  {
   this.x = x;
   this.y = y;
   this.width = width;
@@ -144,6 +144,7 @@ function button (x, y, width, height, scene, text, TextSize)  {
   this.words = text;
   this.hovering = false;
 	this.TextSize = TextSize;
+	this.gotoScene = scene2;
 }
 // conatins the code for drawing the buttons
 // calls the function to change the color of the button
@@ -244,52 +245,52 @@ var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." +
 var creditScroll = 400;
 var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5);
 var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "CPU Speed", 0.5);
-buttonArray.push (new button (10, 10, 75, 25, 2, "Main Menu", 12));  //0
-buttonArray.push (new button (10, 10, 75, 25, 3, "Main Menu", 12)); //1
-buttonArray.push (new button (10, 10, 75, 25, 5, "Main Menu", 12)); //2
-buttonArray.push (new button (10, 10, 75, 25, 6, "Main Menu", 12)); //3
-buttonArray.push (new button (315, 365, 75, 25, 7, "Main Menu", 12)); //4
-buttonArray.push (new button (10, 10, 75, 25, 9, "Main Menu", 12));  //5
-buttonArray.push (new button (10, 10, 75, 25, 10, "Main Menu", 12)); //6
-buttonArray.push (new button (10, 10, 75, 25, 4, "Main Menu", 12));  //7
-buttonArray.push (new button (10, 10, 75, 25, 11, "Main Menu", 12)); //8
-buttonArray.push (new button (10, 50, 120, 40, 1, "Start", 30));    //9
-buttonArray.push (new button (315, 340, 75, 50, 1, "How To Play", 16)); //10
-buttonArray.push (new button (10, 100, 120, 40, 1, "Settings", 30));  //11
-buttonArray.push (new button (20, 50, 75, 30, 2, "Difficulty", 16));  //12
-buttonArray.push (new button (20, 50, 75, 30, 999, "Difficulty", 16)); //13
-buttonArray.push (new button (30, 150, 75, 30, 3, "Hard", 16));        //14
-buttonArray.push (new button (30, 100, 75, 30, 3, "Medium", 16));      //15
-buttonArray.push (new button (30, 50, 75, 30, 3, "Easy", 16));         //16
-buttonArray.push (new button (325, 10, 50, 20, 2, "back", 12));        //17
-buttonArray.push (new button (325, 10, 50, 20, 3, "back", 12));        //18
-buttonArray.push (new button (325, 10, 50, 20, 5, "back", 12));        //19
-buttonArray.push (new button (325, 10, 50, 20, 6, "back", 12));        //20
-buttonArray.push (new button (325, 10, 50, 20, 9, "back", 12));        //21
-buttonArray.push (new button (325, 10, 50, 20, 10, "back", 12));       //22
-buttonArray.push (new button (325, 10, 50, 20, 11, "back", 12));       //23
-buttonArray.push (new button (0, 0, 400, 200, 9, "One Player", 30));   //24
-buttonArray.push (new button (0, 200, 400, 200, 9, "Two Players", 30));//25
-buttonArray.push (new button (0, 0, 400, 200, 10, "Versus", 30));      //26
-buttonArray.push (new button (0, 200, 400, 200, 10, "Same Team", 30)); //26
-buttonArray.push (new button (95, 95, 100, 100, 11, "Single Match")); //27
-buttonArray.push (new button (205, 95, 100, 100, 11, "Tournament"));  //28
-buttonArray.push (new button (95, 205, 100, 100, 11, "Ringette"));    //29
-buttonArray.push (new button (205, 205, 100, 100, 11, "Practice Match")); //30
-buttonArray.push (new button (20, 100, 75, 30, 2, "Controls", 16));       //31
-buttonArray.push (new button (325, 355, 50, 20, 5, "Next", 12));          //32
-buttonArray.push (new button (10, 355, 50, 20, 6, "Prev", 12));           //33
-buttonArray.push (new button (10, 150, 120, 40, 1, "Credits", 30));       //34
-buttonArray.push (new button (80, 45, 80, 45, 5, "bind Player 1 Up key", 12)); //35
-buttonArray.push (new button (80, 135, 80, 45, 5, "bind Player 1 Down key", 12)); //36
-buttonArray.push (new button (80, 225, 80, 45, 5, "bind Player 1 Left key", 12)); //37
-buttonArray.push (new button (80, 315, 80, 45, 5, "bind Player 1 Right key", 12));//38
-buttonArray.push (new button (80, 45, 80, 45, 6, "bind Player 1 Shoot key", 12)); //39
-buttonArray.push (new button (240, 45, 80, 45, 5, "bind Player 2 Up key", 12));   //40
-buttonArray.push (new button (240, 135, 80, 45, 5, "bind Player 2 Down key", 12));//41
-buttonArray.push (new button (240, 225, 80, 45, 5, "bind Player 2 Left key", 12));//42
-buttonArray.push (new button (240, 315, 80, 45, 5, "bind Player 2 Right key", 12));//43
-buttonArray.push (new button (240, 45, 80, 45, 6, "bind Player 2 Shoot key", 12));//44
+buttonArray.push (new button (10, 10, 75, 25, 2, "Main Menu", 12, 1));  //0
+buttonArray.push (new button (10, 10, 75, 25, 3, "Main Menu", 12, 1)); //1
+buttonArray.push (new button (10, 10, 75, 25, 5, "Main Menu", 12, 1)); //2
+buttonArray.push (new button (10, 10, 75, 25, 6, "Main Menu", 12, 1)); //3
+buttonArray.push (new button (315, 365, 75, 25, 7, "Main Menu", 12, 1)); //4
+buttonArray.push (new button (10, 10, 75, 25, 9, "Main Menu", 12, 1));  //5
+buttonArray.push (new button (10, 10, 75, 25, 10, "Main Menu", 12, 1)); //6
+buttonArray.push (new button (10, 10, 75, 25, 4, "Main Menu", 12, 1));  //7
+buttonArray.push (new button (10, 10, 75, 25, 11, "Main Menu", 12, 1)); //8
+buttonArray.push (new button (10, 50, 120, 40, 1, "Start", 30, 9));    //9
+buttonArray.push (new button (315, 340, 75, 50, 1, "How To Play", 16, 4)); //10
+buttonArray.push (new button (10, 100, 120, 40, 1, "Settings", 30, 2));  //11
+buttonArray.push (new button (20, 50, 75, 30, 2, "Difficulty", 16, 3));  //12
+buttonArray.push (new button (20, 50, 75, 30, 999, "Difficulty", 16, 3)); //13
+buttonArray.push (new button (30, 150, 75, 30, 3, "Hard", 16, 2));        //14
+buttonArray.push (new button (30, 100, 75, 30, 3, "Medium", 16, 2));      //15
+buttonArray.push (new button (30, 50, 75, 30, 3, "Easy", 16, 2));         //16
+buttonArray.push (new button (325, 10, 50, 20, 2, "back", 12, 1));        //17
+buttonArray.push (new button (325, 10, 50, 20, 3, "back", 12, 2));        //18
+buttonArray.push (new button (325, 10, 50, 20, 5, "back", 12, 2));        //19
+buttonArray.push (new button (325, 10, 50, 20, 6, "back", 12, 2));        //20
+buttonArray.push (new button (325, 10, 50, 20, 9, "back", 12, 1));        //21
+buttonArray.push (new button (325, 10, 50, 20, 10, "back", 12, 9));       //22
+buttonArray.push (new button (325, 10, 50, 20, 11, "back", 12, 9));       //23
+buttonArray.push (new button (0, 0, 400, 200, 9, "One Player", 30, 11));   //24
+buttonArray.push (new button (0, 200, 400, 200, 9, "Two Players", 30, 10));//25
+buttonArray.push (new button (0, 0, 400, 200, 10, "Versus", 30, 11));      //26
+buttonArray.push (new button (0, 200, 400, 200, 10, "Same Team", 30, 11)); //27
+buttonArray.push (new button (95, 95, 100, 100, 11, "Single Match")); //28
+buttonArray.push (new button (205, 95, 100, 100, 11, "Tournament"));  //29
+buttonArray.push (new button (95, 205, 100, 100, 11, "Ringette"));    //30
+buttonArray.push (new button (205, 205, 100, 100, 11, "Practice Match")); //31
+buttonArray.push (new button (20, 100, 75, 30, 2, "Controls", 16));       //32
+buttonArray.push (new button (325, 355, 50, 20, 5, "Next", 12));          //33
+buttonArray.push (new button (10, 355, 50, 20, 6, "Prev", 12));           //34
+buttonArray.push (new button (10, 150, 120, 40, 1, "Credits", 30));       //35
+buttonArray.push (new button (80, 45, 80, 45, 5, "bind Player 1 Up key", 12)); //36
+buttonArray.push (new button (80, 135, 80, 45, 5, "bind Player 1 Down key", 12)); //37
+buttonArray.push (new button (80, 225, 80, 45, 5, "bind Player 1 Left key", 12)); //38
+buttonArray.push (new button (80, 315, 80, 45, 5, "bind Player 1 Right key", 12));//39
+buttonArray.push (new button (80, 45, 80, 45, 6, "bind Player 1 Shoot key", 12)); //40
+buttonArray.push (new button (240, 45, 80, 45, 5, "bind Player 2 Up key", 12));   //41
+buttonArray.push (new button (240, 135, 80, 45, 5, "bind Player 2 Down key", 12));//42
+buttonArray.push (new button (240, 225, 80, 45, 5, "bind Player 2 Left key", 12));//43
+buttonArray.push (new button (240, 315, 80, 45, 5, "bind Player 2 Right key", 12));//44
+buttonArray.push (new button (240, 45, 80, 45, 6, "bind Player 2 Shoot key", 12));//45
 
 var DrawButton = function () {
 	for (var i = 0; i < buttonArray.length; i ++) {
@@ -309,6 +310,7 @@ function draw() {
 	else {
 		background(220);
 		DrawButton();
+		console.log(scene);
 		// textSize(12);
 		// buttonMenu3.hover();
 		// buttonMenu4.hover();
