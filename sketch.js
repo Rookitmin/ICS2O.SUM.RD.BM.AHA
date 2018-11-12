@@ -3,17 +3,6 @@ function setup() {
   background(220);
 	textAlign(CENTER);
 }
-
-
-/* I'm Doing Something Stupid That Might Not Work
-Adding THe Buttons to An Array.
-*/
-
-
-
-
-
-
 // an in-game variable, controlling 
 // where you are looking on the map.
 var buttonArray = [];
@@ -343,7 +332,7 @@ var detectSceneChange = function () {
 		if (buttonArray[i].hovering && buttonArray[i].gotoScene >= 1) {
 			scene = buttonArray[i].gotoScene;
 		} else if (buttonArray[i].gotoScene === 0 && buttonArray[i].hovering) {
-			if (i === 37) {
+			if (i === 36) {
 				changeKey = 1;
 			}
 			else if (i === 37) {
@@ -388,18 +377,6 @@ function draw() {
 		buttonArray[6].draw();
 		buttonArray[21].draw();
 		buttonArray[22].draw();
-		// console.log(scene);
-		// textSize(12);
-		// buttonMenu3.hover();
-		// buttonMenu4.hover();
-		// Back3.hover();
-		// Back4.hover();
-		// next1.hover();
-		// prev1.hover();
-		// P1UDLRS();
-		// textSize(12);
-		// P2UDLRS();
-		// // just to make scrolling t o where I want to go Easier.
 		if (true) {
 			if (changeKey === 1 & keyIsPressed) {
 				P1.Up = keyCode;
@@ -410,19 +387,16 @@ function draw() {
 				P1.Down = keyCode;
 				P1.keyName.Down = key;
 				changeKey = 0;
-				console.log("1DOWN");
 			}
 			if (changeKey === 3 & keyIsPressed) {
 				P1.Left = keyCode;
 				P1.keyName.Left = key;
 				changeKey = 0;
-				console.log("1Left");
 			}
 			if (changeKey === 4 & keyIsPressed) {
 				P1.Right = keyCode;
 				P1.keyName.Right = key;
 				changeKey = 0;
-				console.log("1Right");
 			}
 			if (changeKey === 6 & keyIsPressed) {
 				P2.Up = keyCode;
@@ -455,37 +429,7 @@ function draw() {
 				changeKey = 0;
 			}
 		}
-		// textSize(12);
-		// buttonMenu1.hover();
-		// buttonMenu2.hover();
-		// buttonMenu5.hover();
-		// buttonMenu8.hover();
-		// buttonMenu9.hover();
-		// Back1.hover();
-		// Back2.hover();
-		// Back7.hover();
-		// textSize(30);
-		// buttonStart1.hover();
-		// buttonSettings1.hover();
-		// credits1.hover();
-		// buttonNumOfPlayer1.hover();
-		// buttonNumOfPlayer2.hover();
-		// buttonPlayerType1.hover();
-		// buttonPlayerType2.hover();
 		OneButton = true;
-		// textSize(16);
-		// buttonDifficulty1.hover();
-		// buttonDifficulty2.hover();
-		// buttonHowToPlay1.hover();
-		// keybind.hover();
-		// HardCpu.hover(1);
-		// MediumCpu.hover(2);
-		// EasyCpu.hover(3);
-		// textSize(12);
-		// buttonMenu6.hover();
-		// buttonMenu7.hover();
-		// Back5.hover();
-		// Back6.hover();
 		if (CompleteControl) {
 			sliderPlayerSpeed.hover();
 			sliderCPUSpeed.hover();
@@ -547,110 +491,6 @@ function draw() {
 function mousePressed () {
 	if (!inGame) {
 		detectSceneChange();
-		// if (buttonArray[0].hovering || buttonArray[1].hovering || buttonArray[2].hovering || buttonArray[3].hovering) {
-		// 	scene = 1;
-		// }
-		// if (buttonArray[4].hovering || buttonArray[5].hovering || buttonArray[6].hovering || buttonArray[7].hovering) {    
-		// 	scene = 1;
-		// }
-		// if (buttonArray[21].hovering) {
-		// 	scene = 1;
-		// }
-		// if (buttonArray[11].hovering) {
-		// scene = 2;
-		// }
-		// if (buttonArray[12].hovering || buttonArray[13].hovering) {
-		// scene = 3;
-		// }
-		// if (buttonArray[14].hovering) {
-		// 	scene = 2;
-		// 	difficulty = 3;
-		// }
-		// if (buttonArray[15].hovering) {
-		// 	scene = 2;
-		// 	difficulty = 2;
-		// }
-		// if (buttonArray[16].hovering) {
-		// 	scene = 2;
-		// 	difficulty = 1;
-		// }
-		// if (buttonArray[17].hovering) {
-		// 	scene = 1;
-		// }
-		// if (buttonArray[18].hovering) {
-		// 	scene = 2;
-		// }
-		// if (buttonArray[19].hovering || buttonArray[20].hovering) {
-		// 	scene = 2;
-		// }
-		// if (buttonArray[22].hovering || buttonArray[23].hovering) {
-		// 	scene = 9;
-		// }
-		// if (buttonArray[31].hovering) {
-		// 	scene = 5;
-		// }
-		// if (buttonArray[35].hovering) {
-		// 	changeKey = 1;
-		// }
-		// if (buttonArray[36].hovering) {
-		// 	changeKey = 2;
-		// }
-		// if (buttonArray[37].hovering) {
-		// 	changeKey = 3;
-		// }
-		// if (buttonArray[38].hovering) {
-		// 	changeKey = 4;
-		// }
-		// if (buttonArray[40].hovering) {
-		// 	changeKey = 5;
-		// }
-		// if (buttonArray[41].hovering) {
-		// 	changeKey = 6;
-		// }
-		// if (buttonArray[42].hovering) {
-		// 	changeKey = 7;
-		// }
-		// if (buttonArray[43].hovering) {
-		// 	changeKey = 8;
-		// }
-		// if (buttonArray[39].hovering) {
-		// 	changeKey = 9;
-		// }
-		// if (buttonArray[44].hovering) {
-		// 	changeKey = 10;
-		// }
-		// if (buttonArray[32].hovering) {
-		// 	scene = 6;
-		// }
-		// if (buttonArray[33].hovering) {
-		// 	scene = 5;
-		// }
-		// if (buttonArray[34].hovering) {
-		// 	scene = 4;
-		// }
-		// if (buttonArray[9].hovering) {
-		// 	scene = 9;
-		// }
-		// // console.log(scene);
-		// if (buttonArray[24].hovering) {
-		// 	Players = 1;
-		// 	scene = 11;
-		// }
-		// if (buttonArray[25].hovering) {
-		// 	Players = 2;
-		// 	scene = 10;
-		// } 
-		// if (buttonArray[26].hovering) {
-		// 	PlayerType = 1;
-		// 	scene = 11;
-		// }
-		// if (buttonArray[27].hovering) {
-		// 	PlayerType = 2;
-		// 	scene = 11;
-		// }
-		// if (buttonArray[10].hovering) {
-		// 	scene = 4;
-		// }
   }
 }
 
