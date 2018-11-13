@@ -372,6 +372,14 @@ function draw() {
   } 
 	else {
 		background(220);
+		if (scene === 1) {
+			background(220, 220, 220);
+			fill(220, 220, 220);
+			stroke(0, 0, 0);
+			textSize(25);
+			text("Hockey Game 20183", 10, 30, 390);
+			rect(10,200, 50, 20, 30);
+		}
 		DrawButton();
 		buttonArray[5].draw();
 		buttonArray[6].draw();
@@ -503,5 +511,3 @@ function keyTyped() {
 		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
 	}
 }
-
-
