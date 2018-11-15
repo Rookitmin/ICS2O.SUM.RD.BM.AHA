@@ -12,13 +12,16 @@ var Players = 0;
 var PlayerType = 0;
 var playerSpeed = 5;
 var CompleteControl = false;
-// controlls what you see
+// controls what you see
 var scene = 1;
 var inGame = false;
 var GameMode = 0;
 // Changes the difficulty of the CPUs and the 
 // color of the buttons
 var difficulty = 1;
+var stick1 = [0, 200, 1, 0];
+var stick2 = [0, 0, 0, 1];
+var puck = [0, 0, 0, 0];
 // Key Changing Variables
 var changeKey = 0;
 var P1 = {Up: 32, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}};
@@ -32,7 +35,7 @@ var team2 = [];
 
 var teamCreate = function (color1, color2, color3, color4) {
 	for (var i = 0; i < 10; i ++) {
-		team1[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color1};
+		team1[i] = {posX: 0, posY: 0, facing: 0, UserAssigned: 0, color:color1};
 		console.log(1);
 	}
 	team1[0].posNum = 1;
@@ -46,11 +49,11 @@ var teamCreate = function (color1, color2, color3, color4) {
 	team1[8].posNum = 5;
 	team1[9].posNum = 5;
 	for (i = 10; i < 12; i ++) {
-		team1[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color2, posNum:6}
+		team1[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color2, posNum:6}
 		console.log(1);
 	}
 	for (i = 0; i < 10; i ++) {
-		team2[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color3}
+		team2[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color3}
 		console.log(1);
 	}
 	team2[0].posNum = 1;
@@ -64,7 +67,7 @@ var teamCreate = function (color1, color2, color3, color4) {
 	team2[8].posNum = 5;
 	team2[9].posNum = 5;
 	for (i = 10; i < 12; i ++) {
-		team2[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color4, posNum:6}
+		team2[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color4, posNum:6}
 		console.log(1);
 	}
 }
@@ -331,6 +334,32 @@ var detectSceneChange = function () {
 	for (var i = 0; i < buttonArray.length; i ++) {
 		if (buttonArray[i].hovering && buttonArray[i].gotoScene >= 1) {
 			scene = buttonArray[i].gotoScene;
+			if (i === 14) {
+				difficulty = 3;
+				console.log(1);
+			}
+			else if (i === 15) {
+				difficulty = 2;
+			}
+			else if (i === 16) {
+				difficulty = 1;
+			}
+			if (buttonArray[i].gotoScene === 12) {
+				inGame = true;
+				teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
+				if (i === 28) {
+					gameMode = 1;
+				}
+				if (i === 29) {
+					gameMode = 2;
+				}
+				if (i === 30) {
+					gameMode = 3;
+				}
+				if (i === 31) {
+					gameMode = 4;
+				}
+			}
 		} else if (buttonArray[i].gotoScene === 0 && buttonArray[i].hovering) {
 			if (i === 36) {
 				changeKey = 1;
@@ -369,16 +398,110 @@ var detectSceneChange = function () {
 function draw() {
   if (inGame) {
   	background(220);
+		fill(team1[0].color)
+		ellipse(200, 200, 50, 15);
+		ellipse(200, 200, 25, 25);
   } 
 	else {
 		background(220);
+		angleMode(DEGREES);
 		if (scene === 1) {
 			background(220, 220, 220);
 			fill(220, 220, 220);
 			stroke(0, 0, 0);
+			resetMatrix();
+			translate(stick1[0], stick1[1]);
+			rect(0, 0, 50, 20, 30);
+			fill(0, 0, 0);
+			rect(20, 0, 5, 20);
+			rect(27, 0, 5, 20);
+			rect(34, 0, 5, 20);
+			fill(220, 220, 220);
+			rotate(225);
+			rect(-25, -10, 100, 20, 30);
+			resetMatrix();
+			translate(stick2[0], stick2[1]);
+			rotate(180);
+			rect(0, 0, 50, 20, 30);
+			fill(0, 0, 0);
+			rect(20, 0, 5, 20);
+			rect(27, 0, 5, 20);
+			rect(34, 0, 5, 20);
+			fill(220, 220, 220);
+			rotate(135);
+			rect(-5, -20, 100, 20, 30);
+			resetMatrix();
+			fill(0, 0, 0);
+			ellipse(puck[0], puck[1], 25, 25);
+			if (stick1[0] < 50) {
+				stick1[3] = 0;
+				stick1[0] += 5;
+			} 
+			else if (stick1[0] > 340 || stick1[3] === 1) {
+				stick1[3] = 1;
+				stick1[0] -= 5;
+			} 
+			else {
+				stick1[0] += 5;
+			}
+			if (stick1[1] < 50) {
+				stick1[4] = 0;
+				stick1[1] += 5;
+			} 
+			else if (stick1[1] > 370 || stick1[4] === 1) {
+				stick1[4] = 1;
+				stick1[1] -= 5;
+			} 
+			else {
+				stick1[1] += 5;
+			}
+			if (stick2[0] < 50) {
+				stick2[3] = 0;
+				stick2[0] += 5;
+			} 
+			else if (stick2[0] > 340 || stick2[3] === 1) {
+				stick2[3] = 1;
+				stick2[0] -= 5;
+			} 
+			else {
+				stick2[0] += 5;
+			}
+			if (stick2[1] < 50) {
+				stick2[4] = 0;
+				stick2[1] += 5;
+			} 
+			else if (stick2[1] > 370 || stick2[4] === 1) {
+				stick2[4] = 1;
+				stick2[1] -= 5;
+			} 
+			else {
+				stick2[1] += 5;
+			}
+			if (puck[0] < 50) {
+				puck[3] = 0;
+				puck[0] += 7;
+			} 
+			else if (puck[0] > 340 || puck[3] === 1) {
+				puck[3] = 1;
+				puck[0] -= 7;
+			} 
+			else {
+				puck[0] += 5;
+			}
+			if (puck[1] < 50) {
+				puck[4] = 0;
+				puck[1] += 7;
+			} 
+			else if (puck[1] > 370 || puck[4] === 1) {
+				puck[4] = 1;
+				puck[1] -= 7;
+			} 
+			else {
+				puck[1] += 7;
+			}
 			textSize(25);
+			fill(220, 220, 220);
 			text("Hockey Game 20183", 10, 30, 390);
-			rect(10,200, 50, 20, 30);
 		}
 		DrawButton();
 		buttonArray[5].draw();
