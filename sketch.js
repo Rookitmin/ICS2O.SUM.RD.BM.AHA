@@ -5,19 +5,23 @@ function setup() {
 }
 // an in-game variable, controlling 
 // where you are looking on the map.
+var buttonArray = [];
 var scroll = [0, 0];
 var Score = 100;
 var Players = 0;
 var PlayerType = 0;
 var playerSpeed = 5;
 var CompleteControl = false;
-// controlls what you see
+// controls what you see
 var scene = 1;
 var inGame = false;
 var GameMode = 0;
 // Changes the difficulty of the CPUs and the 
 // color of the buttons
 var difficulty = 1;
+var stick1 = [0, 200, 1, 0];
+var stick2 = [0, 0, 0, 1];
+var puck = [0, 0, 0, 0];
 // Key Changing Variables
 var changeKey = 0;
 var P1 = {Up: 32, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}};
@@ -31,7 +35,7 @@ var team2 = [];
 
 var teamCreate = function (color1, color2, color3, color4) {
 	for (var i = 0; i < 10; i ++) {
-		team1[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color1};
+		team1[i] = {posX: 0, posY: 0, facing: 0, UserAssigned: 0, color:color1};
 		console.log(1);
 	}
 	team1[0].posNum = 1;
@@ -45,11 +49,11 @@ var teamCreate = function (color1, color2, color3, color4) {
 	team1[8].posNum = 5;
 	team1[9].posNum = 5;
 	for (i = 10; i < 12; i ++) {
-		team1[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color2, posNum:6}
+		team1[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color2, posNum:6}
 		console.log(1);
 	}
 	for (i = 0; i < 10; i ++) {
-		team2[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color3}
+		team2[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color3}
 		console.log(1);
 	}
 	team2[0].posNum = 1;
@@ -63,7 +67,7 @@ var teamCreate = function (color1, color2, color3, color4) {
 	team2[8].posNum = 5;
 	team2[9].posNum = 5;
 	for (i = 10; i < 12; i ++) {
-		team2[i] = {posX: 0, posY: 0, UserAssigned: 0, color:color4, posNum:6}
+		team2[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color4, posNum:6}
 		console.log(1);
 	}
 }
@@ -123,7 +127,7 @@ slider.prototype.posChange = function () {
 	}
 }
 
-function button (x, y, width, height, scene, text, changeBy)  {
+function button (x, y, width, height, scene, text, TextSize, scene2)  {
   this.x = x;
   this.y = y;
   this.width = width;
@@ -131,20 +135,50 @@ function button (x, y, width, height, scene, text, changeBy)  {
   this.scene = scene;
   this.words = text;
   this.hovering = false;
-	this.change = changeBy;
+	this.TextSize = TextSize;
+	this.gotoScene = scene2;
+}
+button.prototype.draw = function () {
+	if (this.scene === scene) {
+		if (this.hovering) {
+			if (difficulty === 1) {
+				fill(102, 102, 0);
+			}
+			else if (difficulty === 2) {
+				fill(102, 51, 10);
+			}
+			else {
+				fill(102, 10, 10);
+			}
+			rect(this.x, this.y, this.width, this.height);
+			fill(255, 255, 255);
+			text(this.words, this.x + 5, this.y + 5, 
+				 this.width - 5, 
+				 this.height - 5);
+		} 
+		else {
+			if (difficulty === 1) {
+				fill(0, 102, 102);
+			}
+			else if (difficulty === 2) {
+				fill(10, 51, 102);
+			}
+			else {
+				fill(10, 10, 102);
+			}
+			rect(this.x, this.y, this.width, this.height);
+			fill(255, 255, 255);
+			text(this.words, this.x + 5, this.y + 5, 
+				 this.width - 5, 
+				 this.height - 5);
+		}
+	}
 }
 // conatins the code for drawing the buttons
-button.prototype.draw = function () {
-  fill(0, 102, 102);
-  rect(this.x, this.y, this.width, this.height);
-  fill(0, 0, 0);
-  text(this.words, this.x + 5, this.y + 5, 
-       this.x + this.width - 10, 
-       this.y + this.height - 10);
-}
 // calls the function to change the color of the button
 // & change a variable on wheather the button is selected.
 button.prototype.hover = function (lll) {
+	textSize(this.TextSize);
   if (this.x < mouseX && this.y < mouseY && 
       this.x + this.width > mouseX && this.y + this.height > mouseY && 
       scene === this.scene) {
@@ -239,94 +273,241 @@ var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." +
 var creditScroll = 400;
 var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5);
 var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "CPU Speed", 0.5);
-var buttonMenu1 = new button (10, 10, 75, 25, 2, "Main Menu");
-var buttonMenu2 = new button (10, 10, 75, 25, 3, "Main Menu");
-var buttonMenu3 = new button (10, 10, 75, 25, 5, "Main Menu");
-var buttonMenu4 = new button (10, 10, 75, 25, 6, "Main Menu");
-var buttonMenu5 = new button (315, 365, 75, 25, 7, "Main Menu");
-var buttonMenu6 = new button (10, 10, 75, 25, 9, "Main Menu");
-var buttonMenu7 = new button (10, 10, 75, 25, 10, "Main Menu");
-var buttonMenu8 = new button (10, 10, 75, 25, 4, "Main Menu");
-var buttonMenu9 = new button (10, 10, 75, 25, 11, "Main Menu");
-var buttonStart1 = new button (10, 50, 120, 40, 1, "Start");
-var buttonHowToPlay1 = new button (315, 340, 75, 50, 1, "How To Play");
-var buttonSettings1 = new button (10, 100, 120, 40, 1, "Settings");
-var buttonDifficulty1 = new button (20, 50, 75, 30, 2, "Difficulty");
-var buttonDifficulty2 = new button (20, 50, 75, 30, 999, "Difficulty");
-var HardCpu = new button (30, 150, 75, 30, 3, "Hard");
-var MediumCpu = new button (30, 100, 75, 30, 3, "Medium");
-var EasyCpu = new button (30, 50, 75, 30, 3, "Easy");
-var Back1 = new button (325, 10, 50, 20, 2, "back");
-var Back2 = new button (325, 10, 50, 20, 3, "back");
-var Back3 = new button (325, 10, 50, 20, 5, "back");
-var Back4 = new button (325, 10, 50, 20, 6, "back");
-var Back5 = new button (325, 10, 50, 20, 9, "back");
-var Back6 = new button (325, 10, 50, 20, 10, "back");
-var Back7 = new button (325, 10, 50, 20, 11, "back");
-var buttonNumOfPlayer1 = new button (0, 0, 400, 200, 9, "One Player");
-var buttonNumOfPlayer2 = new button (0, 200, 400, 200, 9, "Two Players");
-var buttonPlayerType1 = new button (0, 0, 400, 200, 10, "Versus");
-var buttonPlayerType2 = new button (0, 200, 400, 200, 10, "Same Team");
-var buttonGameMode1 = new button (95, 95, 100, 100, 11, "Single Match");
-var buttonGameMode2 = new button (205, 95, 100, 100, 11, "Tournament");
-var buttonGameMode3 = new button (95, 205, 100, 100, 11, "Ringette");
-var buttonGameMode4 = new button (205, 205, 100, 100, 11, "Practice Match");
-var keybind = new button (20, 100, 75, 30, 2, "Controls");
-var next1 = new button (325, 355, 50, 20, 5, "Next");
-var prev1 = new button (10, 355, 50, 20, 6, "Prev");
-var credits1 = new button (10, 150, 120, 40, 1, "Credits");
-var P1Up = new button (80, 45, 80, 45, 5, 
-											"bind Player 1 Up key");
-var P1Down = new button (80, 135, 80, 45, 5, 
-											"bind Player 1 Down key");
-var P1Left = new button (80, 225, 80, 45, 5, 
-											"bind Player 1 Left key");
-var P1Right = new button (80, 315, 80, 45, 5, 
-											"bind Player 1 Right key");
-var P1Shoot = new button (80, 45, 80, 45, 6, 
-											"bind Player 1 Shoot key");
-var P2Up = new button (240, 45, 80, 45, 5, 
-											"bind Player 2 Up key");
-var P2Down = new button (240, 135, 80, 45, 5, 
-											"bind Player 2 Down key");
-var P2Left = new button (240, 225, 80, 45, 5, 
-											"bind Player 2 Left key");
-var P2Right = new button (240, 315, 80, 45, 5, 
-											"bind Player 2 RIght key");
-var P2Shoot = new button (240, 45, 80, 45, 6, 
-											"bind Player 2 Shoot key");
-var P1UDLRS = function () {
-	P1Up.hover();
-	P1Down.hover();
-	P1Left.hover();
-	P1Right.hover();
-	P1Shoot.hover();
+buttonArray.push (new button (10, 10, 75, 25, 2, "Main Menu", 12, 1));  //0
+buttonArray.push (new button (10, 10, 75, 25, 3, "Main Menu", 12, 1)); //1
+buttonArray.push (new button (10, 10, 75, 25, 5, "Main Menu", 12, 1)); //2
+buttonArray.push (new button (10, 10, 75, 25, 6, "Main Menu", 12, 1)); //3
+buttonArray.push (new button (315, 365, 75, 25, 7, "Main Menu", 12, 1)); //4
+buttonArray.push (new button (10, 10, 75, 25, 9, "Main Menu", 12, 1));  //5
+buttonArray.push (new button (10, 10, 75, 25, 10, "Main Menu", 12, 1)); //6
+buttonArray.push (new button (10, 10, 75, 25, 4, "Main Menu", 12, 1));  //7
+buttonArray.push (new button (10, 10, 75, 25, 11, "Main Menu", 12, 1)); //8
+buttonArray.push (new button (10, 50, 120, 40, 1, "Start", 30, 9));    //9
+buttonArray.push (new button (315, 340, 75, 50, 1, "How To Play", 16, 4)); //10
+buttonArray.push (new button (10, 100, 120, 40, 1, "Settings", 30, 2));  //11
+buttonArray.push (new button (20, 50, 75, 30, 2, "Difficulty", 16, 3));  //12
+buttonArray.push (new button (20, 50, 75, 30, 999, "Difficulty", 16, 3)); //13
+buttonArray.push (new button (30, 150, 75, 30, 3, "Hard", 16, 2));        //14
+buttonArray.push (new button (30, 100, 75, 30, 3, "Medium", 16, 2));      //15
+buttonArray.push (new button (30, 50, 75, 30, 3, "Easy", 16, 2));         //16
+buttonArray.push (new button (325, 10, 50, 20, 2, "back", 12, 1));        //17
+buttonArray.push (new button (325, 10, 50, 20, 3, "back", 12, 2));        //18
+buttonArray.push (new button (325, 10, 50, 20, 5, "back", 12, 2));        //19
+buttonArray.push (new button (325, 10, 50, 20, 6, "back", 12, 2));        //20
+buttonArray.push (new button (325, 10, 50, 20, 9, "back", 12, 1));        //21
+buttonArray.push (new button (325, 10, 50, 20, 10, "back", 12, 9));       //22
+buttonArray.push (new button (325, 10, 50, 20, 11, "back", 12, 9));       //23
+buttonArray.push (new button (0, 0, 400, 200, 9, "One Player", 30, 11));   //24
+buttonArray.push (new button (0, 200, 400, 200, 9, "Two Players", 30, 10));//25
+buttonArray.push (new button (0, 0, 400, 200, 10, "Versus", 30, 11));      //26
+buttonArray.push (new button (0, 200, 400, 200, 10, "Same Team", 30, 11)); //27
+buttonArray.push (new button (95, 95, 100, 100, 11, "Single Match", 16, 12)); //28
+buttonArray.push (new button (205, 95, 100, 100, 11, "Tournament", 16, 12));  //29
+buttonArray.push (new button (95, 205, 100, 100, 11, "Ringette", 16, 12));    //30
+buttonArray.push (new button (205, 205, 100, 100, 11, "Practice Match", 16)); //31
+buttonArray.push (new button (20, 100, 75, 30, 2, "Controls", 16, 5));       //32
+buttonArray.push (new button (325, 355, 50, 20, 5, "Next", 12 , 6));          //33
+buttonArray.push (new button (10, 355, 50, 20, 6, "Prev", 12, 5));           //34
+buttonArray.push (new button (10, 150, 120, 40, 1, "Credits", 30, 7));       //35
+buttonArray.push (new button (80, 45, 80, 45, 5, "bind Player 1 Up key", 12, 0)); //36
+buttonArray.push (new button (80, 135, 80, 45, 5, "bind Player 1 Down key", 12, 0)); //37
+buttonArray.push (new button (80, 225, 80, 45, 5, "bind Player 1 Left key", 12, 0)); //38
+buttonArray.push (new button (80, 315, 80, 45, 5, "bind Player 1 Right key", 12, 0));//39
+buttonArray.push (new button (80, 45, 80, 45, 6, "bind Player 1 Shoot key", 12, 0)); //40
+buttonArray.push (new button (240, 45, 80, 45, 5, "bind Player 2 Up key", 12, 0));   //41
+buttonArray.push (new button (240, 135, 80, 45, 5, "bind Player 2 Down key", 12, 0));//42
+buttonArray.push (new button (240, 225, 80, 45, 5, "bind Player 2 Left key", 12, 0));//43
+buttonArray.push (new button (240, 315, 80, 45, 5, "bind Player 2 Right key", 12, 0));//44
+buttonArray.push (new button (240, 45, 80, 45, 6, "bind Player 2 Shoot key", 12, 0));//45
+
+var DrawButton = function () {
+	for (var i = 0; i < buttonArray.length; i ++) {
+		if (i >= 14 && i <= 16) {
+			buttonArray[i].hover(i - 13);
+		} 
+		else {
+		buttonArray[i].hover();
+		}
+	}
 }
-var P2UDLRS = function () {
-	P2Up.hover();
-	P2Left.hover();
-	P2Right.hover();
-	P2Down.hover();
-	P2Shoot.hover();
+var detectSceneChange = function () {
+	for (var i = 0; i < buttonArray.length; i ++) {
+		if (buttonArray[i].hovering && buttonArray[i].gotoScene >= 1) {
+			scene = buttonArray[i].gotoScene;
+			if (i === 14) {
+				difficulty = 3;
+				console.log(1);
+			}
+			else if (i === 15) {
+				difficulty = 2;
+			}
+			else if (i === 16) {
+				difficulty = 1;
+			}
+			if (buttonArray[i].gotoScene === 12) {
+				inGame = true;
+				teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
+				if (i === 28) {
+					gameMode = 1;
+				}
+				if (i === 29) {
+					gameMode = 2;
+				}
+				if (i === 30) {
+					gameMode = 3;
+				}
+				if (i === 31) {
+					gameMode = 4;
+				}
+			}
+		} else if (buttonArray[i].gotoScene === 0 && buttonArray[i].hovering) {
+			if (i === 36) {
+				changeKey = 1;
+			}
+			else if (i === 37) {
+				changeKey = 2;
+			}
+			else if (i === 38) {
+				changeKey = 3;
+			}
+			else if (i === 39) {
+				changeKey = 4;
+			}
+			else if (i === 40) {
+				changeKey = 5;
+			}
+			else if (i === 41) {
+				changeKey = 6;
+			}
+			else if (i === 42) {
+				changeKey = 7;
+			}
+			else if (i === 43) {
+				changeKey = 8;
+			}
+			else if (i === 44) {
+				changeKey = 9;
+			}
+			else if (i === 45) {
+				changeKey = 10;
+			}
+		}
+	}
 }
 
 function draw() {
   if (inGame) {
   	background(220);
+		fill(team1[0].color)
+		ellipse(200, 200, 50, 15);
+		ellipse(200, 200, 25, 25);
   } 
 	else {
 		background(220);
-		textSize(12);
-		buttonMenu3.hover();
-		buttonMenu4.hover();
-		Back3.hover();
-		Back4.hover();
-		next1.hover();
-		prev1.hover();
-		P1UDLRS();
-		textSize(12);
-		P2UDLRS();
-		// just to make scrolling t o where I want to go Easier.
+		angleMode(DEGREES);
+		if (scene === 1) {
+			background(220, 220, 220);
+			fill(220, 220, 220);
+			stroke(0, 0, 0);
+			resetMatrix();
+			translate(stick1[0], stick1[1]);
+			rect(0, 0, 50, 20, 30);
+			fill(0, 0, 0);
+			rect(20, 0, 5, 20);
+			rect(27, 0, 5, 20);
+			rect(34, 0, 5, 20);
+			fill(220, 220, 220);
+			rotate(225);
+			rect(-25, -10, 100, 20, 30);
+			resetMatrix();
+			translate(stick2[0], stick2[1]);
+			rotate(180);
+			rect(0, 0, 50, 20, 30);
+			fill(0, 0, 0);
+			rect(20, 0, 5, 20);
+			rect(27, 0, 5, 20);
+			rect(34, 0, 5, 20);
+			fill(220, 220, 220);
+			rotate(135);
+			rect(-5, -20, 100, 20, 30);
+			resetMatrix();
+			fill(0, 0, 0);
+			ellipse(puck[0], puck[1], 25, 25);
+			if (stick1[0] < 50) {
+				stick1[3] = 0;
+				stick1[0] += 5;
+			} 
+			else if (stick1[0] > 340 || stick1[3] === 1) {
+				stick1[3] = 1;
+				stick1[0] -= 5;
+			} 
+			else {
+				stick1[0] += 5;
+			}
+			if (stick1[1] < 50) {
+				stick1[4] = 0;
+				stick1[1] += 5;
+			} 
+			else if (stick1[1] > 370 || stick1[4] === 1) {
+				stick1[4] = 1;
+				stick1[1] -= 5;
+			} 
+			else {
+				stick1[1] += 5;
+			}
+			if (stick2[0] < 50) {
+				stick2[3] = 0;
+				stick2[0] += 5;
+			} 
+			else if (stick2[0] > 340 || stick2[3] === 1) {
+				stick2[3] = 1;
+				stick2[0] -= 5;
+			} 
+			else {
+				stick2[0] += 5;
+			}
+			if (stick2[1] < 50) {
+				stick2[4] = 0;
+				stick2[1] += 5;
+			} 
+			else if (stick2[1] > 370 || stick2[4] === 1) {
+				stick2[4] = 1;
+				stick2[1] -= 5;
+			} 
+			else {
+				stick2[1] += 5;
+			}
+			if (puck[0] < 50) {
+				puck[3] = 0;
+				puck[0] += 7;
+			} 
+			else if (puck[0] > 340 || puck[3] === 1) {
+				puck[3] = 1;
+				puck[0] -= 7;
+			} 
+			else {
+				puck[0] += 5;
+			}
+			if (puck[1] < 50) {
+				puck[4] = 0;
+				puck[1] += 7;
+			} 
+			else if (puck[1] > 370 || puck[4] === 1) {
+				puck[4] = 1;
+				puck[1] -= 7;
+			} 
+			else {
+				puck[1] += 7;
+			}
+			textSize(25);
+			fill(220, 220, 220);
+			text("Hockey Game 20183", 10, 30, 390);
+		}
+		DrawButton();
+		buttonArray[5].draw();
+		buttonArray[6].draw();
+		buttonArray[21].draw();
+		buttonArray[22].draw();
 		if (true) {
 			if (changeKey === 1 & keyIsPressed) {
 				P1.Up = keyCode;
@@ -348,27 +529,27 @@ function draw() {
 				P1.keyName.Right = key;
 				changeKey = 0;
 			}
-			if (changeKey === 5 & keyIsPressed) {
+			if (changeKey === 6 & keyIsPressed) {
 				P2.Up = keyCode;
 				P2.keyName.Up = key;
 				changeKey = 0;
 			}
-			if (changeKey === 6 & keyIsPressed) {
+			if (changeKey === 7 & keyIsPressed) {
 				P2.Down = keyCode;
 				P2.keyName.Down = key;
 				changeKey = 0;
 			}
-			if (changeKey === 7 & keyIsPressed) {
+			if (changeKey === 8 & keyIsPressed) {
 				P2.Left = keyCode;
 				P2.keyName.Left = key;
 				changeKey = 0;
 			}
-			if (changeKey === 8 & keyIsPressed) {
+			if (changeKey === 9 & keyIsPressed) {
 				P2.Right = keyCode;
 				P2.keyName.Right = key;
 				changeKey = 0;
 			}	
-			if (changeKey === 9 & keyIsPressed) {
+			if (changeKey === 5 & keyIsPressed) {
 				P1.shoot = keyCode;
 				P1.keyName.Shoot = key;
 				changeKey = 0;
@@ -379,37 +560,7 @@ function draw() {
 				changeKey = 0;
 			}
 		}
-    textSize(12);
-    buttonMenu1.hover();
-    buttonMenu2.hover();
-		buttonMenu5.hover();
-		buttonMenu8.hover();
-		buttonMenu9.hover();
-		Back1.hover();
-		Back2.hover();
-		Back7.hover();
-    textSize(30);
-    buttonStart1.hover();
-    buttonSettings1.hover();
-		credits1.hover();
-		buttonNumOfPlayer1.hover();
-		buttonNumOfPlayer2.hover();
-		buttonPlayerType1.hover();
-		buttonPlayerType2.hover();
 		OneButton = true;
-    textSize(16);
-    buttonDifficulty1.hover();
-    buttonDifficulty2.hover();
-		buttonHowToPlay1.hover();
-		keybind.hover();
-		HardCpu.hover(1);
-		MediumCpu.hover(2);
-		EasyCpu.hover(3);
-		textSize(12);
-		buttonMenu6.hover();
-		buttonMenu7.hover();
-		Back5.hover();
-		Back6.hover();
 		if (CompleteControl) {
 			sliderPlayerSpeed.hover();
 			sliderCPUSpeed.hover();
@@ -470,110 +621,7 @@ function draw() {
 }
 function mousePressed () {
 	if (!inGame) {
-  	if (buttonMenu1.hovering || buttonMenu2.hovering || buttonMenu6.hovering || buttonMenu7.hovering || buttonMenu9.hovering) {
-			scene = 1;
-		}
-		if (buttonMenu3.hovering || buttonMenu4.hovering || buttonMenu5.hovering || buttonMenu8.hovering) {    
-			scene = 1;
-  	}
-		if (Back5.hovering) {
-			scene = 1;
-		}
-    if (buttonSettings1.hovering) {
-      scene = 2;
-    }
-    if (buttonDifficulty1.hovering || buttonDifficulty2.hovering) {
-      scene = 3;
-    }
-		if (HardCpu.hovering) {
-			scene = 2;
-			difficulty = 3;
-		}
-		if (MediumCpu.hovering) {
-			scene = 2;
-			difficulty = 2;
-		}
-		if (EasyCpu.hovering) {
-			scene = 2;
-			difficulty = 1;
-		}
-		if (Back1.hovering) {
-			scene = 1;
-		}
-		if (Back2.hovering) {
-			scene = 2;
-		}
-		if (Back3.hovering || Back4.hovering) {
-			scene = 2;
-		}
-		if (Back6.hovering || Back7.hovering) {
-			scene = 9;
-		}
-		if (keybind.hovering) {
-			scene = 5;
-		}
-		if (P1Up.hovering) {
-			changeKey = 1;
-		}
-		if (P1Down.hovering) {
-			changeKey = 2;
-		}
-		if (P1Left.hovering) {
-			changeKey = 3;
-		}
-		if (P1Right.hovering) {
-			changeKey = 4;
-		}
-		if (P2Up.hovering) {
-			changeKey = 5;
-		}
-		if (P2Down.hovering) {
-			changeKey = 6;
-		}
-		if (P2Left.hovering) {
-			changeKey = 7;
-		}
-		if (P2Right.hovering) {
-			changeKey = 8;
-		}
-		if (P1Shoot.hovering) {
-			changeKey = 9;
-		}
-		if (P2Shoot.hovering) {
-			changeKey = 10;
-		}
-		if (next1.hovering) {
-			scene = 6;
-		}
-		if (prev1.hovering) {
-			scene = 5;
-		}
-		if (credits1.hovering) {
-			scene = 7;
-		}
-		if (buttonStart1.hovering) {
-			scene = 9;
-		}
-		// console.log(scene);
-		if (buttonNumOfPlayer1.hovering) {
-			Players = 1;
-			scene = 11;
-		}
-		if (buttonNumOfPlayer2.hovering) {
-			Players = 2;
-			scene = 10;
-		} 
-		if (buttonPlayerType1.hovering) {
-			PlayerType = 1;
-			scene = 11;
-		}
-		if (buttonPlayerType2.hovering) {
-			PlayerType = 2;
-			scene = 11;
-		}
-		if (buttonHowToPlay1.hovering) {
-			scene = 4;
-		}
+		detectSceneChange();
   }
 }
 
@@ -586,5 +634,3 @@ function keyTyped() {
 		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
 	}
 }
-
-
