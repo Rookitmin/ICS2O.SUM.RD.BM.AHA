@@ -24,8 +24,8 @@ var stick2 = [0, 0, 0, 1];
 var puck = [0, 0, 0, 0];
 // Key Changing Variables
 var changeKey = 0;
-var P1 = {Up: 32, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}};
-var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82, keyName: {}};
+var P1 = {Up: 38, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}, speedX: 0, speedY: 0};
+var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82, keyName: {}, speedX: 0, speedY: 0};
 P1.keyName = {Up: "Up Arrow", Down: "Down Arrow", Left: "Left Arrow", 
 							Right: "Right Arrow", Shoot: "M"};
 P2.keyName = {Up: "W", Down: "S", Left: "A", Right: "D", Shoot: "R"};
@@ -394,13 +394,119 @@ var detectSceneChange = function () {
 		}
 	}
 }
+var speedPos1 = 5 - P1.speedX / 5;
+var speedNeg1 = P1.speedX / 5 - 5;
+var speedPos2 = 5 - P1.speedY / 5;
+var speedNeg2 = P1.speedY / 5 - 5;
 
 function draw() {
   if (inGame) {
+		speedPos1 = playerSpeed - P1.speedX / playerSpeed;
+		speedNeg1 = P1.speedX / playerSpeed - playerSpeed;
+		speedPos2 = playerSpeed - P1.speedY / playerSpeed;
+		speedNeg2 = P1.speedY / playerSpeed - playerSpeed;
   	background(220);
-		fill(team1[0].color)
-		ellipse(200, 200, 50, 15);
-		ellipse(200, 200, 25, 25);
+		resetMatrix();
+		translate(team1[0].posX, team1[0].posY);
+		for (var i = -800; i < 800; i += 100) {
+			for (var j = -800; j < 800; j += 100) {
+				rect(i, j, 100, 100);
+			}
+		}
+		resetMatrix();
+		fill(team1[0].color);
+		translate(200, 200);
+		rotate(team1[0].facing);
+		ellipse(0, 0, 50, 15);
+		ellipse(0, 0, 25, 25);
+		if (P1.speedX > 0) {
+			if (P1.speedX > 0.1) {
+				P1.speedX -= 0.1;
+			}
+			else {
+				P1.speedX = 0;
+			}
+		}
+		else if (P1.speedX < 0) {
+			if (P1.speedX < -0.1) {
+				P1.speedX += 0.1;
+			}
+			else {
+				P1.speedX = 0;
+			}
+		}
+		if (P1.speedY > 0) {
+			if (P1.speedY > 0.1) {
+				P1.speedY -= 0.1;
+			}
+			else {
+				P1.speedY = 0;
+			}
+		}
+		else if (P1.speedY < 0) {
+			if (P1.speedY < -0.1) {
+				P1.speedY += 0.1;
+			}
+			else {
+				P1.speedY = 0;
+			}
+		}
+		team1[0].posX += P1.speedX;
+		team1[0].posY += P1.speedY;
+		if (keyIsDown(P1.Up)) {
+			if (keyIsDown(P1.Left)) {
+				team1[0].facing = 315;
+				P1.speedX = speedPos1 * 2 / 3;
+				P1.speedY = speedPos2 * 2 / 3;
+			} 
+			else if (keyIsDown(P1.Right)) {
+				team1[0].facing = 45;
+				P1.speedX = speedNeg1 * 2 / 3;
+				P1.speedY = speedPos2 * 2 / 3;
+			}
+			else if (keyIsDown(P1.Down)) {
+				
+			}
+			else {
+				team1[0].facing = 0;
+				P1.speedY = speedPos2;
+			}
+		}
+		else if (keyIsDown(P1.Down)) {
+			if (keyIsDown(P1.Left)) {
+				team1[0].facing = 225;
+				P1.speedX = speedPos1 * 2 / 3;
+				P1.speedY = speedNeg2 * 2 / 3;
+			} 
+			else if (keyIsDown(P1.Right)) {
+				team1[0].facing = 135;
+				P1.speedX = speedNeg1 * 2 / 3;
+				P1.speedY = speedNeg2 * 2 / 3;
+			}
+			else if (keyIsDown(P1.Up)) {
+				
+			}
+			else {
+				team1[0].facing = 180;
+				P1.speedY = speedNeg2;
+			}
+		}
+		else if (keyIsDown(P1.Left)) {
+			if (keyIsDown(P1.Right)) {
+			}
+			else {
+				team1[0].facing = 270;
+				P1.speedX = speedPos1;
+			}
+		}
+		else if (keyIsDown(P1.Right)) {
+			if (keyIsDown(P1.Left)) {
+			}
+			else {
+				team1[0].facing = 270;
+				P1.speedX = speedNeg1;
+			}
+		}
   } 
 	else {
 		background(220);
@@ -508,7 +614,7 @@ function draw() {
 		buttonArray[6].draw();
 		buttonArray[21].draw();
 		buttonArray[22].draw();
-		if (true) {
+		if (changeKey != 0) {
 			if (changeKey === 1 & keyIsPressed) {
 				P1.Up = keyCode;
 				P1.keyName.Up = key;
@@ -628,9 +734,12 @@ function mousePressed () {
 function keyTyped() {
 	if (key === 'v') {
 		scene = 1;
+		inGame = false;
 	}
 	else if (key === 'b') {
 		CompleteControl = true;
 		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
+		inGame = true;
+		scene = 12;
 	}
 }
