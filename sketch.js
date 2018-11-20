@@ -268,7 +268,8 @@ var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." +
 					 " Also I\'d Like to thank Aadsta, Sheepdude and all of my other" + 
 						" sponsers. This Assingment was coded in Approxamitly ... 10 Hours?" + 
 						" has it really been that long? ... I guess so. huh. well... here are " + 
-						"the real credits: Rookitmin, Ali596087, and Minirals in collaboration " +
+						"The real credits: Rookitmin, Ali596087, and Minirals in collaboration. " +
+		        // "Real names: Rodryck Drapeau, Ali Haydar Ahmad & Ben Mccutcheon." + 
 						"With the grade three's ... Hockey Dude, and Ringette Girl.";
 var creditScroll = 400;
 var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5);
@@ -683,6 +684,7 @@ function draw() {
 		if (scene === 7) {
 			background(155, 0, 155);
 			fill(0, 0, 0);
+			textSize(15);
 			text(credits, 40, 0 + creditScroll, 320, 320);
 			textSize(30);
 			if (creditScroll > 0) {
