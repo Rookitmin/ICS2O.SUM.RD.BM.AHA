@@ -75,7 +75,7 @@ var teamCreate = function (color1, color2, color3, color4) {
 // creates genaralised button & Slider variables
 var OneButton = true;
 // Sliders
-function slider (min, max, x, y, w, h, scene, title, valueChange) {
+function slider (min, max, x, y, w, h, scene, title, valueChange, pos) {
 	this.x = x;
 	this.y = y;
 	this.width = w;
@@ -84,7 +84,7 @@ function slider (min, max, x, y, w, h, scene, title, valueChange) {
 	this.words = title;
 	this.min = min;
 	this.max = max + valueChange;
-	this.pos = min;
+	this.pos = pos;
 	this.hovering = false;
 	this.change = valueChange;
 }
@@ -268,12 +268,11 @@ var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." +
 					 " Also I\'d Like to thank Aadsta, Sheepdude and all of my other" + 
 						" sponsers. This Assingment was coded in Approxamitly ... 10 Hours?" + 
 						" has it really been that long? ... I guess so. huh. well... here are " + 
-						"The real credits: Rookitmin, Ali596087, and Minirals in collaboration. " +
-		        // "Real names: Rodryck Drapeau, Ali Haydar Ahmad & Ben Mccutcheon." + 
+						"the real credits: Rookitmin, Ali596087, and Minirals in collaboration " +
 						"With the grade three's ... Hockey Dude, and Ringette Girl.";
 var creditScroll = 400;
-var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5);
-var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "CPU Speed", 0.5);
+var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5, 8.5);
+var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "CPU Speed", 0.5, 7.5);
 buttonArray.push (new button (10, 10, 75, 25, 2, "Main Menu", 12, 1));  //0
 buttonArray.push (new button (10, 10, 75, 25, 3, "Main Menu", 12, 1)); //1
 buttonArray.push (new button (10, 10, 75, 25, 5, "Main Menu", 12, 1)); //2
@@ -399,6 +398,118 @@ var speedPos1 = 5 - P1.speedX / 5;
 var speedNeg1 = P1.speedX / 5 - 5;
 var speedPos2 = 5 - P1.speedY / 5;
 var speedNeg2 = P1.speedY / 5 - 5;
+var puck1 = [0, 0, 0, 0];
+var ignore = false;
+var dleayl = 0;
+var drawPuck = function () {
+	fill(0, 0, 0);
+	if (puck1[0] * -1 <= team1[0].posX - 200 + 20 && puck1[0] * -1 >= team1[0].posX - 200 - 20 && 
+			puck1[1] * -1 <= team1[0].posY - 200 + 20 && puck1[1] * -1 >= team1[0].posY - 200 - 20 && !ignore) {
+		if (!keyIsDown(P1.shoot)) {
+			puck1[0] = 0 - (team1[0].posX - 200);
+			puck1[1] = 0 - (team1[0].posY - 200);
+			ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+		} 
+		else {
+			puck1[2] = team1[0].facing;
+			puck1[3] = 5;
+			ellipse(puck1[0], puck1[1], 20, 20);
+			ignore = true;
+			delayl = 0;
+		}
+	}
+	else {
+		if (ignore) {
+			delayl ++;
+			if (delayl > 50) {
+				ignore = false;
+			}
+		}
+		ellipse(puck1[0], puck1[1], 20, 20);
+		if (puck1[2] === 45) {
+			puck1[0] += puck1[3] / 2;
+			puck1[1] -= puck1[3] / 2;
+		}
+		else if (puck1[2] === 90) {
+			puck1[0] += puck1[3];
+		}
+		else if (puck1[2] === 135) {
+			puck1[0] += puck1[3] / 2;
+			puck1[1] += puck1[3] / 2;
+		}
+		else if (puck1[2] === 180) {
+			puck1[1] += puck1[3];
+		}
+		else if (puck1[2] === 225) {
+			puck1[0] -= puck1[3] / 2;
+			puck1[1] += puck1[3] / 2;
+		}
+		else if (puck1[2] === 270) {
+			puck1[0] -= puck1[3];
+		}
+		else if (puck1[2] === 315) {
+			puck1[0] -= puck1[3] / 2;
+			puck1[1] -= puck1[3] / 2;
+		}
+		else if (puck1[2] === 0) {
+			puck1[1] -= puck1[3];
+		}
+		if (puck1[3] > 0) {
+			puck1[3] -= 0.01;
+		}
+		else {
+			puck1[3] = 0;
+		}
+		if (puck1[0] < -800) {
+			puck1[0] = -800;
+			if (puck1[2] === 225) {
+				puck1[2] = 135;
+			}
+			else if (puck1[2] === 270) {
+				puck1[2] = 90;
+			}
+			else if (puck1[2] === 315) {
+				puck1[2] = 45;
+			}
+		}
+		if (puck1[0] > 800) {
+			puck1[0] = 800;
+			if (puck1[2] === 135) {
+				puck1[2] = 225;
+			}
+			else if (puck1[2] === 90) {
+				puck1[2] = 270;
+			}
+			else if (puck1[2] === 45) {
+				puck1[2] = 315;
+			}
+		}
+		if (puck1[1] < -800) {
+			puck1[1] = -800;
+			if (puck1[2] === 315) {
+				puck1[2] = 225;
+			}
+			else if (puck1[2] === 0) {
+				puck1[2] = 180;
+			}
+			else if (puck1[2] === 45) {
+				puck1[2] = 135;
+			}
+		}
+		if (puck1[1] > 800) {
+			puck1[1] = 800;
+			if (puck1[2] === 225) {
+				puck1[2] = 315;
+			}
+			else if (puck1[2] === 180) {
+				puck1[2] = 0;
+			}
+			else if (puck1[2] === 135) {
+				puck1[2] = 45;
+			}
+		}
+	}
+}
 
 function draw() {
   if (inGame) {
@@ -409,11 +520,13 @@ function draw() {
   	background(220);
 		resetMatrix();
 		translate(team1[0].posX, team1[0].posY);
+		fill(225, 225, 255);
 		for (var i = -800; i < 800; i += 100) {
 			for (var j = -800; j < 800; j += 100) {
 				rect(i, j, 100, 100);
 			}
 		}
+		drawPuck();
 		resetMatrix();
 		fill(team1[0].color);
 		translate(200, 200);
@@ -452,6 +565,14 @@ function draw() {
 				P1.speedY = 0;
 			}
 		}
+		if (team1[0].posX - 200 < -800 || team1[0].posX - 200 > 800) {
+			P1.speedX = P1.speedX * -1;
+			team1[0].posX = constrain(team1[0].posX, -1000, 600);
+		}
+		if (team1[0].posY - 200 < -800 || team1[0].posY - 200 > 800) {
+			P1.speedY = P1.speedY * -1;
+			team1[0].posY = constrain(team1[0].posY, -1000, 600);
+		}
 		team1[0].posX += P1.speedX;
 		team1[0].posY += P1.speedY;
 		if (keyIsDown(P1.Up)) {
@@ -485,7 +606,6 @@ function draw() {
 				P1.speedY = speedNeg2 * 2 / 3;
 			}
 			else if (keyIsDown(P1.Up)) {
-				
 			}
 			else {
 				team1[0].facing = 180;
@@ -504,7 +624,7 @@ function draw() {
 			if (keyIsDown(P1.Left)) {
 			}
 			else {
-				team1[0].facing = 270;
+				team1[0].facing = 90;
 				P1.speedX = speedNeg1;
 			}
 		}
