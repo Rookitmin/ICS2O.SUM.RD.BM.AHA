@@ -567,11 +567,11 @@ function draw() {
 		}
 		if (team1[0].posX - 200 < -800 || team1[0].posX - 200 > 800) {
 			P1.speedX = P1.speedX * -1;
-			team1[0].posX = constrain(team1[0].posX, -1000, 600);
+			team1[0].posX = constrain(team1[0].posX, -600, 1000);
 		}
 		if (team1[0].posY - 200 < -800 || team1[0].posY - 200 > 800) {
 			P1.speedY = P1.speedY * -1;
-			team1[0].posY = constrain(team1[0].posY, -1000, 600);
+			team1[0].posY = constrain(team1[0].posY, -600, 1000);
 		}
 		team1[0].posX += P1.speedX;
 		team1[0].posY += P1.speedY;
