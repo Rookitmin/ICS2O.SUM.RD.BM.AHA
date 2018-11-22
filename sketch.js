@@ -360,6 +360,20 @@ var detectSceneChange = function () {
 					gameMode = 4;
 				}
 			}
+			else if (buttonArray[i].gotoScene === 10 || buttonArray[i].gotoScene === 11) {
+				if (i === 24) {
+					Players = 1;
+				} 
+				if (i === 25) {
+					Players = 2;
+				}
+				if (i === 26) {
+					PlayerType = 1;
+				}
+				if (i === 27) {
+					PlayerType = 2;
+				}
+			}
 		} else if (buttonArray[i].gotoScene === 0 && buttonArray[i].hovering) {
 			if (i === 36) {
 				changeKey = 1;
@@ -720,7 +734,7 @@ function draw() {
 			}
 			textSize(25);
 			fill(220, 220, 220);
-			text("Hockey Game 20183", 10, 30, 390);
+			text("Hockey Game 2222222222EEE", 10, 30, 390);
 		}
 		DrawButton();
 		buttonArray[5].draw();
