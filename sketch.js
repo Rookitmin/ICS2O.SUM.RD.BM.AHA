@@ -24,8 +24,8 @@ var stick2 = [0, 0, 0, 1];
 var puck = [0, 0, 0, 0];
 // Key Changing Variables
 var changeKey = 0;
-var P1 = {Up: 32, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}};
-var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82, keyName: {}};
+var P1 = {Up: 38, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}, speedX: 0, speedY: 0};
+var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82, keyName: {}, speedX: 0, speedY: 0};
 P1.keyName = {Up: "Up Arrow", Down: "Down Arrow", Left: "Left Arrow", 
 							Right: "Right Arrow", Shoot: "M"};
 P2.keyName = {Up: "W", Down: "S", Left: "A", Right: "D", Shoot: "R"};
@@ -75,7 +75,7 @@ var teamCreate = function (color1, color2, color3, color4) {
 // creates genaralised button & Slider variables
 var OneButton = true;
 // Sliders
-function slider (min, max, x, y, w, h, scene, title, valueChange) {
+function slider (min, max, x, y, w, h, scene, title, valueChange, pos) {
 	this.x = x;
 	this.y = y;
 	this.width = w;
@@ -84,7 +84,7 @@ function slider (min, max, x, y, w, h, scene, title, valueChange) {
 	this.words = title;
 	this.min = min;
 	this.max = max + valueChange;
-	this.pos = min;
+	this.pos = pos;
 	this.hovering = false;
 	this.change = valueChange;
 }
@@ -271,8 +271,8 @@ var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." +
 						"the real credits: Rookitmin, Ali596087, and Minirals in collaboration " +
 						"With the grade three's ... Hockey Dude, and Ringette Girl.";
 var creditScroll = 400;
-var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5);
-var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "CPU Speed", 0.5);
+var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5, 8.5);
+var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "CPU Speed", 0.5, 7.5);
 buttonArray.push (new button (10, 10, 75, 25, 2, "Main Menu", 12, 1));  //0
 buttonArray.push (new button (10, 10, 75, 25, 3, "Main Menu", 12, 1)); //1
 buttonArray.push (new button (10, 10, 75, 25, 5, "Main Menu", 12, 1)); //2
@@ -394,13 +394,240 @@ var detectSceneChange = function () {
 		}
 	}
 }
+var speedPos1 = 5 - P1.speedX / 5;
+var speedNeg1 = P1.speedX / 5 - 5;
+var speedPos2 = 5 - P1.speedY / 5;
+var speedNeg2 = P1.speedY / 5 - 5;
+var puck1 = [0, 0, 0, 0];
+var ignore = false;
+var dleayl = 0;
+var drawPuck = function () {
+	fill(0, 0, 0);
+	if (puck1[0] * -1 <= team1[0].posX - 200 + 20 && puck1[0] * -1 >= team1[0].posX - 200 - 20 && 
+			puck1[1] * -1 <= team1[0].posY - 200 + 20 && puck1[1] * -1 >= team1[0].posY - 200 - 20 && !ignore) {
+		if (!keyIsDown(P1.shoot)) {
+			puck1[0] = 0 - (team1[0].posX - 200);
+			puck1[1] = 0 - (team1[0].posY - 200);
+			ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+		} 
+		else {
+			puck1[2] = team1[0].facing;
+			puck1[3] = 5;
+			ellipse(puck1[0], puck1[1], 20, 20);
+			ignore = true;
+			delayl = 0;
+		}
+	}
+	else {
+		if (ignore) {
+			delayl ++;
+			if (delayl > 50) {
+				ignore = false;
+			}
+		}
+		ellipse(puck1[0], puck1[1], 20, 20);
+		if (puck1[2] === 45) {
+			puck1[0] += puck1[3] / 2;
+			puck1[1] -= puck1[3] / 2;
+		}
+		else if (puck1[2] === 90) {
+			puck1[0] += puck1[3];
+		}
+		else if (puck1[2] === 135) {
+			puck1[0] += puck1[3] / 2;
+			puck1[1] += puck1[3] / 2;
+		}
+		else if (puck1[2] === 180) {
+			puck1[1] += puck1[3];
+		}
+		else if (puck1[2] === 225) {
+			puck1[0] -= puck1[3] / 2;
+			puck1[1] += puck1[3] / 2;
+		}
+		else if (puck1[2] === 270) {
+			puck1[0] -= puck1[3];
+		}
+		else if (puck1[2] === 315) {
+			puck1[0] -= puck1[3] / 2;
+			puck1[1] -= puck1[3] / 2;
+		}
+		else if (puck1[2] === 0) {
+			puck1[1] -= puck1[3];
+		}
+		if (puck1[3] > 0) {
+			puck1[3] -= 0.01;
+		}
+		else {
+			puck1[3] = 0;
+		}
+		if (puck1[0] < -800) {
+			puck1[0] = -800;
+			if (puck1[2] === 225) {
+				puck1[2] = 135;
+			}
+			else if (puck1[2] === 270) {
+				puck1[2] = 90;
+			}
+			else if (puck1[2] === 315) {
+				puck1[2] = 45;
+			}
+		}
+		if (puck1[0] > 800) {
+			puck1[0] = 800;
+			if (puck1[2] === 135) {
+				puck1[2] = 225;
+			}
+			else if (puck1[2] === 90) {
+				puck1[2] = 270;
+			}
+			else if (puck1[2] === 45) {
+				puck1[2] = 315;
+			}
+		}
+		if (puck1[1] < -800) {
+			puck1[1] = -800;
+			if (puck1[2] === 315) {
+				puck1[2] = 225;
+			}
+			else if (puck1[2] === 0) {
+				puck1[2] = 180;
+			}
+			else if (puck1[2] === 45) {
+				puck1[2] = 135;
+			}
+		}
+		if (puck1[1] > 800) {
+			puck1[1] = 800;
+			if (puck1[2] === 225) {
+				puck1[2] = 315;
+			}
+			else if (puck1[2] === 180) {
+				puck1[2] = 0;
+			}
+			else if (puck1[2] === 135) {
+				puck1[2] = 45;
+			}
+		}
+	}
+}
 
 function draw() {
   if (inGame) {
+		speedPos1 = playerSpeed - P1.speedX / playerSpeed;
+		speedNeg1 = P1.speedX / playerSpeed - playerSpeed;
+		speedPos2 = playerSpeed - P1.speedY / playerSpeed;
+		speedNeg2 = P1.speedY / playerSpeed - playerSpeed;
   	background(220);
-		fill(team1[0].color)
-		ellipse(200, 200, 50, 15);
-		ellipse(200, 200, 25, 25);
+		resetMatrix();
+		translate(team1[0].posX, team1[0].posY);
+		fill(225, 225, 255);
+		for (var i = -800; i < 800; i += 100) {
+			for (var j = -800; j < 800; j += 100) {
+				rect(i, j, 100, 100);
+			}
+		}
+		drawPuck();
+		resetMatrix();
+		fill(team1[0].color);
+		translate(200, 200);
+		rotate(team1[0].facing);
+		ellipse(0, 0, 50, 15);
+		ellipse(0, 0, 25, 25);
+		if (P1.speedX > 0) {
+			if (P1.speedX > 0.1) {
+				P1.speedX -= 0.1;
+			}
+			else {
+				P1.speedX = 0;
+			}
+		}
+		else if (P1.speedX < 0) {
+			if (P1.speedX < -0.1) {
+				P1.speedX += 0.1;
+			}
+			else {
+				P1.speedX = 0;
+			}
+		}
+		if (P1.speedY > 0) {
+			if (P1.speedY > 0.1) {
+				P1.speedY -= 0.1;
+			}
+			else {
+				P1.speedY = 0;
+			}
+		}
+		else if (P1.speedY < 0) {
+			if (P1.speedY < -0.1) {
+				P1.speedY += 0.1;
+			}
+			else {
+				P1.speedY = 0;
+			}
+		}
+		if (team1[0].posX - 200 < -800 || team1[0].posX - 200 > 800) {
+			P1.speedX = P1.speedX * -1;
+			team1[0].posX = constrain(team1[0].posX, -600, 1000);
+		}
+		if (team1[0].posY - 200 < -800 || team1[0].posY - 200 > 800) {
+			P1.speedY = P1.speedY * -1;
+			team1[0].posY = constrain(team1[0].posY, -600, 1000);
+		}
+		team1[0].posX += P1.speedX;
+		team1[0].posY += P1.speedY;
+		if (keyIsDown(P1.Up)) {
+			if (keyIsDown(P1.Left)) {
+				team1[0].facing = 315;
+				P1.speedX = speedPos1 * 2 / 3;
+				P1.speedY = speedPos2 * 2 / 3;
+			} 
+			else if (keyIsDown(P1.Right)) {
+				team1[0].facing = 45;
+				P1.speedX = speedNeg1 * 2 / 3;
+				P1.speedY = speedPos2 * 2 / 3;
+			}
+			else if (keyIsDown(P1.Down)) {
+				
+			}
+			else {
+				team1[0].facing = 0;
+				P1.speedY = speedPos2;
+			}
+		}
+		else if (keyIsDown(P1.Down)) {
+			if (keyIsDown(P1.Left)) {
+				team1[0].facing = 225;
+				P1.speedX = speedPos1 * 2 / 3;
+				P1.speedY = speedNeg2 * 2 / 3;
+			} 
+			else if (keyIsDown(P1.Right)) {
+				team1[0].facing = 135;
+				P1.speedX = speedNeg1 * 2 / 3;
+				P1.speedY = speedNeg2 * 2 / 3;
+			}
+			else if (keyIsDown(P1.Up)) {
+			}
+			else {
+				team1[0].facing = 180;
+				P1.speedY = speedNeg2;
+			}
+		}
+		else if (keyIsDown(P1.Left)) {
+			if (keyIsDown(P1.Right)) {
+			}
+			else {
+				team1[0].facing = 270;
+				P1.speedX = speedPos1;
+			}
+		}
+		else if (keyIsDown(P1.Right)) {
+			if (keyIsDown(P1.Left)) {
+			}
+			else {
+				team1[0].facing = 90;
+				P1.speedX = speedNeg1;
+			}
+		}
   } 
 	else {
 		background(220);
@@ -508,7 +735,7 @@ function draw() {
 		buttonArray[6].draw();
 		buttonArray[21].draw();
 		buttonArray[22].draw();
-		if (true) {
+		if (changeKey != 0) {
 			if (changeKey === 1 & keyIsPressed) {
 				P1.Up = keyCode;
 				P1.keyName.Up = key;
@@ -577,6 +804,7 @@ function draw() {
 		if (scene === 7) {
 			background(155, 0, 155);
 			fill(0, 0, 0);
+			textSize(15);
 			text(credits, 40, 0 + creditScroll, 320, 320);
 			textSize(30);
 			if (creditScroll > 0) {
@@ -628,9 +856,12 @@ function mousePressed () {
 function keyTyped() {
 	if (key === 'v') {
 		scene = 1;
+		inGame = false;
 	}
 	else if (key === 'b') {
 		CompleteControl = true;
 		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
+		inGame = true;
+		scene = 12;
 	}
 }
