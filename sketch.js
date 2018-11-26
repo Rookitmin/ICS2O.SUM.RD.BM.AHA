@@ -730,7 +730,7 @@ function draw() {
 					P2.speedX = speedNeg1;
 				}
 			}
-			else if (PlayerType === 1) {
+			else if (PlayerType === 2) {
 				resetMatrix();
 				fill(team1[1].color);
 				translate(-team1[1].posX, -team1[1].posY);
