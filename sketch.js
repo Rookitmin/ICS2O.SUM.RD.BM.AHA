@@ -634,6 +634,198 @@ function draw() {
 			team1[0].facing = 90;
 			P1.speedX = speedNeg1;
 		}
+		if (Players === 2) {
+			if (PlayerType === 1) {
+				resetMatrix();
+				fill(team2[0].color);
+				translate(-team2[0].posX, -team2[0].posY);
+				rotate(team2[0].facing);
+				ellipse(0, 0, 50, 15);
+				ellipse(0, 0, 25, 25);
+				if (P2.speedX > 0) {
+					if (P2.speedX > 0.1) {
+						P2.speedX -= 0.1;
+					}
+					else {
+						P2.speedX = 0;
+					}
+				}
+				else if (P2.speedX < 0) {
+					if (P2.speedX < -0.1) {
+						P2.speedX += 0.1;
+					}
+					else {
+						P2.speedX = 0;
+					}
+				}
+				if (P2.speedY > 0) {
+					if (P2.speedY > 0.1) {
+						P2.speedY -= 0.1;
+					}
+					else {
+						P2.speedY = 0;
+					}
+				}
+				else if (P2.speedY < 0) {
+					if (P2.speedY < -0.1) {
+						P2.speedY += 0.1;
+					}
+					else {
+						P2.speedY = 0;
+					}
+				}
+				if (team2[0].posX < -800 || team2[0].posX > 0) {
+					P2.speedX = P2.speedX * -1;
+					team2[0].posX = constrain(team2[0].posX, -800, 0);
+				}
+				if (team2[0].posY < -800 || team2[0].posY > 0) {
+					P2.speedY = P2.speedY * -1;
+					team2[0].posY = constrain(team2[0].posY, -800, 0);
+				}
+				team2[0].posX += P2.speedX;
+				team2[0].posY += P2.speedY;
+				if (keyIsDown(P2.Up)) {
+					if (keyIsDown(P2.Left)) {
+						team2[0].facing = 315;
+						P2.speedX = speedPos1 * 2 / 3;
+						P2.speedY = speedPos2 * 2 / 3;
+					} 
+					else if (keyIsDown(P2.Right)) {
+						team2[0].facing = 45;
+						P2.speedX = speedNeg1 * 2 / 3;
+						P2.speedY = speedPos2 * 2 / 3;
+					}
+					else if (keyIsDown(P2.Down)) {
+
+					}
+					else {
+						team2[0].facing = 0;
+						P2.speedY = speedPos2;
+					}
+				}
+				else if (keyIsDown(P2.Down)) {
+					if (keyIsDown(P2.Left)) {
+						team2[0].facing = 225;
+						P2.speedX = speedPos1 * 2 / 3;
+						P2.speedY = speedNeg2 * 2 / 3;
+					} 
+					else if (keyIsDown(P2.Right)) {
+						team2[0].facing = 135;
+						P2.speedX = speedNeg1 * 2 / 3;
+						P2.speedY = speedNeg2 * 2 / 3;
+					}
+					else if (keyIsDown(P2.Up)) {
+					}
+					else {
+						team2[0].facing = 180;
+						P2.speedY = speedNeg2;
+					}
+				}
+				else if (keyIsDown(P2.Left) && !keyIsDown(P2.Right)) {
+					team2[0].facing = 270;
+					P2.speedX = speedPos1;
+				}
+				else if (keyIsDown(P2.Right) && !keyIsDown(P2.Left)) {
+					team2[0].facing = 90;
+					P2.speedX = speedNeg1;
+				}
+			}
+			else if (PlayerType === 1) {
+				resetMatrix();
+				fill(team1[1].color);
+				translate(-team1[1].posX, -team1[1].posY);
+				rotate(team1[1].facing);
+				ellipse(0, 0, 50, 15);
+				ellipse(0, 0, 25, 25);
+				if (P2.speedX > 0) {
+					if (P2.speedX > 0.1) {
+						P2.speedX -= 0.1;
+					}
+					else {
+						P2.speedX = 0;
+					}
+				}
+				else if (P2.speedX < 0) {
+					if (P2.speedX < -0.1) {
+						P2.speedX += 0.1;
+					}
+					else {
+						P2.speedX = 0;
+					}
+				}
+				if (P2.speedY > 0) {
+					if (P2.speedY > 0.1) {
+						P2.speedY -= 0.1;
+					}
+					else {
+						P2.speedY = 0;
+					}
+				}
+				else if (P2.speedY < 0) {
+					if (P2.speedY < -0.1) {
+						P2.speedY += 0.1;
+					}
+					else {
+						P2.speedY = 0;
+					}
+				}
+				if (team1[1].posX < -800 || team1[1].posX > 0) {
+					P2.speedX = P2.speedX * -1;
+					team1[1].posX = constrain(team1[1].posX, -800, 0);
+				}
+				if (team1[1].posY < -800 || team1[1].posY > 0) {
+					P2.speedY = P2.speedY * -1;
+					team1[1].posY = constrain(team1[1].posY, -800, 0);
+				}
+				team1[1].posX += P2.speedX;
+				team1[1].posY += P2.speedY;
+				if (keyIsDown(P2.Up)) {
+					if (keyIsDown(P2.Left)) {
+						team1[1].facing = 315;
+						P2.speedX = speedPos1 * 2 / 3;
+						P2.speedY = speedPos2 * 2 / 3;
+					} 
+					else if (keyIsDown(P2.Right)) {
+						team1[1].facing = 45;
+						P2.speedX = speedNeg1 * 2 / 3;
+						P2.speedY = speedPos2 * 2 / 3;
+					}
+					else if (keyIsDown(P2.Down)) {
+
+					}
+					else {
+						team1[1].facing = 0;
+						P2.speedY = speedPos2;
+					}
+				}
+				else if (keyIsDown(P2.Down)) {
+					if (keyIsDown(P2.Left)) {
+						team1[1].facing = 225;
+						P2.speedX = speedPos1 * 2 / 3;
+						P2.speedY = speedNeg2 * 2 / 3;
+					} 
+					else if (keyIsDown(P2.Right)) {
+						team1[1].facing = 135;
+						P2.speedX = speedNeg1 * 2 / 3;
+						P2.speedY = speedNeg2 * 2 / 3;
+					}
+					else if (keyIsDown(P2.Up)) {
+					}
+					else {
+						team1[1].facing = 180;
+						P2.speedY = speedNeg2;
+					}
+				}
+				else if (keyIsDown(P2.Left) && !keyIsDown(P2.Right)) {
+					team1[1].facing = 270;
+					P2.speedX = speedPos1;
+				}
+				else if (keyIsDown(P2.Right) && !keyIsDown(P2.Left)) {
+					team1[1].facing = 90;
+					P2.speedX = speedNeg1;
+				}
+			}
+		}
   } 
 	else {
 		background(220);
@@ -734,7 +926,7 @@ function draw() {
 			}
 			textSize(25);
 			fill(220, 220, 220);
-			text("Hockey Game 2222222222EEE", 10, 30, 390);
+			text("Ice Game 9102", 10, 30, 390);
 		}
 		DrawButton();
 		buttonArray[5].draw();
