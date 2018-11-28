@@ -452,14 +452,16 @@ var detectPlayer = function (PT, NP) {
 		}
 	}
 	else {
-		if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
-					puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20 && !keyIsDown(P1.shoot)) {
-			if (puck1[0] * -1 <= team2[0].posX + 20 && puck1[0] * -1 >= team2[0].posX - 20 && 
-					puck1[1] * -1 <= team2[0].posY + 20 && puck1[1] * -1 >= team2[0].posY - 20 && keyIsDown(P2.shoot)) {
-				return(false);
-			}
-			else {
-				return(true);
+		if (NP === 1) {
+			if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
+						puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20 && !keyIsDown(P1.shoot)) {
+				if (puck1[0] * -1 <= team2[0].posX + 20 && puck1[0] * -1 >= team2[0].posX - 20 && 
+						puck1[1] * -1 <= team2[0].posY + 20 && puck1[1] * -1 >= team2[0].posY - 20 && keyIsDown(P2.shoot)) {
+					return(false);
+				}
+				else {
+					return(true);
+				}
 			}
 		}
 		else {
@@ -498,8 +500,8 @@ var drawPuck = function () {
 	else if (PlayerType === 1) {
 		if (detectPlayer(2, 1) && !ignore) {
 			if (!keyIsDown(P1.shoot)) {
-				puck1[0] = 0 - (team1[1].posX);
-				puck1[1] = 0 - (team1[1].posY);
+				puck1[0] = 0 - (team1[0].posX);
+				puck1[1] = 0 - (team1[0].posY);
 				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
 				console.log("P1 has Puck");
 			} 
@@ -513,13 +515,13 @@ var drawPuck = function () {
 		}
 		else if (detectPlayer(2, 2) && !ignore) {
 			if (!keyIsDown(P2.shoot)) {
-				puck1[0] = 0 - (team1[1].posX);
-				puck1[1] = 0 - (team1[1].posY);
+				puck1[0] = 0 - (team2[0].posX);
+				puck1[1] = 0 - (team2[0].posY);
 				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
 				console.log("P2 has Puck");
 			} 
 			else {
-				puck1[2] = team1[1].facing;
+				puck1[2] = team2[0].facing;
 				puck1[3] = 5;
 				ellipse(puck1[0], puck1[1], 20, 20);
 				ignore = true;
@@ -530,8 +532,8 @@ var drawPuck = function () {
 	else if (PlayerType === 2) {
 		if (detectPlayer(1, 1) && !ignore) {
 			if (!keyIsDown(P1.shoot)) {
-				puck1[0] = 0 - (team1[1].posX);
-				puck1[1] = 0 - (team1[1].posY);
+				puck1[0] = -team1[0].posX;
+				puck1[1] = -team1[0].posY;
 				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
 				console.log("P1 has Puck");
 			} 
@@ -545,13 +547,13 @@ var drawPuck = function () {
 		}
 		else if (detectPlayer(1, 2) && !ignore) {
 			if (!keyIsDown(P2.shoot)) {
-				puck1[0] = 0 - (team2[0].posX);
-				puck1[1] = 0 - (team2[0].posY);
+				puck1[0] = -team1[1].posX;
+				puck1[1] = -team1[1].posY;
 				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
 				console.log("P2 has Puck");
 			} 
 			else {
-				puck1[2] = team2[0].facing;
+				puck1[2] = team1[1].facing;
 				puck1[3] = 5;
 				ellipse(puck1[0], puck1[1], 20, 20);
 				ignore = true;
