@@ -24,6 +24,7 @@ var stick2 = [0, 0, 0, 1];
 var puck = [0, 0, 0, 0];
 // Key Changing Variables
 var changeKey = 0;
+var changeKeyPressed = false;
 var P1 = {Up: 38, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}, speedX: 0, speedY: 0};
 var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82, keyName: {}, speedX: 0, speedY: 0};
 P1.keyName = {Up: "Up Arrow", Down: "Down Arrow", Left: "Left Arrow", 
@@ -1062,55 +1063,61 @@ function draw() {
 		buttonArray[21].draw();
 		buttonArray[22].draw();
 		if (changeKey != 0) {
-			if (changeKey === 1 & keyIsPressed) {
+			if(changeKeyPressed && !keyIsPressed) {
+			if (changeKey === 1) {
 				P1.Up = keyCode;
 				P1.keyName.Up = key;
 				changeKey = 0;
 			}
-			if (changeKey === 2 & keyIsPressed) {
+			if (changeKey === 2) {
 				P1.Down = keyCode;
 				P1.keyName.Down = key;
 				changeKey = 0;
 			}
-			if (changeKey === 3 & keyIsPressed) {
+			if (changeKey === 3) {
 				P1.Left = keyCode;
 				P1.keyName.Left = key;
 				changeKey = 0;
 			}
-			if (changeKey === 4 & keyIsPressed) {
+			if (changeKey === 4) {
 				P1.Right = keyCode;
 				P1.keyName.Right = key;
 				changeKey = 0;
 			}
-			if (changeKey === 6 & keyIsPressed) {
+			if (changeKey === 6) {
 				P2.Up = keyCode;
 				P2.keyName.Up = key;
 				changeKey = 0;
 			}
-			if (changeKey === 7 & keyIsPressed) {
+			if (changeKey === 7) {
 				P2.Down = keyCode;
 				P2.keyName.Down = key;
 				changeKey = 0;
 			}
-			if (changeKey === 8 & keyIsPressed) {
+			if (changeKey === 8) {
 				P2.Left = keyCode;
 				P2.keyName.Left = key;
 				changeKey = 0;
 			}
-			if (changeKey === 9 & keyIsPressed) {
+			if (changeKey === 9) {
 				P2.Right = keyCode;
 				P2.keyName.Right = key;
 				changeKey = 0;
 			}	
-			if (changeKey === 5 & keyIsPressed) {
+			if (changeKey === 5) {
 				P1.shoot = keyCode;
 				P1.keyName.Shoot = key;
 				changeKey = 0;
 			}
-			if (changeKey === 10 & keyIsPressed) {
+			if (changeKey === 10) {
 				P2.shoot = keyCode;
 				P2.keyName.Shoot = key;
 				changeKey = 0;
+			}
+				changeKeyPressed = false;
+			}
+			if (!changeKeyPressed && keyIsPressed) {
+				changeKeyPressed = true;
 			}
 		}
 		OneButton = true;
