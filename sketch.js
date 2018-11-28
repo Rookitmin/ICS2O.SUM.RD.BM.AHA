@@ -1054,8 +1054,11 @@ function draw() {
 				puck[1] += 7;
 			}
 			textSize(25);
-			fill(220, 220, 220);
-			text("Hockey Game 2222222222EEE", 10, 30, 390);
+			fill(220, 0, 0);
+			text("Hockey Game 2K19", 10, 40, 390);
+			textSize(12);
+			fill(220, 0, 0);
+			text("Presented By Rookitmin, Ali596087, and Minirals", 5, 385, 350);
 		}
 		DrawButton();
 		buttonArray[5].draw();
