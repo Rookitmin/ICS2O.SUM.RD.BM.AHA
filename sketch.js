@@ -455,7 +455,7 @@ var detectPlayer = function (PT, NP) {
 	else {
 		if (NP === 1) {
 			if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
-						puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20 && !keyIsDown(P1.shoot)) {
+						puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20) {
 				if (puck1[0] * -1 <= team2[0].posX + 20 && puck1[0] * -1 >= team2[0].posX - 20 && 
 						puck1[1] * -1 <= team2[0].posY + 20 && puck1[1] * -1 >= team2[0].posY - 20 && keyIsDown(P2.shoot)) {
 					return(false);
@@ -467,7 +467,7 @@ var detectPlayer = function (PT, NP) {
 		}
 		else {
 			if (puck1[0] * -1 <= team2[0].posX + 20 && puck1[0] * -1 >= team2[0].posX - 20 && 
-					puck1[1] * -1 <= team2[0].posY + 20 && puck1[1] * -1 >= team2[0].posY - 20 && !keyIsDown(P2.shoot)) {
+					puck1[1] * -1 <= team2[0].posY + 20 && puck1[1] * -1 >= team2[0].posY - 20) {
 				if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
 				puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20 && keyIsDown(P1.shoot)) {
 					return(false);
@@ -487,7 +487,6 @@ var drawPuck = function () {
 				puck1[0] = 0 - (team1[0].posX);
 				puck1[1] = 0 - (team1[0].posY);
 				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
-				console.log("P1 has Puck");
 			} 
 			else {
 				puck1[2] = team1[0].facing;
@@ -504,7 +503,6 @@ var drawPuck = function () {
 				puck1[0] = 0 - (team1[0].posX);
 				puck1[1] = 0 - (team1[0].posY);
 				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
-				console.log("P1 has Puck");
 			} 
 			else {
 				puck1[2] = team1[0].facing;
@@ -519,7 +517,6 @@ var drawPuck = function () {
 				puck1[0] = 0 - (team2[0].posX);
 				puck1[1] = 0 - (team2[0].posY);
 				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
-				console.log("P2 has Puck");
 			} 
 			else {
 				puck1[2] = team2[0].facing;
@@ -536,7 +533,6 @@ var drawPuck = function () {
 				puck1[0] = -team1[0].posX;
 				puck1[1] = -team1[0].posY;
 				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
-				console.log("P1 has Puck");
 			} 
 			else {
 				puck1[2] = team1[0].facing;
@@ -551,7 +547,6 @@ var drawPuck = function () {
 				puck1[0] = -team1[1].posX;
 				puck1[1] = -team1[1].posY;
 				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
-				console.log("P2 has Puck");
 			} 
 			else {
 				puck1[2] = team1[1].facing;
@@ -596,12 +591,6 @@ var drawPuck = function () {
 	}
 	else if (puck1[2] === 0) {
 		puck1[1] -= puck1[3];
-	}
-	if (puck1[3] > 0) {
-		puck1[3] -= 0.01;
-	}
-	else {
-		puck1[3] = 0;
 	}
 	if (puck1[0] < 0) {
 		puck1[0] = 0;
