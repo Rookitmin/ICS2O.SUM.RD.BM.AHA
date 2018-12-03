@@ -2,10 +2,12 @@ function setup() {
   createCanvas(400, 400);
   background(220);
 	textAlign(CENTER);
+	colorMode(RGB, 255, 255, 255, 255);
 }
 // an in-game variable, controlling 
 // where you are looking on the map.
 var buttonArray = [];
+var PauseButton = [];
 var scroll = [0, 0];
 var Score = 100;
 var Players = 0;
@@ -14,6 +16,7 @@ var playerSpeed = 5;
 var CompleteControl = false;
 // controls what you see
 var scene = 1;
+var Pause = false;
 var inGame = false;
 var GameMode = 0;
 // Changes the difficulty of the CPUs and the 
@@ -304,7 +307,7 @@ buttonArray.push (new button (0, 0, 400, 200, 10, "Versus", 30, 11));      //26
 buttonArray.push (new button (0, 200, 400, 200, 10, "Same Team", 30, 11)); //27
 buttonArray.push (new button (95, 95, 100, 100, 11, "Single Match", 16, 12)); //28
 buttonArray.push (new button (205, 95, 100, 100, 11, "Tournament", 16, 12));  //29
-buttonArray.push (new button (95, 205, 100, 100, 11, "Ringette", 16, 12));    //30
+buttonArray.push (new button (95, 205, 100, 100, 11, "Tutorial", 16, 12));    //30
 buttonArray.push (new button (205, 205, 100, 100, 11, "Practice Match", 16)); //31
 buttonArray.push (new button (20, 100, 75, 30, 2, "Controls", 16, 5));       //32
 buttonArray.push (new button (325, 355, 50, 20, 5, "Next", 12 , 6));          //33
@@ -320,6 +323,7 @@ buttonArray.push (new button (240, 135, 80, 45, 5, "bind Player 2 Down key", 12,
 buttonArray.push (new button (240, 225, 80, 45, 5, "bind Player 2 Left key", 12, 0));//43
 buttonArray.push (new button (240, 315, 80, 45, 5, "bind Player 2 Right key", 12, 0));//44
 buttonArray.push (new button (240, 45, 80, 45, 6, "bind Player 2 Shoot key", 12, 0));//45
+PauseButton.push (new button (50, 75, 200, 50, 15, "Resume", 40, 1))
 
 var DrawButton = function () {
 	for (var i = 0; i < buttonArray.length; i ++) {
@@ -329,6 +333,12 @@ var DrawButton = function () {
 		else {
 		buttonArray[i].hover();
 		}
+	}
+}
+var PauseScreen = function () {
+	OneButton = true;
+	for (var i = 0; i < PauseButton.length; i++) {
+		PauseButton[i].hover();
 	}
 }
 var detectSceneChange = function () {
@@ -405,6 +415,17 @@ var detectSceneChange = function () {
 			}
 			else if (i === 45) {
 				changeKey = 10;
+			}
+		}
+	}
+}
+var detectPauseChange = function () {
+	for (var i = 0; i < PauseButton.length; i ++) {
+		if (PauseButton[i].hovering && PauseButton[i].gotoScene >= 1) {
+			scene = PauseButton[i].gotoScene;
+			if (i === 0) {
+				inGame = true;
+				Pause = false;
 			}
 		}
 	}
@@ -945,6 +966,46 @@ function draw() {
 			}
 		}
   } 
+	else if (Pause) {
+		background(220);
+		resetMatrix();
+		fill(225, 225, 255);
+		for (var ii = 0; ii < 800; ii += 100) {
+			for (jj = 0; jj < 800; jj += 100) {
+				rect(ii, jj, 100, 100);
+			}
+		}
+		fill(0, 0, 0);
+		ellipse(puck1[0], puck1[1], 20, 20);
+		resetMatrix();
+		fill(team1[0].color);
+		translate(-1 * team1[0].posX, -team1[0].posY);
+		rotate(team1[0].facing);
+		ellipse(0, 0, 50, 15);
+		ellipse(0, 0, 25, 25);
+		if (Players === 2) {
+			if (PlayerType === 1) {
+				resetMatrix();
+				fill(team2[0].color);
+				translate(-team2[0].posX, -team2[0].posY);
+				rotate(team2[0].facing);
+				ellipse(0, 0, 50, 15);
+				ellipse(0, 0, 25, 25);
+			}
+			else if (PlayerType === 2) {
+				resetMatrix();
+				fill(team1[1].color);
+				translate(-team1[1].posX, -team1[1].posY);
+				rotate(team1[1].facing);
+				ellipse(0, 0, 50, 15);
+				ellipse(0, 0, 25, 25);
+			}
+		}
+		resetMatrix();
+		fill(0, 0, 0, 125);
+		rect(0, 0, 801, 801);
+		PauseScreen();
+	}
 	else {
 		background(220);
 		angleMode(DEGREES);
@@ -1168,15 +1229,18 @@ function draw() {
 			text("The Keys to Move are " + P2.keyName.Up + " - " + P2.keyName.Down + " - " + P2.keyName.Left + " - " + 
 					 P2.keyName.Right + " with " + P2.keyName.Shoot + " to shoot (Player 2) " + 
 					 "& " + P1.keyName.Up + " - " + P1.keyName.Down + " - " + P1.keyName.Left + " - " + P1.keyName.Right + " with " + 
-					 P1.keyName.Shoot + " to shoot (Player 1).", 50, 50, 300, 300);
+					 P1.keyName.Shoot + " to shoot (Player 1). Press [SPACE] to Pause", 50, 50, 300, 300);
 		}
   }
 }
 function mousePressed () {
-	if (!inGame) {
+	if (!inGame && !Pause) {
 		detectSceneChange();
 		resizeCanvas(400, 400);
   }
+	if (Pause) {
+		detectPauseChange();
+	}
 	if (inGame) {
 		resizeCanvas(800, 800);
 	}
@@ -1193,7 +1257,13 @@ function keyTyped() {
 		inGame = true;
 		scene = 12;
 	}
-	if (inGame) {
+	if (inGame && key === " ") {
+		Pause = true;
+		inGame = false;
+		scene = 15;
+		console.log("Pause");
+	}
+	if (inGame || Pause) {
 		resizeCanvas(801, 801);
 	}
 	else {
