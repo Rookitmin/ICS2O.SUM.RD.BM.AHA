@@ -24,6 +24,7 @@ var stick2 = [0, 0, 0, 1];
 var puck = [0, 0, 0, 0];
 // Key Changing Variables
 var changeKey = 0;
+var changeKeyPressed = false;
 var P1 = {Up: 38, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}, speedX: 0, speedY: 0};
 var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82, keyName: {}, speedX: 0, speedY: 0};
 P1.keyName = {Up: "Up Arrow", Down: "Down Arrow", Left: "Left Arrow", 
@@ -415,112 +416,228 @@ var speedNeg2 = P1.speedY / 5 - 5;
 var puck1 = [400, 400, 0, 0];
 var ignore = false;
 var dleayl = 0;
-var drawPuck = function () {
-	fill(0, 0, 0);
-	if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
-			puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20 && !ignore) {
-		if (!keyIsDown(P1.shoot)) {
-			puck1[0] = 0 - (team1[0].posX);
-			puck1[1] = 0 - (team1[0].posY);
-			ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
-		} 
+var detectPlayer = function (PT, NP) {
+	if (PT === 0) {
+		if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
+				puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20) {
+			return(true);
+		}
 		else {
-			puck1[2] = team1[0].facing;
-			puck1[3] = 5;
-			ellipse(puck1[0], puck1[1], 20, 20);
-			ignore = true;
-			delayl = 0;
+			return(false);
+		}
+	}
+	else if (PT === 1) {
+		if (NP === 1) {
+			if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
+					puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20) {
+				if (puck1[0] * -1 <= team1[1].posX + 20 && puck1[0] * -1 >= team1[1].posX - 20 && 
+				puck1[1] * -1 <= team1[1].posY + 20 && puck1[1] * -1 >= team1[1].posY - 20 && keyIsDown(P2.shoot)) {
+					return(false);
+				}
+				else {
+					return(true);
+				}
+			}
+		}
+		else {
+			if (puck1[0] * -1 <= team1[1].posX + 20 && puck1[0] * -1 >= team1[1].posX - 20 && 
+					puck1[1] * -1 <= team1[1].posY + 20 && puck1[1] * -1 >= team1[1].posY - 20) {
+				if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
+				puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20 && keyIsDown(P1.shoot)) {
+					return(false);
+				}
+				else {
+					return(true);
+				}
+			}
 		}
 	}
 	else {
-		if (ignore) {
-			delayl ++;
-			if (delayl > 50) {
-				ignore = false;
+		if (NP === 1) {
+			if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
+						puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20) {
+				if (puck1[0] * -1 <= team2[0].posX + 20 && puck1[0] * -1 >= team2[0].posX - 20 && 
+						puck1[1] * -1 <= team2[0].posY + 20 && puck1[1] * -1 >= team2[0].posY - 20 && keyIsDown(P2.shoot)) {
+					return(false);
+				}
+				else {
+					return(true);
+				}
 			}
-		}
-		ellipse(puck1[0], puck1[1], 20, 20);
-		if (puck1[2] === 45) {
-			puck1[0] += puck1[3] / 2;
-			puck1[1] -= puck1[3] / 2;
-		}
-		else if (puck1[2] === 90) {
-			puck1[0] += puck1[3];
-		}
-		else if (puck1[2] === 135) {
-			puck1[0] += puck1[3] / 2;
-			puck1[1] += puck1[3] / 2;
-		}
-		else if (puck1[2] === 180) {
-			puck1[1] += puck1[3];
-		}
-		else if (puck1[2] === 225) {
-			puck1[0] -= puck1[3] / 2;
-			puck1[1] += puck1[3] / 2;
-		}
-		else if (puck1[2] === 270) {
-			puck1[0] -= puck1[3];
-		}
-		else if (puck1[2] === 315) {
-			puck1[0] -= puck1[3] / 2;
-			puck1[1] -= puck1[3] / 2;
-		}
-		else if (puck1[2] === 0) {
-			puck1[1] -= puck1[3];
-		}
-		if (puck1[3] > 0) {
-			puck1[3] -= 0.01;
 		}
 		else {
-			puck1[3] = 0;
-		}
-		if (puck1[0] < 0) {
-			puck1[0] = 0;
-			if (puck1[2] === 225) {
-				puck1[2] = 135;
-			}
-			else if (puck1[2] === 270) {
-				puck1[2] = 90;
-			}
-			else if (puck1[2] === 315) {
-				puck1[2] = 45;
+			if (puck1[0] * -1 <= team2[0].posX + 20 && puck1[0] * -1 >= team2[0].posX - 20 && 
+					puck1[1] * -1 <= team2[0].posY + 20 && puck1[1] * -1 >= team2[0].posY - 20) {
+				if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
+				puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20 && keyIsDown(P1.shoot)) {
+					return(false);
+				}
+				else {
+					return(true);
+				}
 			}
 		}
-		if (puck1[0] > 800) {
-			puck1[0] = 800;
-			if (puck1[2] === 135) {
-				puck1[2] = 225;
-			}
-			else if (puck1[2] === 90) {
-				puck1[2] = 270;
-			}
-			else if (puck1[2] === 45) {
-				puck1[2] = 315;
-			}
-		}
-		if (puck1[1] < 0) {
-			puck1[1] = 0;
-			if (puck1[2] === 315) {
-				puck1[2] = 225;
-			}
-			else if (puck1[2] === 0) {
-				puck1[2] = 180;
-			}
-			else if (puck1[2] === 45) {
-				puck1[2] = 135;
+	}
+}
+var drawPuck = function () {
+	fill(0, 0, 0);
+	if (Players === 1) {
+		if (detectPlayer(0, 1) && !ignore) {
+			if (!keyIsDown(P1.shoot)) {
+				puck1[0] = 0 - (team1[0].posX);
+				puck1[1] = 0 - (team1[0].posY);
+				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+			} 
+			else {
+				puck1[2] = team1[0].facing;
+				puck1[3] = 5;
+				ellipse(puck1[0], puck1[1], 20, 20);
+				ignore = true;
+				delayl = 0;
 			}
 		}
-		if (puck1[1] > 800) {
-			puck1[1] = 800;
-			if (puck1[2] === 225) {
-				puck1[2] = 315;
+	}
+	else if (PlayerType === 1) {
+		if (detectPlayer(2, 1) && !ignore) {
+			if (!keyIsDown(P1.shoot)) {
+				puck1[0] = 0 - (team1[0].posX);
+				puck1[1] = 0 - (team1[0].posY);
+				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+			} 
+			else {
+				puck1[2] = team1[0].facing;
+				puck1[3] = 5;
+				ellipse(puck1[0], puck1[1], 20, 20);
+				ignore = true;
+				delayl = 0;
+			} 
+		}
+		else if (detectPlayer(2, 2) && !ignore) {
+			if (!keyIsDown(P2.shoot)) {
+				puck1[0] = 0 - (team2[0].posX);
+				puck1[1] = 0 - (team2[0].posY);
+				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+			} 
+			else {
+				puck1[2] = team2[0].facing;
+				puck1[3] = 5;
+				ellipse(puck1[0], puck1[1], 20, 20);
+				ignore = true;
+				delayl = 0;
 			}
-			else if (puck1[2] === 180) {
-				puck1[2] = 0;
+		}
+	}
+	else if (PlayerType === 2) {
+		if (detectPlayer(1, 1) && !ignore) {
+			if (!keyIsDown(P1.shoot)) {
+				puck1[0] = -team1[0].posX;
+				puck1[1] = -team1[0].posY;
+				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+			} 
+			else {
+				puck1[2] = team1[0].facing;
+				puck1[3] = 5;
+				ellipse(puck1[0], puck1[1], 20, 20);
+				ignore = true;
+				delayl = 0;
+			} 
+		}
+		else if (detectPlayer(1, 2) && !ignore) {
+			if (!keyIsDown(P2.shoot)) {
+				puck1[0] = -team1[1].posX;
+				puck1[1] = -team1[1].posY;
+				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+			} 
+			else {
+				puck1[2] = team1[1].facing;
+				puck1[3] = 5;
+				ellipse(puck1[0], puck1[1], 20, 20);
+				ignore = true;
+				delayl = 0;
 			}
-			else if (puck1[2] === 135) {
-				puck1[2] = 45;
-			}
+		}
+	}
+	if (ignore) {
+		delayl ++;
+		if (delayl > 50) {
+			ignore = false;
+		}
+	}
+	ellipse(puck1[0], puck1[1], 20, 20);
+	if (puck1[2] === 45) {
+		puck1[0] += puck1[3] / 2;
+		puck1[1] -= puck1[3] / 2;
+	}
+	else if (puck1[2] === 90) {
+		puck1[0] += puck1[3];
+	}
+	else if (puck1[2] === 135) {
+		puck1[0] += puck1[3] / 2;
+		puck1[1] += puck1[3] / 2;
+	}
+	else if (puck1[2] === 180) {
+		puck1[1] += puck1[3];
+	}
+	else if (puck1[2] === 225) {
+		puck1[0] -= puck1[3] / 2;
+		puck1[1] += puck1[3] / 2;
+	}
+	else if (puck1[2] === 270) {
+		puck1[0] -= puck1[3];
+	}
+	else if (puck1[2] === 315) {
+		puck1[0] -= puck1[3] / 2;
+		puck1[1] -= puck1[3] / 2;
+	}
+	else if (puck1[2] === 0) {
+		puck1[1] -= puck1[3];
+	}
+	if (puck1[0] < 0) {
+		puck1[0] = 0;
+		if (puck1[2] === 225) {
+			puck1[2] = 135;
+		}
+		else if (puck1[2] === 270) {
+			puck1[2] = 90;
+		}
+		else if (puck1[2] === 315) {
+			puck1[2] = 45;
+		}
+	}
+	if (puck1[0] > 800) {
+		puck1[0] = 800;
+		if (puck1[2] === 135) {
+			puck1[2] = 225;
+		}
+		else if (puck1[2] === 90) {
+			puck1[2] = 270;
+		}
+		else if (puck1[2] === 45) {
+			puck1[2] = 315;
+		}
+	}
+	if (puck1[1] < 0) {
+		puck1[1] = 0;
+		if (puck1[2] === 315) {
+			puck1[2] = 225;
+		}
+		else if (puck1[2] === 0) {
+			puck1[2] = 180;
+		}
+		else if (puck1[2] === 45) {
+			puck1[2] = 135;
+		}
+	}
+	if (puck1[1] > 800) {
+		puck1[1] = 800;
+		if (puck1[2] === 225) {
+			puck1[2] = 315;
+		}
+		else if (puck1[2] === 180) {
+			puck1[2] = 0;
+		}
+		else if (puck1[2] === 135) {
+			puck1[2] = 45;
 		}
 	}
 }
@@ -533,6 +650,7 @@ function draw() {
 		speedPos2 = playerSpeed - P1.speedY / playerSpeed;
 		speedNeg2 = P1.speedY / playerSpeed - playerSpeed;
   	background(220);
+		// console.log(detectPlayer(0, 1));
 		resetMatrix();
 		fill(225, 225, 255);
 		for (var i = -800; i < 800; i += 100) {
@@ -925,8 +1043,11 @@ function draw() {
 				puck[1] += 7;
 			}
 			textSize(25);
-			fill(220, 220, 220);
-			text("Ice Game 9102", 10, 30, 390);
+			fill(220, 0, 0);
+			text("Hockey Game 2K19", 10, 40, 390);
+			textSize(12);
+			fill(220, 0, 0);
+			text("Presented By Rookitmin, Ali596087, and Minirals", 5, 385, 350);
 		}
 		DrawButton();
 		buttonArray[5].draw();
@@ -934,55 +1055,61 @@ function draw() {
 		buttonArray[21].draw();
 		buttonArray[22].draw();
 		if (changeKey != 0) {
-			if (changeKey === 1 & keyIsPressed) {
+			if(changeKeyPressed && !keyIsPressed) {
+			if (changeKey === 1) {
 				P1.Up = keyCode;
 				P1.keyName.Up = key;
 				changeKey = 0;
 			}
-			if (changeKey === 2 & keyIsPressed) {
+			if (changeKey === 2) {
 				P1.Down = keyCode;
 				P1.keyName.Down = key;
 				changeKey = 0;
 			}
-			if (changeKey === 3 & keyIsPressed) {
+			if (changeKey === 3) {
 				P1.Left = keyCode;
 				P1.keyName.Left = key;
 				changeKey = 0;
 			}
-			if (changeKey === 4 & keyIsPressed) {
+			if (changeKey === 4) {
 				P1.Right = keyCode;
 				P1.keyName.Right = key;
 				changeKey = 0;
 			}
-			if (changeKey === 6 & keyIsPressed) {
+			if (changeKey === 6) {
 				P2.Up = keyCode;
 				P2.keyName.Up = key;
 				changeKey = 0;
 			}
-			if (changeKey === 7 & keyIsPressed) {
+			if (changeKey === 7) {
 				P2.Down = keyCode;
 				P2.keyName.Down = key;
 				changeKey = 0;
 			}
-			if (changeKey === 8 & keyIsPressed) {
+			if (changeKey === 8) {
 				P2.Left = keyCode;
 				P2.keyName.Left = key;
 				changeKey = 0;
 			}
-			if (changeKey === 9 & keyIsPressed) {
+			if (changeKey === 9) {
 				P2.Right = keyCode;
 				P2.keyName.Right = key;
 				changeKey = 0;
 			}	
-			if (changeKey === 5 & keyIsPressed) {
+			if (changeKey === 5) {
 				P1.shoot = keyCode;
 				P1.keyName.Shoot = key;
 				changeKey = 0;
 			}
-			if (changeKey === 10 & keyIsPressed) {
+			if (changeKey === 10) {
 				P2.shoot = keyCode;
 				P2.keyName.Shoot = key;
 				changeKey = 0;
+			}
+				changeKeyPressed = false;
+			}
+			if (!changeKeyPressed && keyIsPressed) {
+				changeKeyPressed = true;
 			}
 		}
 		OneButton = true;
