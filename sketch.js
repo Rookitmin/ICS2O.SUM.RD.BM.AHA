@@ -323,7 +323,9 @@ buttonArray.push (new button (240, 135, 80, 45, 5, "bind Player 2 Down key", 12,
 buttonArray.push (new button (240, 225, 80, 45, 5, "bind Player 2 Left key", 12, 0));//43
 buttonArray.push (new button (240, 315, 80, 45, 5, "bind Player 2 Right key", 12, 0));//44
 buttonArray.push (new button (240, 45, 80, 45, 6, "bind Player 2 Shoot key", 12, 0));//45
-PauseButton.push (new button (50, 75, 200, 50, 15, "Resume", 40, 1))
+PauseButton.push (new button (50, 75, 200, 50, 15, "Resume", 40, 1));
+PauseButton.push (new button (50, 135, 200, 50, 15, "Main Menu", 40, 1));
+PauseButton.push (new button ());
 
 var DrawButton = function () {
 	for (var i = 0; i < buttonArray.length; i ++) {
@@ -426,6 +428,14 @@ var detectPauseChange = function () {
 			if (i === 0) {
 				inGame = true;
 				Pause = false;
+			}
+			if (i === 1) {
+				inGame = false;
+				Pause = false;
+				team1 = [];
+				team2 = [];
+				teamCreate();
+				puck1 = [400, 400, 0, 0] 
 			}
 		}
 	}
@@ -1105,7 +1115,7 @@ function draw() {
 			}
 			textSize(25);
 			fill(220, 0, 0);
-			text("Hockey Game 9102", 10, 40, 390);
+			text("Hockey Game 9201", 10, 40, 390);
 			textSize(12);
 			fill(220, 0, 0);
 			text("Presented By Rookitmin, Ali596087, and Minirals", 5, 385, 350);
@@ -1247,11 +1257,11 @@ function mousePressed () {
 }
 
 function keyTyped() {
-	if (key === 'v') {
+	if (key === 'v' && inGame) {
 		scene = 1;
 		inGame = false;
 	}
-	else if (key === 'b') {
+	else if (key === 'b' && !Pause && !inGame) {
 		CompleteControl = true;
 		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
 		inGame = true;
