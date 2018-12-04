@@ -290,7 +290,6 @@ buttonArray.push (new button (10, 50, 120, 40, 1, "Start", 30, 9));    //9
 buttonArray.push (new button (315, 340, 75, 50, 1, "How To Play", 16, 4)); //10
 buttonArray.push (new button (10, 100, 120, 40, 1, "Settings", 30, 2));  //11
 buttonArray.push (new button (20, 50, 75, 30, 2, "Difficulty", 16, 3));  //12
-buttonArray.push (new button (20, 50, 75, 30, 999, "Difficulty", 16, 3)); //13
 buttonArray.push (new button (30, 150, 75, 30, 3, "Hard", 16, 2));        //14
 buttonArray.push (new button (30, 100, 75, 30, 3, "Medium", 16, 2));      //15
 buttonArray.push (new button (30, 50, 75, 30, 3, "Easy", 16, 2));         //16
@@ -325,12 +324,12 @@ buttonArray.push (new button (240, 315, 80, 45, 5, "bind Player 2 Right key", 12
 buttonArray.push (new button (240, 45, 80, 45, 6, "bind Player 2 Shoot key", 12, 0));//45
 PauseButton.push (new button (50, 75, 200, 50, 15, "Resume", 40, 1));
 PauseButton.push (new button (50, 135, 200, 50, 15, "Main Menu", 40, 1));
-PauseButton.push (new button ());
+PauseButton.push (new button (50, 195, 200, 50, 15, "Settings", 40, 1));
 
 var DrawButton = function () {
 	for (var i = 0; i < buttonArray.length; i ++) {
-		if (i >= 14 && i <= 16) {
-			buttonArray[i].hover(i - 13);
+		if (i >= 13 && i <= 15) {
+			buttonArray[i].hover(i - 12);
 		} 
 		else {
 		buttonArray[i].hover();
@@ -347,75 +346,75 @@ var detectSceneChange = function () {
 	for (var i = 0; i < buttonArray.length; i ++) {
 		if (buttonArray[i].hovering && buttonArray[i].gotoScene >= 1) {
 			scene = buttonArray[i].gotoScene;
-			if (i === 14) {
+			if (i === 13) {
 				difficulty = 3;
 				console.log(1);
 			}
-			else if (i === 15) {
+			else if (i === 14) {
 				difficulty = 2;
 			}
-			else if (i === 16) {
+			else if (i === 15) {
 				difficulty = 1;
 			}
 			if (buttonArray[i].gotoScene === 12) {
 				inGame = true;
 				teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
-				if (i === 28) {
+				if (i === 27) {
 					gameMode = 1;
 				}
-				if (i === 29) {
+				if (i === 28) {
 					gameMode = 2;
 				}
-				if (i === 30) {
+				if (i === 29) {
 					gameMode = 3;
 				}
-				if (i === 31) {
+				if (i === 30) {
 					gameMode = 4;
 				}
 			}
 			else if (buttonArray[i].gotoScene === 10 || buttonArray[i].gotoScene === 11) {
-				if (i === 24) {
+				if (i === 23) {
 					Players = 1;
 				} 
-				if (i === 25) {
+				if (i === 24) {
 					Players = 2;
 				}
-				if (i === 26) {
+				if (i === 25) {
 					PlayerType = 1;
 				}
-				if (i === 27) {
+				if (i === 26) {
 					PlayerType = 2;
 				}
 			}
 		} else if (buttonArray[i].gotoScene === 0 && buttonArray[i].hovering) {
-			if (i === 36) {
+			if (i === 35) {
 				changeKey = 1;
 			}
-			else if (i === 37) {
+			else if (i === 36) {
 				changeKey = 2;
 			}
-			else if (i === 38) {
+			else if (i === 37) {
 				changeKey = 3;
 			}
-			else if (i === 39) {
+			else if (i === 38) {
 				changeKey = 4;
 			}
-			else if (i === 40) {
+			else if (i === 39) {
 				changeKey = 5;
 			}
-			else if (i === 41) {
+			else if (i === 40) {
 				changeKey = 6;
 			}
-			else if (i === 42) {
+			else if (i === 41) {
 				changeKey = 7;
 			}
-			else if (i === 43) {
+			else if (i === 42) {
 				changeKey = 8;
 			}
-			else if (i === 44) {
+			else if (i === 43) {
 				changeKey = 9;
 			}
-			else if (i === 45) {
+			else if (i === 44) {
 				changeKey = 10;
 			}
 		}
@@ -1258,7 +1257,7 @@ function mousePressed () {
 
 function keyTyped() {
 	if (key === 'v' && inGame) {
-		scene = 1;
+		scene =  1;
 		inGame = false;
 	}
 	else if (key === 'b' && !Pause && !inGame) {
