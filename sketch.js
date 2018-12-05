@@ -8,7 +8,9 @@ function setup() {
 // where you are looking on the map.
 var buttonArray = [];
 var PauseButton = [];
+var PauseSlider = [];
 var scroll = [0, 0];
+var gotoPause = false;
 var Score = 100;
 var Players = 0;
 var PlayerType = 0;
@@ -276,7 +278,7 @@ var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." +
 						"With the grade three's ... Hockey Dude, and Ringette Girl.";
 var creditScroll = 400;
 var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5, 8.5);
-var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "CPU Speed", 0.5, 7.5);
+var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
 buttonArray.push (new button (10, 10, 75, 25, 2, "Main Menu", 12, 1));  //0
 buttonArray.push (new button (10, 10, 75, 25, 3, "Main Menu", 12, 1)); //1
 buttonArray.push (new button (10, 10, 75, 25, 5, "Main Menu", 12, 1)); //2
@@ -287,7 +289,7 @@ buttonArray.push (new button (10, 10, 75, 25, 10, "Main Menu", 12, 1)); //6
 buttonArray.push (new button (10, 10, 75, 25, 4, "Main Menu", 12, 1));  //7
 buttonArray.push (new button (10, 10, 75, 25, 11, "Main Menu", 12, 1)); //8
 buttonArray.push (new button (10, 50, 120, 40, 1, "Start", 30, 9));    //9
-buttonArray.push (new button (315, 315, 75, 50, 1, "How To Play", 16, 4)); //10
+buttonArray.push (new button (315, 340, 75, 50, 1, "How To Play", 16, 4)); //10
 buttonArray.push (new button (10, 100, 120, 40, 1, "Settings", 30, 2));  //11
 buttonArray.push (new button (20, 50, 75, 30, 2, "Difficulty", 16, 3));  //12
 buttonArray.push (new button (30, 150, 75, 30, 3, "Hard", 16, 2));        //14
@@ -322,9 +324,11 @@ buttonArray.push (new button (240, 135, 80, 45, 5, "bind Player 2 Down key", 12,
 buttonArray.push (new button (240, 225, 80, 45, 5, "bind Player 2 Left key", 12, 0));//43
 buttonArray.push (new button (240, 315, 80, 45, 5, "bind Player 2 Right key", 12, 0));//44
 buttonArray.push (new button (240, 45, 80, 45, 6, "bind Player 2 Shoot key", 12, 0));//45
-PauseButton.push (new button (50, 75, 200, 50, 15, "Resume", 40, 1));
+PauseButton.push (new button (50, 75, 200, 50, 15, "Resume", 40, 15));
 PauseButton.push (new button (50, 135, 200, 50, 15, "Main Menu", 40, 1));
-PauseButton.push (new button (50, 195, 200, 50, 15, "Settings", 40, 1));
+PauseButton.push (new button (50, 195, 200, 50, 15, "Settings", 40, 16));
+PauseButton.push (new button (60, 80, 150, 35, 16, "change team 1 colour", 21, 17));
+// PauseSlider.push (new slider (0, 255, 70, 85, ));
 
 var DrawButton = function () {
 	for (var i = 0; i < buttonArray.length; i ++) {
@@ -1114,8 +1118,8 @@ function draw() {
 			}
 			textSize(25);
 			fill(220, 0, 0);
-			text("Hockey game 9201", 10, 40, 390);
-			textSize(15);
+			text("Hockey Game 9201", 10, 40, 390);
+			textSize(12);
 			fill(220, 0, 0);
 			text("Presented By Rookitmin, Ali596087, and Minirals", 5, 385, 350);
 		}
