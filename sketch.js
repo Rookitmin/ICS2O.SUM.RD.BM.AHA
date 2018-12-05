@@ -1114,7 +1114,7 @@ function draw() {
 			}
 			textSize(25);
 			fill(220, 0, 0);
-			text("Hockey 2K19", 10, 40, 390);
+			text("Hockey game 9201", 10, 40, 390);
 			textSize(15);
 			fill(220, 0, 0);
 			text("Presented By Rookitmin, Ali596087, and Minirals", 5, 385, 350);
