@@ -287,7 +287,7 @@ buttonArray.push (new button (10, 10, 75, 25, 10, "Main Menu", 12, 1)); //6
 buttonArray.push (new button (10, 10, 75, 25, 4, "Main Menu", 12, 1));  //7
 buttonArray.push (new button (10, 10, 75, 25, 11, "Main Menu", 12, 1)); //8
 buttonArray.push (new button (10, 50, 120, 40, 1, "Start", 30, 9));    //9
-buttonArray.push (new button (315, 340, 75, 50, 1, "How To Play", 16, 4)); //10
+buttonArray.push (new button (315, 315, 75, 50, 1, "How To Play", 16, 4)); //10
 buttonArray.push (new button (10, 100, 120, 40, 1, "Settings", 30, 2));  //11
 buttonArray.push (new button (20, 50, 75, 30, 2, "Difficulty", 16, 3));  //12
 buttonArray.push (new button (30, 150, 75, 30, 3, "Hard", 16, 2));        //14
@@ -1114,8 +1114,8 @@ function draw() {
 			}
 			textSize(25);
 			fill(220, 0, 0);
-			text("Hockey Game 9201", 10, 40, 390);
-			textSize(12);
+			text("Hockey 2K19", 10, 40, 390);
+			textSize(15);
 			fill(220, 0, 0);
 			text("Presented By Rookitmin, Ali596087, and Minirals", 5, 385, 350);
 		}
