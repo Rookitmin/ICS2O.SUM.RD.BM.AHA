@@ -309,7 +309,7 @@ buttonArray.push (new button (0, 200, 400, 200, 10, "Same Team", 30, 11)); //27
 buttonArray.push (new button (95, 95, 100, 100, 11, "Single Match", 16, 12)); //28
 buttonArray.push (new button (205, 95, 100, 100, 11, "Tournament", 16, 12));  //29
 buttonArray.push (new button (95, 205, 100, 100, 11, "Tutorial", 16, 12));    //30
-buttonArray.push (new button (205, 205, 100, 100, 11, "Practice Match", 16)); //31
+buttonArray.push (new button (205, 205, 100, 100, 11, "Practice Match", 16, 12)); //31
 buttonArray.push (new button (20, 100, 75, 30, 2, "Controls", 16, 5));       //32
 buttonArray.push (new button (325, 355, 50, 20, 5, "Next", 12 , 6));          //33
 buttonArray.push (new button (10, 355, 50, 20, 6, "Prev", 12, 5));           //34
