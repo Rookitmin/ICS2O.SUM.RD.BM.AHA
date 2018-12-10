@@ -1286,14 +1286,17 @@ function mousePressed () {
 }
 
 function keyTyped() {
-	if (key === 'v' && inGame) {
+	if (key === 'v' && (inGame || Pause)) {
 		scene =  1;
 		inGame = false;
+		Pause = false;
+		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
 	}
 	else if (key === 'b' && !Pause && !inGame) {
 		CompleteControl = true;
 		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
 		inGame = true;
+		puck1 = [400, 400, 0, 0];
 		scene = 12;
 	}
 	if (inGame && key === " ") {
