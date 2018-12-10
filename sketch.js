@@ -16,6 +16,18 @@ var Players = 0;
 var PlayerType = 0;
 var playerSpeed = 5;
 var CompleteControl = false;
+var colorChange = {
+	team1: {
+		r: 0,
+		g: 0,
+		b: 0
+	},
+	team2: {
+		r: 0,
+		g: 0,
+		b: 0
+	}
+}
 // controls what you see
 var scene = 1;
 var Pause = false;
@@ -95,7 +107,7 @@ function slider (min, max, x, y, w, h, scene, title, valueChange, pos) {
 	this.change = valueChange;
 }
 
-slider.prototype.hover = function () {
+slider.prototype.hover = function (r, g, b) {
 	this.hovering = false;
 	if (scene === this.scene) {
 		noFill();
@@ -108,6 +120,9 @@ slider.prototype.hover = function () {
 		}
 		else {
 			fill(10, 10, 102);
+		}
+		if (!(r <= 0 && g <= 0 && b <= 0)) {
+			fill(r, g, b);
 		}
 		rect(this.x + this.pos * this.width / (this.max - this.min), this.y, 
 				 this.width / (this.max - this.min), this.height);
@@ -327,8 +342,11 @@ buttonArray.push (new button (240, 45, 80, 45, 6, "bind Player 2 Shoot key", 12,
 PauseButton.push (new button (50, 75, 200, 50, 15, "Resume", 40, 15));
 PauseButton.push (new button (50, 135, 200, 50, 15, "Main Menu", 40, 1));
 PauseButton.push (new button (50, 195, 200, 50, 15, "Settings", 40, 16));
-PauseButton.push (new button (60, 80, 150, 35, 16, "change team 1 colour", 21, 17));
-// PauseSlider.push (new slider (0, 255, 70, 85, ));
+PauseButton.push (new button (60, 80, 200, 35, 16, "change team 1 colour", 21, 17));
+PauseButton.push (new button (725, 10, 50, 20, 16, "back", 12, 15));
+PauseButton.push (new button (725, 10, 50, 20, 17, "back", 12, 16));
+PauseSlider.push (new slider (0, 255, 70, 85, 510, 17, "Team 1 Red Value", 5, 255));
+// new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
 
 var DrawButton = function () {
 	for (var i = 0; i < buttonArray.length; i ++) {
@@ -344,6 +362,9 @@ var PauseScreen = function () {
 	OneButton = true;
 	for (var i = 0; i < PauseButton.length; i++) {
 		PauseButton[i].hover();
+	}
+	for (i = 0; i < PauseSlider.length; i++) {
+		PauseSlider[i].hover(colorChange.team1);
 	}
 }
 var detectSceneChange = function () {
@@ -440,6 +461,11 @@ var detectPauseChange = function () {
 				teamCreate();
 				puck1 = [400, 400, 0, 0] 
 			}
+		}
+	}
+	for (i = 0; i < PauseSlider.length; i ++) {
+		if (PauseSlider.hovering) {
+			PauseSlider.posChange();
 		}
 	}
 }
@@ -1238,7 +1264,7 @@ function draw() {
 		}
 		if (scene === 4) {
 			fill("black");
-			textSize(29);
+			textSize(30);
 			text("The Keys to Move are " + P2.keyName.Up + " - " + P2.keyName.Down + " - " + P2.keyName.Left + " - " + 
 					 P2.keyName.Right + " with " + P2.keyName.Shoot + " to shoot (Player 2) " + 
 					 "& " + P1.keyName.Up + " - " + P1.keyName.Down + " - " + P1.keyName.Left + " - " + P1.keyName.Right + " with " + 
@@ -1260,14 +1286,17 @@ function mousePressed () {
 }
 
 function keyTyped() {
-	if (key === 'v' && inGame) {
+	if (key === 'v' && (inGame || Pause)) {
 		scene =  1;
 		inGame = false;
+		Pause = false;
+		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
 	}
 	else if (key === 'b' && !Pause && !inGame) {
 		CompleteControl = true;
 		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
 		inGame = true;
+		puck1 = [400, 400, 0, 0];
 		scene = 12;
 	}
 	if (inGame && key === " ") {
