@@ -93,58 +93,61 @@ var teamCreate = function (color1, color2, color3, color4) {
 // creates genaralised button & Slider variables
 var OneButton = true;
 // Sliders
-function slider (min, max, x, y, w, h, scene, title, valueChange, pos) {
+function slider (min, max, x, y, w, h, sceneNumber, title, valueChange, pos) {
 	this.x = x;
 	this.y = y;
 	this.width = w;
+	this.buttonwidth = w;
 	this.height = h;
-	this.scene = scene;
+	this.scene = sceneNumber;
 	this.words = title;
 	this.min = min;
-	this.max = max + valueChange;
+	this.max = max;
 	this.pos = pos;
 	this.hovering = false;
 	this.change = valueChange;
-}
 
-slider.prototype.hover = function (r, g, b) {
-	this.hovering = false;
-	if (scene === this.scene) {
-		noFill();
-		rect(this.x, this.y + this.height / 3, this.width, this.height / 3);
-		if (difficulty === 1) {
-			fill(0, 102, 102);
-		}
-		else if (difficulty === 2) {
-			fill(10, 51, 102);
-		}
-		else {
-			fill(10, 10, 102);
-		}
-		if (!(r <= 0 && g <= 0 && b <= 0)) {
-			fill(r, g, b);
-		}
-		rect(this.x + this.pos * this.width / (this.max - this.min), this.y, 
-				 this.width / (this.max - this.min), this.height);
-		text(this.words, this.x, this.y - 15, this.width, this.height);
-		fill(255, 255, 255);
-		text(this.pos, this.x + this.pos * this.width / (this.max - this.min), this.y + this.height / 5, 
-				 this.width / (this.max - this.min), this.height);
-		if (mouseX > this.x && mouseX < this.x + this.width && mouseY > this.y && mouseY < this.y + this.height) {
-			this.hovering = true;
+	this.hover = function (r, g, b) {
+		this.hovering = false;
+		// console.log(this.scene);
+		// console.log(scene);
+		if (scene === this.scene) {
+			// console.log(451);
+			noFill();
+			rect(this.x, this.y + this.height / 3, this.width, this.height / 3);
+			if (difficulty === 1) {
+				fill(0, 102, 102);
+			}
+			else if (difficulty === 2) {
+				fill(10, 51, 102);
+			}
+			else {
+				fill(10, 10, 102);
+			}
+			if (!(r <= 0 && g <= 0 && b <= 0)) {
+				fill(r, g, b);
+			}
+			rect(this.x + this.pos * (this.width / (this.max - this.min)), this.y, 
+					 this.width / (this.max - this.min), this.height);
+			text(this.words, this.x, this.y - 15, this.width, this.height);
+			fill(255, 255, 255);
+			text(this.pos, this.x + this.pos * this.width / (this.max - this.min), this.y + this.height / 5, 
+					 this.width / (this.max - this.min), this.height);
+			if (mouseX > this.x && mouseX < this.x + this.width && mouseY > this.y && mouseY < this.y + this.height) {
+				this.hovering = true;
+			}
 		}
 	}
-}
 
-slider.prototype.posChange = function () {
-	if ((this.pos + this.change / 2) * this.width / (this.max - this.min) + this.width / (this.max - this.min) < mouseX && 
-				this.scene === scene && this.pos + this.change <= this.max) {
-			this.pos += this.change;
-	}
-	else if ((this.pos - this.change / 2) * this.width / (this.max - this.min) + this.width / (this.max - this.min) > mouseX && 
-				this.scene === scene && this.pos - this.change >= this.min) {
-		this.pos -= this.change;
-		
+	this.posChange = function () {
+		if ((this.pos + this.change) + this.width / (this.max - this.min) < mouseX && 
+					this.scene === scene && this.pos + this.change <= this.max) {
+				this.pos += this.change;
+		}
+		else if ((this.pos - this.change) + this.width / (this.max - this.min) > mouseX && 
+					this.scene === scene && this.pos - this.change >= this.min) {
+			this.pos -= this.change;
+		}
 	}
 }
 
@@ -345,7 +348,10 @@ PauseButton.push (new button (50, 195, 200, 50, 15, "Settings", 40, 16));
 PauseButton.push (new button (60, 80, 200, 35, 16, "change team 1 colour", 21, 17));
 PauseButton.push (new button (725, 10, 50, 20, 16, "back", 12, 15));
 PauseButton.push (new button (725, 10, 50, 20, 17, "back", 12, 16));
-PauseSlider.push (new slider (0, 255, 70, 85, 510, 17, "Team 1 Red Value", 5, 255));
+PauseSlider.push (new slider (35, 250, 70, 85, 510, 15, 17, "Team 1 Red Value", 5, 255));
+PauseSlider.push (new slider (0, 255, 70, 115, 510, 15, 17, "Team 1 Green Value", 5, 255));
+PauseSlider.push (new slider (0, 255, 70, 145, 510, 15, 17, "Team 1 Blue Value", 5, 255));
+
 // new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
 
 var DrawButton = function () {
@@ -363,8 +369,8 @@ var PauseScreen = function () {
 	for (var i = 0; i < PauseButton.length; i++) {
 		PauseButton[i].hover();
 	}
-	for (i = 0; i < PauseSlider.length; i++) {
-		PauseSlider[i].hover(colorChange.team1);
+	for (var ii = 0; ii < PauseSlider.length; ii++) {
+		PauseSlider[ii].hover();
 	}
 }
 var detectSceneChange = function () {
@@ -464,8 +470,17 @@ var detectPauseChange = function () {
 		}
 	}
 	for (i = 0; i < PauseSlider.length; i ++) {
-		if (PauseSlider.hovering) {
-			PauseSlider.posChange();
+		if (PauseSlider[i].hovering) {
+			PauseSlider[i].posChange();
+			if (i === 0) {
+				colorChange.team1.r = PauseSlider[i].pos;
+			}
+			else if (i === 1) {
+				colorChange.team1.g = PauseSlider[i].pos;
+			}
+			else if (i === 2) {
+				colorChange.team1.b = PauseSlider[i].pos;
+			}
 		}
 	}
 }
