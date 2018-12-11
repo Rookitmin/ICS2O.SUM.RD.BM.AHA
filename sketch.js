@@ -288,6 +288,7 @@ button.prototype.hover = function (lll) {
     this.hovering = false;
   }
 }
+// Here's the description of our code
 var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." + 
 					 " Also I\'d Like to thank Aadsta, Sheepdude and all of my other" + 
 						" sponsers. This Assingment was coded in Approxamitly ... 10 Hours?" + 
@@ -297,6 +298,7 @@ var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." +
 var creditScroll = 400;
 var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5, 8.5);
 var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
+// Here is all of our button array & it works
 buttonArray.push (new button (10, 10, 75, 25, 2, "Main Menu", 12, 1));  //0
 buttonArray.push (new button (10, 10, 75, 25, 3, "Main Menu", 12, 1)); //1
 buttonArray.push (new button (10, 10, 75, 25, 5, "Main Menu", 12, 1)); //2
@@ -733,6 +735,7 @@ function draw() {
 				rect(i, j, 100, 100);
 			}
 		}
+		// How our puck is designed & interacts 
 		drawPuck();
 		resetMatrix();
 		fill(team1[0].color);
@@ -1029,6 +1032,7 @@ function draw() {
 				rect(ii, jj, 100, 100);
 			}
 		}
+		//This is how our animation works in our main screen works
 		fill(0, 0, 0);
 		ellipse(puck1[0], puck1[1], 20, 20);
 		resetMatrix();
@@ -1157,6 +1161,7 @@ function draw() {
 			else {
 				puck[1] += 7;
 			}
+			// This displaces our title for our game. 
 			textSize(25);
 			fill(220, 0, 0);
 			text("Hockey Game 9201", 10, 40, 390);
@@ -1241,6 +1246,7 @@ function draw() {
 				}
 			}
 		}
+		// This keeps our credits scene scrolling down
 		if (scene === 7) {
 			background(155, 0, 155);
 			fill(0, 0, 0);
@@ -1277,6 +1283,7 @@ function draw() {
 				text(Score + "th place.", 100, 200, 200, 100);
 			}
 		}
+		// Here tell's the player their keybinds in the "How to Play"
 		if (scene === 4) {
 			fill("black");
 			textSize(29);
