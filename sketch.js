@@ -1264,7 +1264,7 @@ function draw() {
 		}
 		if (scene === 4) {
 			fill("black");
-			textSize(30);
+			textSize(29);
 			text("The Keys to Move are " + P2.keyName.Up + " - " + P2.keyName.Down + " - " + P2.keyName.Left + " - " + 
 					 P2.keyName.Right + " with " + P2.keyName.Shoot + " to shoot (Player 2) " + 
 					 "& " + P1.keyName.Up + " - " + P1.keyName.Down + " - " + P1.keyName.Left + " - " + P1.keyName.Right + " with " + 
