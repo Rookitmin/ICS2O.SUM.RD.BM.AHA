@@ -291,7 +291,7 @@ button.prototype.hover = function (lll) {
 // Here's the description of our code
 var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." + 
 					 " Also I\'d Like to thank Aadsta, Sheepdude and all of my other" + 
-						" sponsers. This Assingment was coded in Approxamitly ... 10 Hours?" + 
+						" sponsers. This Assingment was coded in Approxamitly ... 50 Hours?" + 
 						" has it really been that long? ... I guess so. huh. well... here are " + 
 						"the real credits: Rookitmin, Ali596087, and Minirals in collaboration " +
 						"With the grade three's ... Hockey Dude, and Ringette Girl.";
@@ -375,6 +375,7 @@ var PauseScreen = function () {
 		PauseSlider[ii].hover();
 	}
 }
+//This changes the scene when a player changes the difficulty
 var detectSceneChange = function () {
 	for (var i = 0; i < buttonArray.length; i ++) {
 		if (buttonArray[i].hovering && buttonArray[i].gotoScene >= 1) {
@@ -718,7 +719,7 @@ var drawPuck = function () {
 		}
 	}
 }
-
+// The start to our draw function 
 function draw() {
   if (inGame) {
 		// resizeCanvas(800, 800);
@@ -1169,6 +1170,7 @@ function draw() {
 			fill(220, 0, 0);
 			text("Presented By Rookitmin, Ali596087, and Minirals", 5, 385, 350);
 		}
+		//This what makes changing keybinds work
 		DrawButton();
 		buttonArray[5].draw();
 		buttonArray[6].draw();
@@ -1266,6 +1268,7 @@ function draw() {
 				creditScroll = 400;
 			}
 		}
+		//This tells the player their score
 		if (scene === 8) {
 			textSize(35);
 			text("Game Over", 100, 100, 200, 200);
