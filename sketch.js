@@ -101,8 +101,8 @@ function slider (min, max, x, y, w, h, sceneNumber, title, valueChange, pos) {
 	this.height = h;
 	this.scene = sceneNumber;
 	this.words = title;
-	this.min = min;
-	this.max = max;
+	this.min = min - pos;
+	this.max = max + pos;
 	this.pos = pos;
 	this.hovering = false;
 	this.change = valueChange;
