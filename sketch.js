@@ -101,8 +101,8 @@ function slider (min, max, x, y, w, h, sceneNumber, title, valueChange, pos) {
 	this.height = h;
 	this.scene = sceneNumber;
 	this.words = title;
-	this.min = min;
-	this.max = max;
+	this.min = min - pos;
+	this.max = max + pos;
 	this.pos = pos;
 	this.hovering = false;
 	this.change = valueChange;
@@ -140,12 +140,14 @@ function slider (min, max, x, y, w, h, sceneNumber, title, valueChange, pos) {
 	}
 
 	this.posChange = function () {
-		if ((this.pos + this.change) + this.width / (this.max - this.min) < mouseX && 
-					this.scene === scene && this.pos + this.change <= this.max) {
+		if (this.x + ((this.pos + this.change) * this.width / (this.max - this.min)) < mouseX && 
+					this.scene === scene && this.pos + this.change <= this.max && 
+						mouseIsPressed) {
 				this.pos += this.change;
 		}
-		else if ((this.pos - this.change) + this.width / (this.max - this.min) > mouseX && 
-					this.scene === scene && this.pos - this.change >= this.min) {
+		else if (this.x + ((this.pos - this.change) * this.width / (this.max - this.min)) > mouseX && 
+					this.scene === scene && this.pos - this.change >= this.min && 
+						 mouseIsPressed) {
 			this.pos -= this.change;
 		}
 	}
