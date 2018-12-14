@@ -101,8 +101,8 @@ function slider (min, max, x, y, w, h, sceneNumber, title, valueChange, pos) {
 	this.height = h;
 	this.scene = sceneNumber;
 	this.words = title;
-	this.min = min - pos;
-	this.max = max + pos;
+	this.min = min;
+	this.max = max;
 	this.pos = pos;
 	this.hovering = false;
 	this.change = valueChange;
@@ -352,9 +352,9 @@ PauseButton.push (new button (50, 195, 200, 50, 15, "Settings", 40, 16));
 PauseButton.push (new button (60, 80, 200, 35, 16, "change team 1 colour", 21, 17));
 PauseButton.push (new button (725, 10, 50, 20, 16, "back", 12, 15));
 PauseButton.push (new button (725, 10, 50, 20, 17, "back", 12, 16));
-PauseSlider.push (new slider (35, 250, 70, 85, 510, 15, 17, "Team 1 Red Value", 5, 255));
-PauseSlider.push (new slider (0, 255, 70, 115, 510, 15, 17, "Team 1 Green Value", 5, 255));
-PauseSlider.push (new slider (0, 255, 70, 145, 510, 15, 17, "Team 1 Blue Value", 5, 255));
+PauseSlider.push (new slider (0, 255, 70, 85, 510, 15, 17, "Team 1 Red Value", 5, 250));
+PauseSlider.push (new slider (0, 255, 70, 115, 510, 15, 17, "Team 1 Green Value", 5, 250));
+PauseSlider.push (new slider (0, 255, 70, 145, 510, 15, 17, "Team 1 Blue Value", 5, 250));
 
 // new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
 
@@ -456,35 +456,39 @@ var detectSceneChange = function () {
 		}
 	}
 }
-var detectPauseChange = function () {
-	for (var i = 0; i < PauseButton.length; i ++) {
-		if (PauseButton[i].hovering && PauseButton[i].gotoScene >= 1) {
-			scene = PauseButton[i].gotoScene;
-			if (i === 0) {
-				inGame = true;
-				Pause = false;
-			}
-			if (i === 1) {
-				inGame = false;
-				Pause = false;
-				team1 = [];
-				team2 = [];
-				teamCreate();
-				puck1 = [400, 400, 0, 0] 
+var detectPauseChange = function (lll) {
+	if (lll === 1) {
+		for (var i = 0; i < PauseButton.length; i ++) {
+			if (PauseButton[i].hovering && PauseButton[i].gotoScene >= 1) {
+				scene = PauseButton[i].gotoScene;
+				if (i === 0) {
+					inGame = true;
+					Pause = false;
+				}
+				if (i === 1) {
+					inGame = false;
+					Pause = false;
+					team1 = [];
+					team2 = [];
+					teamCreate();
+					puck1 = [400, 400, 0, 0] 
+				}
 			}
 		}
 	}
-	for (i = 0; i < PauseSlider.length; i ++) {
-		if (PauseSlider[i].hovering) {
-			PauseSlider[i].posChange();
-			if (i === 0) {
-				colorChange.team1.r = PauseSlider[i].pos;
-			}
-			else if (i === 1) {
-				colorChange.team1.g = PauseSlider[i].pos;
-			}
-			else if (i === 2) {
-				colorChange.team1.b = PauseSlider[i].pos;
+	else if (lll === 2) {
+		for (var ii = 0; ii < PauseSlider.length; ii ++) {
+			if (PauseSlider[ii].hovering) {
+				PauseSlider[ii].posChange();
+				if (ii === 0) {
+					colorChange.team1.r = PauseSlider[ii].pos;
+				}
+				else if (ii === 1) {
+					colorChange.team1.g = PauseSlider[ii].pos;
+				}
+				else if (ii === 2) {
+					colorChange.team1.b = PauseSlider[ii].pos;
+				}
 			}
 		}
 	}
@@ -1066,6 +1070,9 @@ function draw() {
 		fill(0, 0, 0, 125);
 		rect(0, 0, 801, 801);
 		PauseScreen();
+		if (mouseIsPressed) {
+			detectPauseChange(2);
+		}
 	}
 	else {
 		background(220);
@@ -1305,7 +1312,7 @@ function mousePressed () {
 		resizeCanvas(400, 400);
   }
 	if (Pause) {
-		detectPauseChange();
+		detectPauseChange(1);
 	}
 	if (inGame) {
 		resizeCanvas(800, 800);
