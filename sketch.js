@@ -374,7 +374,24 @@ var PauseScreen = function () {
 		PauseButton[i].hover();
 	}
 	for (var ii = 0; ii < PauseSlider.length; ii++) {
-		PauseSlider[ii].hover();
+		if (ii <= 2) {
+			PauseSlider[ii].hover(colorChange.team1.r, colorChange.team1.g, colorChange.team1.b);
+		}
+		else if (ii <= 5) {
+			PauseSlider[ii].hover(colorChange.team2.r, colorChange.team2.g, colorChange.team2.b);
+		}
+	}
+}
+var updateColor = function (lll) {
+	if (lll === 1) {
+		for (var i = 0; i < team1.length; i++) {
+			team1[i].color = color(colorChange.team1.r, colorChange.team1.g, colorChange.team1.b);
+		}
+	}
+	else if (lll === 2) {
+		for (var ii = 0; ii < team1.length; ii++) {
+			team1[ii].color = color(colorChange.team2.r, colorChange.team2.g, colorChange.team2.b);
+		}
 	}
 }
 //This changes the scene when a player changes the difficulty
@@ -482,12 +499,15 @@ var detectPauseChange = function (lll) {
 				PauseSlider[ii].posChange();
 				if (ii === 0) {
 					colorChange.team1.r = PauseSlider[ii].pos;
+					updateColor(1);
 				}
 				else if (ii === 1) {
 					colorChange.team1.g = PauseSlider[ii].pos;
+					updateColor(1);
 				}
 				else if (ii === 2) {
 					colorChange.team1.b = PauseSlider[ii].pos;
+					updateColor(1);
 				}
 			}
 		}
