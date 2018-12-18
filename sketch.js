@@ -18,13 +18,13 @@ var playerSpeed = 5;
 var CompleteControl = false;
 var colorChange = {
 	team1: {
-		r: 0,
+		r: 250,
 		g: 0,
 		b: 0
 	},
 	team2: {
 		r: 0,
-		g: 0,
+		g: 255,
 		b: 0
 	}
 }
@@ -350,12 +350,17 @@ buttonArray.push (new button (240, 45, 80, 45, 6, "bind Player 2 Shoot key", 12,
 PauseButton.push (new button (50, 75, 200, 50, 15, "Resume", 40, 15));
 PauseButton.push (new button (50, 135, 200, 50, 15, "Main Menu", 40, 1));
 PauseButton.push (new button (50, 195, 200, 50, 15, "Settings", 40, 16));
-PauseButton.push (new button (60, 80, 200, 35, 16, "change team 1 colour", 21, 17));
+PauseButton.push (new button (60, 80, 300, 35, 16, "Change Team 1 Colour", 21, 17));
+PauseButton.push (new button (60, 160, 300, 35, 16, "Change Team 2 Colour", 21, 18));
 PauseButton.push (new button (725, 10, 50, 20, 16, "back", 12, 15));
 PauseButton.push (new button (725, 10, 50, 20, 17, "back", 12, 16));
+PauseButton.push (new button (725, 10, 50, 20, 18, "back", 12, 16));
 PauseSlider.push (new slider (0, 255, 70, 85, 510, 15, 17, "Team 1 Red Value", 5, 250));
-PauseSlider.push (new slider (0, 255, 70, 115, 510, 15, 17, "Team 1 Green Value", 5, 250));
-PauseSlider.push (new slider (0, 255, 70, 145, 510, 15, 17, "Team 1 Blue Value", 5, 250));
+PauseSlider.push (new slider (0, 255, 70, 115, 510, 15, 17, "Team 1 Green Value", 5, 0));
+PauseSlider.push (new slider (0, 255, 70, 145, 510, 15, 17, "Team 1 Blue Value", 5, 0));
+PauseSlider.push (new slider (0, 255, 70, 85, 510, 15, 18, "Team 2 Red Value", 5, 0));
+PauseSlider.push (new slider (0, 255, 70, 115, 510, 15, 18, "Team 2 Green Value", 5, 250));
+PauseSlider.push (new slider (0, 255, 70, 145, 510, 15, 18, "Team 2 Blue Value", 5, 0));
 
 // new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
 
@@ -381,6 +386,9 @@ var PauseScreen = function () {
 		else if (ii <= 5) {
 			PauseSlider[ii].hover(colorChange.team2.r, colorChange.team2.g, colorChange.team2.b);
 		}
+		else {
+			PauseSlider[ii].hover();
+		}
 	}
 }
 var updateColor = function (lll) {
@@ -391,7 +399,7 @@ var updateColor = function (lll) {
 	}
 	else if (lll === 2) {
 		for (var ii = 0; ii < team1.length; ii++) {
-			team1[ii].color = color(colorChange.team2.r, colorChange.team2.g, colorChange.team2.b);
+			team2[ii].color = color(colorChange.team2.r, colorChange.team2.g, colorChange.team2.b);
 		}
 	}
 }
@@ -509,6 +517,18 @@ var detectPauseChange = function (lll) {
 				else if (ii === 2) {
 					colorChange.team1.b = PauseSlider[ii].pos;
 					updateColor(1);
+				}
+				else if (ii === 3) {
+					colorChange.team2.r = PauseSlider[ii].pos;
+					updateColor(2);
+				}
+				else if (ii === 4) {
+					colorChange.team2.g = PauseSlider[ii].pos;
+					updateColor(2);
+				}
+				else if (ii === 5) {
+					colorChange.team2.b = PauseSlider[ii].pos;
+					updateColor(2);
 				}
 			}
 		}
