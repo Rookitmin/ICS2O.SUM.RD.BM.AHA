@@ -42,6 +42,7 @@ var puck = [0, 0, 0, 0];
 // Key Changing Variables
 var changeKey = 0;
 var changeKeyPressed = false;
+// default keybinds for player 1 and 2
 var P1 = {Up: 38, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}, speedX: 0, speedY: 0};
 var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82, keyName: {}, speedX: 0, speedY: 0};
 P1.keyName = {Up: "Up Arrow", Down: "Down Arrow", Left: "Left Arrow", 
