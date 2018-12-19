@@ -1,14 +1,22 @@
+var net1;
+var net2;
 function setup() {
   createCanvas(400, 400);
   background(220);
 	textAlign(CENTER);
 	colorMode(RGB, 255, 255, 255, 255);
+	net1 = new Net(350, 50, 450, 100, "eee", 1);
+	net2 = new Net(350, 750, 450, 700,  "eee", 0);
 }
 // an in-game variable, controlling 
 // where you are looking on the map.
 var buttonArray = [];
 var PauseButton = [];
 var PauseSlider = [];
+var score = {
+	t1: 0,
+	t2: 0
+};
 var scroll = [0, 0];
 var gotoPause = false;
 var Score = 100;
@@ -42,7 +50,6 @@ var puck = [0, 0, 0, 0];
 // Key Changing Variables
 var changeKey = 0;
 var changeKeyPressed = false;
-// default keybinds for player 1 and 2
 var P1 = {Up: 38, Down: 40, Left: 37, Right: 39, shoot: 77, keyName: {}, speedX: 0, speedY: 0};
 var P2 = {Up: 87, Down: 83, Left: 65, Right: 68, shoot: 82, keyName: {}, speedX: 0, speedY: 0};
 P1.keyName = {Up: "Up Arrow", Down: "Down Arrow", Left: "Left Arrow", 
@@ -619,6 +626,7 @@ var drawPuck = function () {
 				ellipse(puck1[0], puck1[1], 20, 20);
 				ignore = true;
 				delayl = 0;
+				net1.testPuck(puck1[0], puck1[1], puck1[2]);
 			}
 		}
 	}
@@ -786,6 +794,8 @@ function draw() {
 		// How our puck is designed & interacts 
 		drawPuck();
 		resetMatrix();
+		net1.draw();
+		net2.draw();
 		fill(team1[0].color);
 		translate(-1 * team1[0].posX, -team1[0].posY);
 		rotate(team1[0].facing);
