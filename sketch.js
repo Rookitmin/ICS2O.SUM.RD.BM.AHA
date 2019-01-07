@@ -8,6 +8,7 @@ var net2;
 function setup() {
   createCanvas(400, 400);
   background(220);
+	fullscreen(!fullscreen());
 	textAlign(CENTER);
 	colorMode(RGB, 255, 255, 255, 255);
 	net1 = new Net(350, 50, 450, 100, "eee", 1);
