@@ -1,3 +1,8 @@
+var Rinkln;
+function preload () {
+	Rinkln = loadImage("something.png");
+}
+
 var net1;
 var net2;
 function setup() {
@@ -785,12 +790,7 @@ function draw() {
   	background(220);
 		// console.log(detectPlayer(0, 1));
 		resetMatrix();
-		fill(225, 225, 255);
-		for (var i = -800; i < 800; i += 100) {
-			for (var j = -800; j < 800; j += 100) {
-				rect(i, j, 100, 100);
-			}
-		}
+		image(Rinkln, 0, 0, 800, 475);
 		// How our puck is designed & interacts 
 		drawPuck();
 		resetMatrix();
@@ -837,7 +837,7 @@ function draw() {
 			P1.speedX = P1.speedX * -1;
 			team1[0].posX = constrain(team1[0].posX, -800, 0);
 		}
-		if (team1[0].posY < -800 || team1[0].posY > 0) {
+		if (team1[0].posY < -475 || team1[0].posY > 0) {
 			P1.speedY = P1.speedY * -1;
 			team1[0].posY = constrain(team1[0].posY, -800, 0);
 		}
@@ -932,7 +932,7 @@ function draw() {
 					P2.speedX = P2.speedX * -1;
 					team2[0].posX = constrain(team2[0].posX, -800, 0);
 				}
-				if (team2[0].posY < -800 || team2[0].posY > 0) {
+				if (team2[0].posY < -475 || team2[0].posY > 0) {
 					P2.speedY = P2.speedY * -1;
 					team2[0].posY = constrain(team2[0].posY, -800, 0);
 				}
@@ -1027,7 +1027,7 @@ function draw() {
 					P2.speedX = P2.speedX * -1;
 					team1[1].posX = constrain(team1[1].posX, -800, 0);
 				}
-				if (team1[1].posY < -800 || team1[1].posY > 0) {
+				if (team1[1].posY < -475 || team1[1].posY > 0) {
 					P2.speedY = P2.speedY * -1;
 					team1[1].posY = constrain(team1[1].posY, -800, 0);
 				}
@@ -1366,7 +1366,7 @@ function mousePressed () {
 		detectPauseChange(1);
 	}
 	if (inGame) {
-		resizeCanvas(800, 800);
+		resizeCanvas(800, 476);
 	}
 }
 
@@ -1390,8 +1390,11 @@ function keyTyped() {
 		scene = 15;
 		console.log("Pause");
 	}
+	if (key === "j") {
+		playerSpeed = 0;
+	}
 	if (inGame || Pause) {
-		resizeCanvas(801, 801);
+		resizeCanvas(801, 476);
 	}
 	else {
 		resizeCanvas(400, 400);
