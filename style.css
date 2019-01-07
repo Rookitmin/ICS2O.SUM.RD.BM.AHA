@@ -1,8 +1,10 @@
 html, body {
   margin: 0;
   padding: 0;
+	background-color: rgb(100, 100, 100);
 }
 canvas {
   display: block;
-  margin: auto;
+	border: 10px ridge red;
+ 	margin: auto;
 }
