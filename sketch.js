@@ -628,12 +628,12 @@ var drawPuck = function () {
 			if (!keyIsDown(P1.shoot)) {
 				puck1[0] = 0 - (team1[0].posX);
 				puck1[1] = 0 - (team1[0].posY);
-				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+				ellipse(puck1[0] + 5, puck1[1] + 5, 15, 15);
 			} 
 			else {
 				puck1[2] = team1[0].facing;
 				puck1[3] = 5;
-				ellipse(puck1[0], puck1[1], 20, 20);
+				ellipse(puck1[0], puck1[1], 15, 15);
 				ignore = true;
 				delayl = 0;
 				net1.testPuck(puck1[0], puck1[1], puck1[2]);
@@ -645,12 +645,12 @@ var drawPuck = function () {
 			if (!keyIsDown(P1.shoot)) {
 				puck1[0] = 0 - (team1[0].posX);
 				puck1[1] = 0 - (team1[0].posY);
-				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+				ellipse(puck1[0] + 5, puck1[1] + 5, 15, 15);
 			} 
 			else {
 				puck1[2] = team1[0].facing;
 				puck1[3] = 5;
-				ellipse(puck1[0], puck1[1], 20, 20);
+				ellipse(puck1[0], puck1[1], 15, 15);
 				ignore = true;
 				delayl = 0;
 			} 
@@ -659,12 +659,12 @@ var drawPuck = function () {
 			if (!keyIsDown(P2.shoot)) {
 				puck1[0] = 0 - (team2[0].posX);
 				puck1[1] = 0 - (team2[0].posY);
-				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+				ellipse(puck1[0] + 5, puck1[1] + 5, 15, 15);
 			} 
 			else {
 				puck1[2] = team2[0].facing;
 				puck1[3] = 5;
-				ellipse(puck1[0], puck1[1], 20, 20);
+				ellipse(puck1[0], puck1[1], 15, 15);
 				ignore = true;
 				delayl = 0;
 			}
@@ -675,12 +675,12 @@ var drawPuck = function () {
 			if (!keyIsDown(P1.shoot)) {
 				puck1[0] = -team1[0].posX;
 				puck1[1] = -team1[0].posY;
-				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+				ellipse(puck1[0] + 5, puck1[1] + 5, 15, 15);
 			} 
 			else {
 				puck1[2] = team1[0].facing;
 				puck1[3] = 5;
-				ellipse(puck1[0], puck1[1], 20, 20);
+				ellipse(puck1[0], puck1[1], 10, 10);
 				ignore = true;
 				delayl = 0;
 			} 
@@ -689,12 +689,12 @@ var drawPuck = function () {
 			if (!keyIsDown(P2.shoot)) {
 				puck1[0] = -team1[1].posX;
 				puck1[1] = -team1[1].posY;
-				ellipse(puck1[0] + 5, puck1[1] + 5, 20, 20);
+				ellipse(puck1[0] + 5, puck1[1] + 5, 15, 15);
 			} 
 			else {
 				puck1[2] = team1[1].facing;
 				puck1[3] = 5;
-				ellipse(puck1[0], puck1[1], 20, 20);
+				ellipse(puck1[0], puck1[1], 15, 15);
 				ignore = true;
 				delayl = 0;
 			}
@@ -706,7 +706,7 @@ var drawPuck = function () {
 			ignore = false;
 		}
 	}
-	ellipse(puck1[0], puck1[1], 20, 20);
+	ellipse(puck1[0], puck1[1], 15, 15);
 	if (puck1[2] === 45) {
 		puck1[0] += puck1[3] / 2;
 		puck1[1] -= puck1[3] / 2;
@@ -845,7 +845,7 @@ function draw() {
 		}
 		if (team1[0].posY < -475 || team1[0].posY > 0) {
 			P1.speedY = P1.speedY * -1;
-			team1[0].posY = constrain(team1[0].posY, -800, 0);
+			team1[0].posY = constrain(team1[0].posY, -475, 0);
 		}
 		team1[0].posX += P1.speedX;
 		team1[0].posY += P1.speedY;
@@ -940,7 +940,7 @@ function draw() {
 				}
 				if (team2[0].posY < -475 || team2[0].posY > 0) {
 					P2.speedY = P2.speedY * -1;
-					team2[0].posY = constrain(team2[0].posY, -800, 0);
+					team2[0].posY = constrain(team2[0].posY, -475, 0);
 				}
 				team2[0].posX += P2.speedX;
 				team2[0].posY += P2.speedY;
@@ -1035,7 +1035,7 @@ function draw() {
 				}
 				if (team1[1].posY < -475 || team1[1].posY > 0) {
 					P2.speedY = P2.speedY * -1;
-					team1[1].posY = constrain(team1[1].posY, -800, 0);
+					team1[1].posY = constrain(team1[1].posY, -475, 0);
 				}
 				team1[1].posX += P2.speedX;
 				team1[1].posY += P2.speedY;
