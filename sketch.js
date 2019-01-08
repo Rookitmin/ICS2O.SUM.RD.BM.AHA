@@ -8,11 +8,11 @@ var net2;
 function setup() {
   createCanvas(400, 400);
   background(220);
-	fullscreen(!fullscreen());
 	textAlign(CENTER);
 	colorMode(RGB, 255, 255, 255, 255);
 	net1 = new Net(350, 50, 450, 100, "eee", 1);
 	net2 = new Net(350, 750, 450, 700,  "eee", 0);
+	frameRate(60);
 }
 // an in-game variable, controlling 
 // where you are looking on the map.
@@ -149,6 +149,7 @@ function slider (min, max, x, y, w, h, sceneNumber, title, valueChange, pos) {
 					 this.width / (this.max - this.min), this.height);
 			if (mouseX > this.x && mouseX < this.x + this.width && mouseY > this.y && mouseY < this.y + this.height) {
 				this.hovering = true;
+				cursor(HAND);
 			}
 		}
 	}
@@ -248,6 +249,7 @@ button.prototype.hover = function (lll) {
 				 this.width - 5, 
 				 this.height - 5);
 			this.hovering = true;
+			cursor(HAND);
 		} else {
 			if (difficulty === 1) {
 				fill(0, 102, 102);
@@ -378,6 +380,7 @@ PauseSlider.push (new slider (0, 255, 70, 145, 510, 15, 18, "Team 2 Blue Value",
 // new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
 
 var DrawButton = function () {
+	cursor(ARROW);
 	for (var i = 0; i < buttonArray.length; i ++) {
 		if (i >= 13 && i <= 15) {
 			buttonArray[i].hover(i - 12);
@@ -388,6 +391,7 @@ var DrawButton = function () {
 	}
 }
 var PauseScreen = function () {
+	cursor(ARROW);
 	OneButton = true;
 	for (var i = 0; i < PauseButton.length; i++) {
 		PauseButton[i].hover();
@@ -767,8 +771,8 @@ var drawPuck = function () {
 			puck1[2] = 135;
 		}
 	}
-	if (puck1[1] > 800) {
-		puck1[1] = 800;
+	if (puck1[1] > 475) {
+		puck1[1] = 475;
 		if (puck1[2] === 225) {
 			puck1[2] = 315;
 		}
@@ -782,6 +786,7 @@ var drawPuck = function () {
 }
 // The start to our draw function 
 function draw() {
+	
   if (inGame) {
 		// resizeCanvas(800, 800);
 		speedPos1 = playerSpeed - P1.speedX / playerSpeed;
@@ -1359,9 +1364,10 @@ function draw() {
   }
 }
 function mousePressed () {
+	cursor(ARROW);
+	resizeCanvas(400, 400);
 	if (!inGame && !Pause) {
 		detectSceneChange();
-		resizeCanvas(400, 400);
   }
 	if (Pause) {
 		detectPauseChange(1);
@@ -1372,6 +1378,7 @@ function mousePressed () {
 }
 
 function keyTyped() {
+	noCursor();
 	if (key === 'v' && (inGame || Pause)) {
 		scene =  1;
 		inGame = false;
@@ -1389,7 +1396,7 @@ function keyTyped() {
 		Pause = true;
 		inGame = false;
 		scene = 15;
-		console.log("Pause");
+		cursor(ARROW);
 	}
 	if (key === "j") {
 		playerSpeed = 0;
