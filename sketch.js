@@ -10,8 +10,8 @@ function setup() {
   background(220);
 	textAlign(CENTER);
 	colorMode(RGB, 255, 255, 255, 255);
-	net1 = new Net(350, 50, 450, 100, "eee", 1);
-	net2 = new Net(350, 750, 450, 700,  "eee", 0);
+	net1 = new Net(30, 190, 50, 250, "eee", -1);
+	net2 = new Net(740, 200, 760, 260,  "eee", 1);
 	frameRate(60);
 }
 // an in-game variable, controlling 
@@ -19,13 +19,10 @@ function setup() {
 var buttonArray = [];
 var PauseButton = [];
 var PauseSlider = [];
-var score = {
-	t1: 0,
-	t2: 0
-};
 var scroll = [0, 0];
 var gotoPause = false;
-var Score = 100;
+var Score = 0;
+var Score2 = 0;
 var Players = 0;
 var PlayerType = 0;
 var playerSpeed = 5;
@@ -636,7 +633,6 @@ var drawPuck = function () {
 				ellipse(puck1[0], puck1[1], 15, 15);
 				ignore = true;
 				delayl = 0;
-				net1.testPuck(puck1[0], puck1[1], puck1[2]);
 			}
 		}
 	}
@@ -706,6 +702,8 @@ var drawPuck = function () {
 			ignore = false;
 		}
 	}
+	net1.testPuck(puck1[0], puck1[1], puck1[2], 0);
+	net2.testPuck(puck1[0], puck1[1], puck1[2], 1);
 	ellipse(puck1[0], puck1[1], 15, 15);
 	if (puck1[2] === 45) {
 		puck1[0] += puck1[3] / 2;
@@ -800,8 +798,6 @@ function draw() {
 		// How our puck is designed & interacts 
 		drawPuck();
 		resetMatrix();
-		net1.draw();
-		net2.draw();
 		fill(team1[0].color);
 		translate(-1 * team1[0].posX, -team1[0].posY);
 		rotate(team1[0].facing);
@@ -1091,11 +1087,7 @@ function draw() {
 		background(220);
 		resetMatrix();
 		fill(225, 225, 255);
-		for (var ii = 0; ii < 800; ii += 100) {
-			for (jj = 0; jj < 800; jj += 100) {
-				rect(ii, jj, 100, 100);
-			}
-		}
+		image(Rinkln, 0, 0, 800, 475);
 		//This is how our animation works in our main screen works
 		fill(0, 0, 0);
 		ellipse(puck1[0], puck1[1], 20, 20);
@@ -1374,6 +1366,7 @@ function mousePressed () {
 	}
 	if (inGame) {
 		resizeCanvas(800, 476);
+		console.log("X: " + mouseX + ", Y: " + mouseY);
 	}
 }
 
