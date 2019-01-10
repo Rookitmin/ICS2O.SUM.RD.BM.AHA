@@ -10,8 +10,8 @@ function setup() {
   background(220);
 	textAlign(CENTER);
 	colorMode(RGB, 255, 255, 255, 255);
-	net1 = new Net(30, 190, 50, 250, "eee", -1);
-	net2 = new Net(740, 200, 760, 260,  "eee", 1);
+	net1 = new Net(30, 200, 50, 270, 1);
+	net2 = new Net(740, 200, 760, 270, -1);
 	frameRate(60);
 }
 // an in-game variable, controlling 
@@ -702,8 +702,9 @@ var drawPuck = function () {
 			ignore = false;
 		}
 	}
-	net1.testPuck(puck1[0], puck1[1], puck1[2], 0);
-	net2.testPuck(puck1[0], puck1[1], puck1[2], 1);
+	net1.testPuck(puck1[0], puck1[1], puck1[2], 1);
+	net2.testPuck(puck1[0], puck1[1], puck1[2], 0);
+	resetMatrix();
 	ellipse(puck1[0], puck1[1], 15, 15);
 	if (puck1[2] === 45) {
 		puck1[0] += puck1[3] / 2;
@@ -1363,6 +1364,7 @@ function mousePressed () {
   }
 	if (Pause) {
 		detectPauseChange(1);
+		resizeCanvas(800, 476);
 	}
 	if (inGame) {
 		resizeCanvas(800, 476);
@@ -1392,7 +1394,7 @@ function keyTyped() {
 		cursor(ARROW);
 	}
 	if (key === "j") {
-		playerSpeed = 0;
+		console.log("T1: " + Score + " T2: " + Score2);
 	}
 	if (inGame || Pause) {
 		resizeCanvas(801, 476);
