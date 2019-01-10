@@ -2,7 +2,6 @@ function Net (x1, y1, x2, y2, facing) {
 	this.p1 = createVector(x1, y1);
 	this.p2 = createVector(x2, y2);
 	this.facing = facing;
-	
 	this.testPuck = function (pX, pY, pD, team) {
 		console.log("1" + (pX <= this.p1.X));
 		if (pY > this.p1.y && pY < this.p2.y && 
