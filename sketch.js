@@ -340,14 +340,14 @@ buttonArray.push (new button (325, 10, 50, 20, 6, "back", 12, 2));        //20
 buttonArray.push (new button (325, 10, 50, 20, 9, "back", 12, 1));        //21
 buttonArray.push (new button (325, 10, 50, 20, 10, "back", 12, 9));       //22
 buttonArray.push (new button (325, 10, 50, 20, 11, "back", 12, 9));       //23
-buttonArray.push (new button (0, 0, 400, 200, 9, "One Player", 30, 11));   //24
+buttonArray.push (new button (0, 0, 400, 200, 9, "One Player", 30, 12));   //24
 buttonArray.push (new button (0, 200, 400, 200, 9, "Two Players", 30, 10));//25
 buttonArray.push (new button (0, 0, 400, 200, 10, "Versus", 30, 11));      //26
 buttonArray.push (new button (0, 200, 400, 200, 10, "Same Team", 30, 11)); //27
-buttonArray.push (new button (95, 95, 100, 100, 11, "Single Match", 16, 12)); //28
-buttonArray.push (new button (205, 95, 100, 100, 11, "Tournament", 16, 12));  //29
-buttonArray.push (new button (95, 205, 100, 100, 11, "Tutorial", 16, 12));    //30
-buttonArray.push (new button (205, 205, 100, 100, 11, "Practice Match", 16, 12)); //31
+buttonArray.push (new button (95, 95, 200, 200, 11, "Single Match", 16, 13)); //28
+buttonArray.push (new button (205, 95, 100, 100, 15, "Tournament", 16, 13));  //29
+buttonArray.push (new button (95, 205, 100, 100, 15, "Tutorial", 16, 13));    //30
+buttonArray.push (new button (95, 95, 200, 200, 12, "Practice Match", 16, 13)); //31
 buttonArray.push (new button (20, 100, 75, 30, 2, "Controls", 16, 5));       //32
 buttonArray.push (new button (325, 355, 50, 20, 5, "Next", 12 , 6));          //33
 buttonArray.push (new button (10, 355, 50, 20, 6, "Prev", 12, 5));           //34
@@ -388,6 +388,9 @@ var DrawButton = function () {
 		else {
 		buttonArray[i].hover();
 		}
+	}
+	for(i = 17; i < 23; i ++){
+		buttonArray[i].draw();
 	}
 }
 var PauseScreen = function () {
@@ -435,7 +438,7 @@ var detectSceneChange = function () {
 			else if (i === 15) {
 				difficulty = 1;
 			}
-			if (buttonArray[i].gotoScene === 12) {
+			if (buttonArray[i].gotoScene === 13) {
 				inGame = true;
 				teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
 				if (i === 27) {
