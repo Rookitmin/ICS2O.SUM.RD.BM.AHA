@@ -1,6 +1,9 @@
 var Rinkln;
+var moosic;
 function preload () {
 	Rinkln = loadImage("something.png");
+	soundFormats('mp3');
+	moosic = loadSound('Rodrycks_Fanfare.mp3');
 }
 
 var net1;
@@ -785,7 +788,9 @@ var drawPuck = function () {
 }
 // The start to our draw function 
 function draw() {
-	
+	if (!moosic.isPlaying()) {
+		moosic.play();
+	}
   if (inGame) {
 		// resizeCanvas(800, 800);
 		speedPos1 = playerSpeed - P1.speedX / playerSpeed;
