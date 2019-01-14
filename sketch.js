@@ -67,8 +67,8 @@ var team2 = [];
 
 var teamCreate = function (color1, color2, color3, color4) {
 	for (var i = 0; i < 10; i ++) {
-		team1[i] = {posX: 0, posY: 0, facing: 0, UserAssigned: 0, color:color1};
-		console.log(1);
+		team1[i] = {posX: 200, posY: 200, facing: 0, UserAssigned: 0, color:color1};
+		// console.log(1);
 	}
 	team1[0].posNum = 1;
 	team1[1].posNum = 1;
@@ -82,11 +82,11 @@ var teamCreate = function (color1, color2, color3, color4) {
 	team1[9].posNum = 5;
 	for (i = 10; i < 12; i ++) {
 		team1[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color2, posNum:6}
-		console.log(1);
+		// console.log(1);
 	}
 	for (i = 0; i < 10; i ++) {
-		team2[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color3}
-		console.log(1);
+		team2[i] = {posX: 600, posY: 200, facing:0, UserAssigned: 0, color:color3}
+		// console.log(1);
 	}
 	team2[0].posNum = 1;
 	team2[1].posNum = 1;
@@ -100,7 +100,7 @@ var teamCreate = function (color1, color2, color3, color4) {
 	team2[9].posNum = 5;
 	for (i = 10; i < 12; i ++) {
 		team2[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color4, posNum:6}
-		console.log(1);
+		// console.log(1);
 	}
 }
 
@@ -455,9 +455,9 @@ var detectSceneChange = function () {
 				}
 			}
 			else if (buttonArray[i].gotoScene === 10 || buttonArray[i].gotoScene === 11) {
-				if (i === 23) {
-					Players = 1;
-				} 
+				// if (i === 23) {
+				// 	Players = 1;
+				// } 
 				if (i === 24) {
 					Players = 2;
 				}
@@ -467,6 +467,9 @@ var detectSceneChange = function () {
 				if (i === 26) {
 					PlayerType = 2;
 				}
+			}
+			if (i === 23) {
+				Players = 1;
 			}
 		} else if (buttonArray[i].gotoScene === 0 && buttonArray[i].hovering) {
 			if (i === 35) {
@@ -562,9 +565,12 @@ var puck1 = [400, 400, 0, 0];
 var ignore = false;
 var dleayl = 0;
 var detectPlayer = function (PT, NP) {
+	console.log(3);
 	if (PT === 0) {
+		// console.log(2);
 		if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
 				puck1[1] * -1 <= team1[0].posY + 20 && puck1[1] * -1 >= team1[0].posY - 20) {
+			// console.log(1);
 			return(true);
 		}
 		else {
@@ -627,6 +633,7 @@ var detectPlayer = function (PT, NP) {
 var drawPuck = function () {
 	fill(0, 0, 0);
 	if (Players === 1) {
+		// console.log(11);
 		if (detectPlayer(0, 1) && !ignore) {
 			if (!keyIsDown(P1.shoot)) {
 				puck1[0] = 0 - (team1[0].posX);
