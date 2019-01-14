@@ -314,8 +314,8 @@ var credits = "Coded By: Rookitmin, Printear, Winnie And The Guy Next Door." +
 						"the real credits: Rookitmin, Ali596087, and Minirals in collaboration " +
 						"With the grade three's ... Hockey Dude, and Ringette Girl.";
 var creditScroll = 400;
-var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5, 8.5);
-var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
+// var sliderPlayerSpeed = new slider (0, 15, 10, 200, 380, 20, 2, "Player Speed", 0.5, 8.5);
+// var sliderCPUSpeed = new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
 // Here is all of our button array & it works
 buttonArray.push (new button (10, 10, 75, 25, 2, "Main Menu", 12, 1));  //0
 buttonArray.push (new button (10, 10, 75, 25, 3, "Main Menu", 12, 1)); //1
@@ -339,14 +339,14 @@ buttonArray.push (new button (325, 10, 50, 20, 5, "back", 12, 2));        //19
 buttonArray.push (new button (325, 10, 50, 20, 6, "back", 12, 2));        //20
 buttonArray.push (new button (325, 10, 50, 20, 9, "back", 12, 1));        //21
 buttonArray.push (new button (325, 10, 50, 20, 10, "back", 12, 9));       //22
-buttonArray.push (new button (325, 10, 50, 20, 11, "back", 12, 9));       //23
+buttonArray.push (new button (325, 10, 50, 20, 11, "back", 12, 10));       //23
 buttonArray.push (new button (0, 0, 400, 200, 9, "One Player", 30, 12));   //24
 buttonArray.push (new button (0, 200, 400, 200, 9, "Two Players", 30, 10));//25
 buttonArray.push (new button (0, 0, 400, 200, 10, "Versus", 30, 11));      //26
 buttonArray.push (new button (0, 200, 400, 200, 10, "Same Team", 30, 11)); //27
 buttonArray.push (new button (95, 95, 200, 200, 11, "Single Match", 16, 13)); //28
-buttonArray.push (new button (205, 95, 100, 100, 15, "Tournament", 16, 13));  //29
-buttonArray.push (new button (95, 205, 100, 100, 15, "Tutorial", 16, 13));    //30
+buttonArray.push (new button (325, 10, 50, 20, 12, "back", 12, 9));  //29
+buttonArray.push (new button (10, 10, 75, 25, 12, "Main Menu", 12, 1));    //30
 buttonArray.push (new button (95, 95, 200, 200, 12, "Practice Match", 16, 13)); //31
 buttonArray.push (new button (20, 100, 75, 30, 2, "Controls", 16, 5));       //32
 buttonArray.push (new button (325, 355, 50, 20, 5, "Next", 12 , 6));          //33
@@ -1302,19 +1302,19 @@ function draw() {
 			}
 		}
 		OneButton = true;
-		if (CompleteControl) {
-			sliderPlayerSpeed.hover();
-			sliderCPUSpeed.hover();
-			if (mouseIsPressed) {
-				if (sliderPlayerSpeed.hovering) {
-					sliderPlayerSpeed.posChange();
-					playerSpeed = sliderPlayerSpeed.pos;
-				}
-				if (sliderCPUSpeed.hovering) {
-					sliderCPUSpeed.posChange();
-				}
-			}
-		}
+		// if (CompleteControl) {
+		// 	sliderPlayerSpeed.hover();
+		// 	sliderCPUSpeed.hover();
+		// 	if (mouseIsPressed) {
+		// 		if (sliderPlayerSpeed.hovering) {
+		// 			sliderPlayerSpeed.posChange();
+		// 			playerSpeed = sliderPlayerSpeed.pos;
+		// 		}
+		// 		if (sliderCPUSpeed.hovering) {
+		// 			sliderCPUSpeed.posChange();
+		// 		}
+		// 	}
+		// }
 		// This keeps our credits scene scrolling down
 		if (scene === 7) {
 			background(155, 0, 155);
