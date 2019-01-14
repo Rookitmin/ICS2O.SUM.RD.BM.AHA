@@ -67,7 +67,7 @@ var team2 = [];
 
 var teamCreate = function (color1, color2, color3, color4) {
 	for (var i = 0; i < 10; i ++) {
-		team1[i] = {posX: 200, posY: 200, facing: 0, UserAssigned: 0, color:color1};
+		team1[i] = {posX: -200, posY: -200, facing: 0, UserAssigned: 0, color:color1};
 		// console.log(1);
 	}
 	team1[0].posNum = 1;
@@ -81,11 +81,11 @@ var teamCreate = function (color1, color2, color3, color4) {
 	team1[8].posNum = 5;
 	team1[9].posNum = 5;
 	for (i = 10; i < 12; i ++) {
-		team1[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color2, posNum:6}
+		team1[i] = {posX: 200, posY: 200, facing:0, UserAssigned: 0, color:color2, posNum:6}
 		// console.log(1);
 	}
 	for (i = 0; i < 10; i ++) {
-		team2[i] = {posX: 600, posY: 200, facing:0, UserAssigned: 0, color:color3}
+		team2[i] = {posX: -600, posY: -200, facing:0, UserAssigned: 0, color:color3}
 		// console.log(1);
 	}
 	team2[0].posNum = 1;
@@ -99,7 +99,7 @@ var teamCreate = function (color1, color2, color3, color4) {
 	team2[8].posNum = 5;
 	team2[9].posNum = 5;
 	for (i = 10; i < 12; i ++) {
-		team2[i] = {posX: 0, posY: 0, facing:0, UserAssigned: 0, color:color4, posNum:6}
+		team2[i] = {posX: 600, posY: 200, facing:0, UserAssigned: 0, color:color4, posNum:6}
 		// console.log(1);
 	}
 }
@@ -378,7 +378,16 @@ PauseSlider.push (new slider (0, 255, 70, 115, 510, 15, 18, "Team 2 Green Value"
 PauseSlider.push (new slider (0, 255, 70, 145, 510, 15, 18, "Team 2 Blue Value", 5, 0));
 
 // new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
-
+var drawScore = function () {
+	textSize(32);
+	fill(colorChange.team1.r, colorChange.team1.g, colorChange.team1.b);
+	rect(300, 0, 100, 70);
+	fill(colorChange.team2.r, colorChange.team2.g, colorChange.team2.b);
+	rect(400, 0, 100, 70);
+	fill(0, 0, 0);
+	text(Score, 300, 40, 100);
+	text(Score2, 400, 40, 100);
+}
 var DrawButton = function () {
 	cursor(ARROW);
 	for (var i = 0; i < buttonArray.length; i ++) {
@@ -520,7 +529,7 @@ var detectPauseChange = function (lll) {
 					team1 = [];
 					team2 = [];
 					teamCreate();
-					puck1 = [400, 400, 0, 0] 
+					puck1 = [400, 255, 0, 0] 
 				}
 			}
 		}
@@ -561,11 +570,11 @@ var speedPos1 = 5 - P1.speedX / 5;
 var speedNeg1 = P1.speedX / 5 - 5;
 var speedPos2 = 5 - P1.speedY / 5;
 var speedNeg2 = P1.speedY / 5 - 5;
-var puck1 = [400, 400, 0, 0];
+var puck1 = [400, 225, 0, 0];
 var ignore = false;
 var dleayl = 0;
 var detectPlayer = function (PT, NP) {
-	console.log(3);
+	// console.log(3);
 	if (PT === 0) {
 		// console.log(2);
 		if (puck1[0] * -1 <= team1[0].posX + 20 && puck1[0] * -1 >= team1[0].posX - 20 && 
@@ -811,6 +820,7 @@ function draw() {
 		// console.log(detectPlayer(0, 1));
 		resetMatrix();
 		image(Rinkln, 0, 0, 800, 475);
+		drawScore();
 		// How our puck is designed & interacts 
 		drawPuck();
 		resetMatrix();
@@ -1104,6 +1114,7 @@ function draw() {
 		resetMatrix();
 		fill(225, 225, 255);
 		image(Rinkln, 0, 0, 800, 475);
+		drawScore();
 		//This is how our animation works in our main screen works
 		fill(0, 0, 0);
 		ellipse(puck1[0], puck1[1], 20, 20);
@@ -1399,7 +1410,7 @@ function keyTyped() {
 		CompleteControl = true;
 		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
 		inGame = true;
-		puck1 = [400, 400, 0, 0];
+		puck1 = [400, 225, 0, 0];
 		scene = 12;
 	}
 	if (inGame && key === " ") {
