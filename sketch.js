@@ -440,13 +440,17 @@ var detectSceneChange = function () {
 			scene = buttonArray[i].gotoScene;
 			if (i === 13) {
 				difficulty = 3;
-				console.log(1);
+				// console.log(1);
 			}
 			else if (i === 14) {
 				difficulty = 2;
 			}
 			else if (i === 15) {
 				difficulty = 1;
+			}
+			if (i === buttonArray.length) {
+				Score = 0;
+				Score2 = 0;
 			}
 			if (buttonArray[i].gotoScene === 13) {
 				inGame = true;
