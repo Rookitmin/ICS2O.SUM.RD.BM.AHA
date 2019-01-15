@@ -9,3 +9,7 @@ canvas {
 	border: 10px ridge red;
  	margin: auto;
 }
+#wasd {
+	position: absolute;
+	top: 700px;
+}
