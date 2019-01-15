@@ -448,7 +448,7 @@ var detectSceneChange = function () {
 			else if (i === 15) {
 				difficulty = 1;
 			}
-			if (i === buttonArray.length) {
+			if (i === buttonArray.length - 1) {
 				Score = 0;
 				Score2 = 0;
 			}
