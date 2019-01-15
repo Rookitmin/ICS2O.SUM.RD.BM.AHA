@@ -29,7 +29,7 @@ var Score2 = 0;
 var Players = 0;
 var PlayerType = 0;
 var playerSpeed = 5;
-var CompleteControl = false;
+// var CompleteControl = false;
 var colorChange = {
 	team1: {
 		r: 250,
@@ -362,6 +362,7 @@ buttonArray.push (new button (240, 135, 80, 45, 5, "bind Player 2 Down key", 12,
 buttonArray.push (new button (240, 225, 80, 45, 5, "bind Player 2 Left key", 12, 0));//43
 buttonArray.push (new button (240, 315, 80, 45, 5, "bind Player 2 Right key", 12, 0));//44
 buttonArray.push (new button (240, 45, 80, 45, 6, "bind Player 2 Shoot key", 12, 0));//45
+buttonArray.push (new button (10, 10, 75, 25, 8, "Main Menu",  12, 1));//45
 PauseButton.push (new button (50, 75, 200, 50, 15, "Resume", 40, 15));
 PauseButton.push (new button (50, 135, 200, 50, 15, "Main Menu", 40, 1));
 PauseButton.push (new button (50, 195, 200, 50, 15, "Settings", 40, 16));
@@ -811,6 +812,18 @@ function draw() {
 		moosic.play();
 	}
   if (inGame) {
+		if (Score >= 5) {
+			scene = 8;
+			inGame = false;
+			Pause = false;
+			resizeCanvas(400, 400);
+		}
+		if (Score2 >= 5) {
+			scene = 8;
+			inGame = false;
+			Pause = false;
+			resizeCanvas(400, 400);
+		}
 		// resizeCanvas(800, 800);
 		speedPos1 = playerSpeed - P1.speedX / playerSpeed;
 		speedNeg1 = P1.speedX / playerSpeed - playerSpeed;
@@ -1355,21 +1368,13 @@ function draw() {
 		}
 		//This tells the player their score
 		if (scene === 8) {
+			// resizeCanvas(400, 400);
 			textSize(35);
 			text("Game Over", 100, 100, 200, 200);
 			textSize(30);
-			if (GameMode === 1 || GameMode === 2) {
-				text("Your Score Is:", 100, 150, 200, 150);
-				text(Score + " points.", 100, 200, 200, 100);
-			}
-			if (GameMode === 3) {
-				text("Your Score Is:", 100, 150, 200, 150);
-				text(Score + " Goals.", 100, 200, 200, 100);
-			}
-			if (GameMode === 4) {
-				text("Your'e in:", 100, 150, 200, 150);
-				text(Score + "th place.", 100, 200, 200, 100);
-			}
+			fill("black");
+			text("Your Score Is:", 100, 150, 200, 150);
+			text(Score + " points to " + Score2 + " points.", 100, 200, 200, 100);
 		}
 		// Here tell's the player their keybinds in the "How to Play"
 		if (scene === 4) {
@@ -1400,19 +1405,6 @@ function mousePressed () {
 
 function keyTyped() {
 	noCursor();
-	if (key === 'v' && (inGame || Pause)) {
-		scene =  1;
-		inGame = false;
-		Pause = false;
-		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
-	}
-	else if (key === 'b' && !Pause && !inGame) {
-		CompleteControl = true;
-		teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
-		inGame = true;
-		puck1 = [400, 225, 0, 0];
-		scene = 12;
-	}
 	if (inGame && key === " ") {
 		Pause = true;
 		inGame = false;
