@@ -13,8 +13,8 @@ function setup() {
   background(220);
 	textAlign(CENTER);
 	colorMode(RGB, 255, 255, 255, 255);
-	net1 = new Net(0, 200, 50, 270, 1);
-	net2 = new Net(740, 200, 800, 270, -1);
+	net1 = new Net(0, 100, 50, 375, 1);
+	net2 = new Net(740, 100, 800, 375, -1);
 	frameRate(60);
 }
 // an in-game variable, controlling 
