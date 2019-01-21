@@ -37,8 +37,8 @@ var colorChange = {
 		b: 0
 	},
 	team2: {
-		r: 0,
-		g: 255,
+		r: 255,
+		g: 165,
 		b: 0
 	}
 }
@@ -374,8 +374,8 @@ PauseButton.push (new button (725, 10, 50, 20, 18, "back", 12, 16));
 PauseSlider.push (new slider (0, 255, 70, 85, 510, 15, 17, "Team 1 Red Value", 5, 250));
 PauseSlider.push (new slider (0, 255, 70, 115, 510, 15, 17, "Team 1 Green Value", 5, 0));
 PauseSlider.push (new slider (0, 255, 70, 145, 510, 15, 17, "Team 1 Blue Value", 5, 0));
-PauseSlider.push (new slider (0, 255, 70, 85, 510, 15, 18, "Team 2 Red Value", 5, 0));
-PauseSlider.push (new slider (0, 255, 70, 115, 510, 15, 18, "Team 2 Green Value", 5, 250));
+PauseSlider.push (new slider (0, 255, 70, 85, 510, 15, 18, "Team 2 Red Value", 5, 255));
+PauseSlider.push (new slider (0, 255, 70, 115, 510, 15, 18, "Team 2 Green Value", 5, 165));
 PauseSlider.push (new slider (0, 255, 70, 145, 510, 15, 18, "Team 2 Blue Value", 5, 0));
 
 // new slider (0, 15, 10, 250, 380, 20, 2, "Puck Speed", 0.5, 7.5);
@@ -454,7 +454,7 @@ var detectSceneChange = function () {
 			}
 			if (buttonArray[i].gotoScene === 13) {
 				inGame = true;
-				teamCreate(color(255, 0, 0), color(255, 102, 102), color(0, 255, 0), color(102, 255, 102));
+				teamCreate(color(255, 0, 0), color(255, 102, 102), color(255, 165, 0), color(102, 255, 102));
 				if (i === 27) {
 					gameMode = 1;
 				}
@@ -1392,7 +1392,7 @@ function draw() {
   }
 }
 function mousePressed () {
-	cursor(ARROW);
+	// cursor(ARROW);
 	resizeCanvas(400, 400);
 	if (!inGame && !Pause) {
 		detectSceneChange();
