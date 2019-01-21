@@ -454,7 +454,7 @@ var detectSceneChange = function () {
 			}
 			if (buttonArray[i].gotoScene === 13) {
 				inGame = true;
-				teamCreate(color(255, 0, 0), color(255, 102, 102), color(255, 165, 0), color(102, 255, 102));
+				teamCreate(color(colorChange.team1.r, colorChange.team1.g, colorChange.team1.b), color(255, 102, 102), color(colorChange.team2.r, colorChange.team2.g, colorChange.team2.b), color(102, 255, 102));
 				if (i === 27) {
 					gameMode = 1;
 				}
