@@ -3,7 +3,7 @@ var moosic;
 function preload () {
 	Rinkln = loadImage("something.png");
 	soundFormats('mp3');
-	moosic = loadSound('Rodrycks_Fanfare.mp3');
+	moosic = loadSound("Rodrycks_Fanfare.mp3");
 }
 
 var net1;
