@@ -3,7 +3,7 @@ var moosic;
 function preload () {
 	Rinkln = loadImage("something.png");
 	soundFormats('mp3');
-	moosic = loadSound("Rodrycks_Fanfare.mp3");
+	moosic = loadSound('Rodrycks_Fanfare.mp3');
 }
 
 var net1;
@@ -342,8 +342,8 @@ buttonArray.push (new button (325, 10, 50, 20, 10, "back", 12, 9));       //22
 buttonArray.push (new button (325, 10, 50, 20, 11, "back", 12, 10));       //23
 buttonArray.push (new button (0, 0, 400, 200, 9, "One Player", 30, 12));   //24
 buttonArray.push (new button (0, 200, 400, 200, 9, "Two Players", 30, 10));//25
-buttonArray.push (new button (0, 0, 400, 200, 10, "Versus", 30, 11));      //26
-buttonArray.push (new button (0, 200, 400, 200, 10, "Same Team", 30, 11)); //27
+buttonArray.push (new button (95, 95, 200, 200, 10, "Versus", 30, 11));      //26
+// buttonArray.push (new button (0, 200, 400, 200, 10, "Same Team", 30, 11)); //27
 buttonArray.push (new button (95, 95, 200, 200, 11, "Single Match", 16, 13)); //28
 buttonArray.push (new button (325, 10, 50, 20, 12, "back", 12, 9));  //29
 buttonArray.push (new button (10, 10, 75, 25, 12, "Main Menu", 12, 1));    //30
@@ -531,6 +531,8 @@ var detectPauseChange = function (lll) {
 				if (i === 1) {
 					inGame = false;
 					Pause = false;
+					Score = 0;
+					Score2 = 0;
 					team1 = [];
 					team2 = [];
 					teamCreate();
