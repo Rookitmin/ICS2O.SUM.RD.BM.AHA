@@ -9,12 +9,12 @@ function Net (x1, y1, x2, y2) {
 		if (pY > this.p1.y && pY < this.p2.y) { 
 			// console.log(16);
 			if (round(pX) < this.p2.x && team === 1 && pD > 180 && pD < 360) {
-				Score ++;
+				Score2 ++;
 				puck1 = [400, 225, 0, 0];
 				// console.log(15);
 			}
 			else if (pX > this.p1.x && team === 0 && pD < 180 && pD > 0) {
-				Score2 ++;
+				Score ++;
 				puck1 = [400, 225, 0, 0];
 				// console.log(17);
 			}
